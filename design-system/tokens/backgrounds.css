@@ -3,6 +3,7 @@
   --bg-rain: var(--color-rain); --bg-amber: var(--color-amber);
   --bg-dark-rgb: 20,26,40; --bg-ink-rgb: 15,36,56; --bg-rose-rgb: 224,200,209; --bg-white-rgb: 247,248,249;
 }
+.bg-cloud { background: var(--bg-rose) image-set(url('../assets/backgrounds/cloud-background.png') 1x, url('../assets/backgrounds/cloud-background@2x.png') 2x) center / cover no-repeat; color: var(--color-ink); }
 .bg-dark  { background-color: var(--bg-dark);  color: var(--color-paper); }
 .bg-ink   { background-color: var(--bg-ink);   color: var(--color-paper); }
 .bg-rose  { background-color: var(--bg-rose);  color: var(--color-ink); }
