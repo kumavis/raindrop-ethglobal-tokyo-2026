@@ -1,7 +1,9 @@
-# Raindrop: Funding the mission through the social graph
+# Raindrop: funding via the social graph.
 
 ## Abstract
-Every cause worth fighting for runs on people: researchers, builders, teachers and organizers who move it forward. Funding them is hard. Committees can't see everyone, grant proposals take months, and one-time airdrops have to guess the right recipients up front. But the people closest to the work already know who is doing it. They know who they learn from, who ships and who shows up. Raindrop turns that knowledge into funding. It is a continuous airdrop steered by trust. Token holders endorse the people they believe in, and every round newly minted tokens "rain" across the network according to a trust score computed from those endorsements with the EigenTrust algorithm [1]. Endorsers keep their coins. Endorsements persist until changed, so participation runs in the background instead of through proposals and deadlines. Anyone can spin up a Raindrop network around a mission, and the social graph decides where the value flows.
+Every cause – be it charity or business – grapples with the problem of funding effectively. Funding usually hits those who are the loudest, who apply for the most grants, or who are obvious "whales", and not necessarily the researchers, builders, teachers and organisers who are really moving things forward. Currently, it is hard for committees to see everyone, have to engage in a lot of guess work, and even when funding is applied for or decided, the proposals and distribution takes months.
+
+But the people closest to the work already know who is doing it. They know who they learn from, who ships and who shows up. Raindrop turns that knowledge into funding. It is a continuous airdrop steered by trust. Token holders endorse the people they believe in, and every round newly minted tokens "rain" across the network according to a trust score computed from those endorsements with the EigenTrust algorithm [1]. Endorsers keep their coins. Endorsements persist until changed, so participation runs in the background instead of through proposals and deadlines. Anyone can spin up a Raindrop network around a mission, and the social graph decides where the value flows.
 
 ## 1. It starts with a mission
 
