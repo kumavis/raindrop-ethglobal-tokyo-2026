@@ -19,10 +19,10 @@ Rendered components with real labels, showing text placement and styling.
 |---|---|
 | Track | Full width, 6px tall, 3px radius, white at 15% opacity |
 | Fill | 6px tall, 3px radius, rose `#E8B5C7` (`--color-rose`) |
-| Glow on fill | Rose at 40% opacity, 4px blur, 1px spread, no offset |
+| Glow on fill | Rose at 40% opacity, 8px blur (SVG stdDeviation 4), 1px spread, no offset |
 | Position | Near the bottom of the frame (34px clear below it in the 180px example) |
 
-The spec sheet says the bar "uses paper/ink color depending on background", but this visual uses a rose fill. On dark backgrounds, follow the visual (rose). It isn't settled what colour to use on light backgrounds.
+Built as `.progress-bar` in [`../tokens/progress.css`](../tokens/progress.css). **Rose is the default.** On light backgrounds it switches to **ink** (track: ink at 15%, no glow). This happens automatically inside the light `.bg-*` classes, or you can add `.progress-bar--on-light`. This replaces the spec sheet's paper/ink rule.
 
 ## Spec sheets — `spec-sheets/`
 
@@ -48,4 +48,4 @@ The spec text below is copied from each sheet.
 | `ripple@2x.png` | Expanding concentric rings. Appears on rain impact and network propagation events. Fades out as it expands. | `ripple.svg` |
 | `trust-edge@2x.png` | Directed connection between nodes. Arrow shows endorsement direction. Width scales with weight. Particles flow along path. | None (build in code) |
 | `sybil-split@2x.png` | Single large circle splitting into many small ones. Visualizes the futility of creating fake accounts to game the system. | `sybil-split.svg`, use wherever Sybil attacks or Sybil resistance come up |
-| `progress-bar@2x.png` | Full-width bar at the bottom of every frame. Shows playback position. Uses paper/ink color depending on background. | None (build in code). Visual reference: `examples/progress-bar.svg` |
+| `progress-bar@2x.png` | Full-width bar at the bottom of every frame. Shows playback position. Uses paper/ink color depending on background. | `.progress-bar` in `tokens/progress.css`. Visual reference: `examples/progress-bar.svg` |

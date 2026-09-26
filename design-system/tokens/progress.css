@@ -1,0 +1,17 @@
+:root {
+  --progress-height: 6px; --progress-radius: 3px;
+  --progress-track: rgba(255, 255, 255, 0.15);
+  --progress-fill: var(--color-rose);
+  --progress-glow: 0 0 8px 1px rgba(var(--color-rose-rgb), 0.4);
+  --progress-track-on-light: rgba(var(--color-ink-rgb), 0.15);
+  --progress-fill-on-light: var(--color-ink);
+  --progress-glow-on-light: none;
+}
+/* Usage: <div class="progress-bar" style="--progress: 0.6"></div> (0 to 1) */
+.progress-bar { position: relative; width: 100%; height: var(--progress-height); border-radius: var(--progress-radius); background: var(--progress-track); }
+.progress-bar::after { content: ''; position: absolute; inset: 0 auto 0 0; width: calc(var(--progress, 0) * 100%); border-radius: inherit; background: var(--progress-fill); box-shadow: var(--progress-glow); }
+/* Rose is the default; switch to ink on light backgrounds */
+.progress-bar--on-light,
+:is(.bg-rose, .bg-white, .bg-rain, .bg-amber, .bg-cloud, .bg-gradient-rose, .bg-gradient-rain-to-amber, .bg-frosted-rose, .bg-frosted-white, .bg-beat-rain, .bg-beat-amber, .bg-beat-paper) .progress-bar {
+  --progress-track: var(--progress-track-on-light); --progress-fill: var(--progress-fill-on-light); --progress-glow: var(--progress-glow-on-light);
+}
