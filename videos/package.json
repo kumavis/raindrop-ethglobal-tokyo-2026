@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "postinstall": "playwright install chromium",
-    "render": "npm run render:mission-first && npm run render:protocol-first && npm run render:dao-first",
+    "render": "npm run render:mission-first && npm run render:protocol-first && npm run render:dao-first && npm run render:slime-first",
     "render:mission-first": "node render-videos.mjs --out-dir dist/mission-first src/mission-first/video.html",
     "render:protocol-first": "node render-videos.mjs --out-dir dist/protocol-first src/protocol-first/video.html",
-    "render:dao-first": "node render-videos.mjs --out-dir dist/dao-first src/dao-first/video.html"
+    "render:dao-first": "node render-videos.mjs --out-dir dist/dao-first src/dao-first/video.html",
+    "render:slime-first": "node render-videos.mjs --out-dir dist/slime-first src/slime-first/video.html"
   },
   "devDependencies": {
     "playwright": "^1.55.0"
