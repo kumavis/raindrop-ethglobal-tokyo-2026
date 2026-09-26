@@ -33,8 +33,10 @@ Buttons, tags, cards and motifs in the frosted-glass style. The CSS equivalents 
 | Glass circle, token | `glass-circle-token.svg` | 56×56 | 98×98 | Token motif |
 | Cloud icon | `cloud-icon.svg` | 220×140 | 220×140 | Cloud motif |
 | Cloud icon, outline | `cloud-icon-outline.svg` | 231×154 | 231×154 | Cloud motif, line variant |
+| Network node | `network-node@2x.png` (PNG only) | 62×104 | 231×294 @2x | Person/node in the social-graph diagrams |
 
 **Usage notes**
 
 - **Export canvas includes the glow.** The glass exports are padded (36px each side; 21–22px for the token) so the outer glow isn't clipped. Position by the body size, not the canvas: centre the SVG on the element, or offset it by the padding.
-- **No label text is baked in.** Buttons, tags and cards are blank shapes. Put the label in code over the SVG, using the `button` or `body-small` typography tokens.
+- **Network node is a stopgap.** It's PNG-only and has the name "ADA" baked in, so it can't be reused for other nodes as-is. Replace it with a textless SVG export and render the name in code.
+- **No label text is baked in** (except the network node). Buttons, tags and cards are blank shapes. Put the label in code over the SVG, using the `button` or `body-small` typography tokens.
