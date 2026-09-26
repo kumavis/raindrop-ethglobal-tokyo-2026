@@ -3,7 +3,7 @@
 //
 // Setup (once):  npm install   (from the repo root; also fetches Chromium)
 //                (ffmpeg must be on your PATH — see README.md)
-// Usage:         node render-videos.mjs film.html [more.html ...]
+// Usage:         node render-videos.mjs [--out-dir dir] film.html [more.html ...]
 //
 // Output goes next to each source file (film.html -> film.mp4).
 // Environment overrides:
@@ -12,16 +12,21 @@
 //   CRF=18         x264 quality (lower = better/bigger)
 //   PRESET=medium  x264 preset
 //   BLOCK_FONTS=1  skip Google Fonts and use locally installed fonts instead
-//   OUT_DIR=dir    write MP4s here instead of next to the sources
+//   OUT_DIR=dir    write MP4s here instead of next to the sources (same as --out-dir)
 
 import { spawn, spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import { pathToFileURL } from 'url';
 import { chromium } from 'playwright';
 
-const files = process.argv.slice(2);
+const args = process.argv.slice(2);
+let outDirArg;
+const o = args.indexOf('--out-dir');
+if (o !== -1) [, outDirArg] = args.splice(o, 2);
+const files = args;
 if (!files.length) {
-  console.log('usage: node render-videos.mjs film.html [more.html ...]');
+  console.log('usage: node render-videos.mjs [--out-dir dir] film.html [more.html ...]');
   process.exit(1);
 }
 if (spawnSync('ffmpeg', ['-version']).error) {
@@ -42,7 +47,7 @@ for (const src of files) {
   const dur = +process.env.DURATION || (m ? +m[1] : NaN);
   if (!dur) { console.error(`skip: no DUR in ${src} (set DURATION=seconds)`); continue; }
   const N = Math.round(dur * FPS);
-  const outDir = process.env.OUT_DIR || path.dirname(src);
+  const outDir = outDirArg || process.env.OUT_DIR || path.dirname(src);
   fs.mkdirSync(outDir, { recursive: true });
   const out = path.join(outDir, path.basename(src, path.extname(src)) + '.mp4');
   console.log(`==> ${src}`);
@@ -55,7 +60,7 @@ for (const src of files) {
     const q = []; window.requestAnimationFrame = cb => (q.push(cb), q.length);
     window.__frame = ms => { const c = q.splice(0); c.forEach(f => f(ms)); };
   });
-  await page.goto('file://' + path.resolve(src), { waitUntil: 'load' });
+  await page.goto(pathToFileURL(path.resolve(src)).href, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
 
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',

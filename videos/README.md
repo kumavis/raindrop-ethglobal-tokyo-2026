@@ -51,7 +51,15 @@ node render-videos.mjs path/to/film.html   # writes film.mp4 next to the source
 | `BLOCK_FONTS` | unset          | `1` skips Google Fonts, uses local fonts        |
 | `OUT_DIR`     | source dir     | Where MP4s are written                          |
 
-Example quick preview: `DURATION=5 npm run render:mission-first`
+Example quick preview:
+
+```bash
+DURATION=5 npm run render:mission-first                          # macOS / Linux
+$env:DURATION=5; npm run render:mission-first                    # Windows PowerShell
+set DURATION=5 && npm run render:mission-first                   # Windows cmd
+```
+
+In PowerShell, `$env:` variables persist for the rest of the session; clear with `Remove-Item Env:DURATION`.
 
 ## How it works
 
