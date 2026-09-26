@@ -1,0 +1,36 @@
+:root {
+  --bg-dark: #141A28; --bg-ink: #0F2438; --bg-rose: #E0C8D1; --bg-white: #F7F8F9;
+  --bg-rain: var(--color-rain); --bg-amber: var(--color-amber);
+  --bg-dark-rgb: 20,26,40; --bg-ink-rgb: 15,36,56; --bg-rose-rgb: 224,200,209; --bg-white-rgb: 247,248,249;
+}
+.bg-dark  { background-color: var(--bg-dark);  color: var(--color-paper); }
+.bg-ink   { background-color: var(--bg-ink);   color: var(--color-paper); }
+.bg-rose  { background-color: var(--bg-rose);  color: var(--color-ink); }
+.bg-white { background-color: var(--bg-white); color: var(--color-ink); }
+.bg-rain  { background-color: var(--bg-rain);  color: var(--color-ink); }
+.bg-amber { background-color: var(--bg-amber); color: var(--color-ink); }
+.bg-gradient-dark { background: radial-gradient(ellipse at 30% 30%, #1E2840 0%, var(--bg-dark) 70%); color: var(--color-paper); }
+.bg-gradient-ink  { background: radial-gradient(ellipse at 40% 40%, #1A3A55 0%, var(--bg-ink) 70%); color: var(--color-paper); }
+.bg-gradient-rose { background: radial-gradient(ellipse at 50% 50%, #EDD5DE 0%, var(--bg-rose) 70%); color: var(--color-ink); }
+.bg-gradient-rain-to-amber { background: linear-gradient(135deg, var(--color-rain) 0%, var(--color-amber) 100%); color: var(--color-ink); }
+.bg-gradient-ink-to-rain { background: linear-gradient(180deg, var(--bg-ink) 0%, rgba(var(--color-rain-rgb), 0.3) 100%); color: var(--color-paper); }
+.bg-frosted-dark { background-color: var(--bg-dark); position: relative; overflow: hidden; }
+.bg-frosted-dark::before { content: ''; position: absolute; inset: 0; background: radial-gradient(280px circle at 15% 15%, rgba(51,102,128,0.12), transparent), radial-gradient(250px circle at 60% 65%, rgba(89,77,107,0.10), transparent), radial-gradient(200px circle at 70% 20%, rgba(38,89,115,0.08), transparent), radial-gradient(220px circle at 25% 70%, rgba(140,107,128,0.06), transparent); filter: blur(60px); z-index: 0; }
+.bg-frosted-dark::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(var(--bg-dark-rgb),0.1) 0%, rgba(var(--bg-dark-rgb),0.35) 100%); z-index: 1; }
+.bg-frosted-dark > * { position: relative; z-index: 2; }
+.bg-frosted-ink { background-color: var(--bg-ink); position: relative; overflow: hidden; }
+.bg-frosted-ink::before { content: ''; position: absolute; inset: 0; background: radial-gradient(300px circle at 12% 20%, rgba(46,97,128,0.14), transparent), radial-gradient(240px circle at 65% 60%, rgba(64,128,140,0.10), transparent), radial-gradient(220px circle at 55% 12%, rgba(115,89,122,0.08), transparent), radial-gradient(200px circle at 20% 75%, rgba(38,107,122,0.07), transparent); filter: blur(60px); z-index: 0; }
+.bg-frosted-ink::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(var(--bg-ink-rgb),0.1) 0%, rgba(var(--bg-ink-rgb),0.30) 100%); z-index: 1; }
+.bg-frosted-ink > * { position: relative; z-index: 2; }
+.bg-frosted-rose { background-color: var(--bg-rose); position: relative; overflow: hidden; }
+.bg-frosted-rose::before { content: ''; position: absolute; inset: 0; background: radial-gradient(300px circle at 15% 15%, rgba(242,191,209,0.20), transparent), radial-gradient(260px circle at 65% 65%, rgba(199,209,235,0.15), transparent), radial-gradient(220px circle at 70% 15%, rgba(217,184,217,0.12), transparent), radial-gradient(240px circle at 20% 75%, rgba(235,217,199,0.10), transparent); filter: blur(60px); z-index: 0; }
+.bg-frosted-rose::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(var(--bg-rose-rgb),0.1) 0%, rgba(var(--bg-rose-rgb),0.25) 100%); z-index: 1; }
+.bg-frosted-rose > * { position: relative; z-index: 2; }
+.bg-frosted-white { background-color: var(--bg-white); position: relative; overflow: hidden; }
+.bg-frosted-white::before { content: ''; position: absolute; inset: 0; background: radial-gradient(320px circle at 12% 20%, rgba(209,230,245,0.20), transparent), radial-gradient(280px circle at 68% 65%, rgba(235,204,219,0.15), transparent), radial-gradient(240px circle at 65% 12%, rgba(199,230,217,0.12), transparent), radial-gradient(200px circle at 15% 72%, rgba(224,209,235,0.10), transparent); filter: blur(60px); z-index: 0; }
+.bg-frosted-white::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(var(--bg-white-rgb),0.1) 0%, rgba(var(--bg-white-rgb),0.30) 100%); z-index: 1; }
+.bg-frosted-white > * { position: relative; z-index: 2; }
+.bg-beat-rain  { background-color: var(--color-rain);  color: var(--color-ink); }
+.bg-beat-ink   { background-color: var(--color-ink);   color: var(--color-paper); }
+.bg-beat-amber { background-color: var(--color-amber); color: var(--color-ink); }
+.bg-beat-paper { background-color: var(--color-paper); color: var(--color-ink); }

@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Albert+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap');
+:root {
+  --font-display: 'Cormorant', 'Libre Bodoni', 'Playfair Display', Georgia, serif;
+  --font-body:    'Albert Sans', 'Inter', 'Helvetica Neue', Helvetica, sans-serif;
+  --display-hero-family: var(--font-display); --display-hero-weight: 700; --display-hero-size: 120px; --display-hero-line-height: 0.95; --display-hero-letter-spacing: -0.02em;
+  --display-heading-family: var(--font-display); --display-heading-weight: 600; --display-heading-size: 100px; --display-heading-line-height: 0.95; --display-heading-letter-spacing: -0.045em;
+  --display-subtitle-family: var(--font-body); --display-subtitle-weight: 500; --display-subtitle-size: 58px; --display-subtitle-line-height: 1.2; --display-subtitle-letter-spacing: -0.01em;
+  --display-title-family: var(--font-display); --display-title-weight: 600; --display-title-size: 48px; --display-title-line-height: auto; --display-title-letter-spacing: 0;
+  --body-large-family: var(--font-body); --body-large-weight: 400; --body-large-size: 34px; --body-large-line-height: 1.5; --body-large-letter-spacing: 0.02em;
+  --body-default-family: var(--font-body); --body-default-weight: 400; --body-default-size: 18px; --body-default-line-height: 1.4; --body-default-letter-spacing: 0;
+  --body-small-family: var(--font-body); --body-small-weight: 400; --body-small-size: 14px; --body-small-line-height: 1.5; --body-small-letter-spacing: 0;
+  --chrome-family: var(--font-body); --chrome-weight: 500; --chrome-size: 22px; --chrome-line-height: auto; --chrome-letter-spacing: 0.14em;
+  --section-label-family: var(--font-body); --section-label-weight: 500; --section-label-size: 28px; --section-label-line-height: auto; --section-label-letter-spacing: 0.14em;
+  --button-family: var(--font-display); --button-weight: 600; --button-size: 18px; --button-line-height: auto; --button-letter-spacing: 0;
+  --emphasis-family: var(--font-body); --emphasis-weight: 400; --emphasis-size: 130px; --emphasis-line-height: 0.95; --emphasis-letter-spacing: -0.01em;
+}
+.display-hero { font-family: var(--display-hero-family); font-weight: var(--display-hero-weight); font-size: var(--display-hero-size); line-height: var(--display-hero-line-height); letter-spacing: var(--display-hero-letter-spacing); }
+.display-heading { font-family: var(--display-heading-family); font-weight: var(--display-heading-weight); font-size: var(--display-heading-size); line-height: var(--display-heading-line-height); letter-spacing: var(--display-heading-letter-spacing); }
+.display-subtitle { font-family: var(--display-subtitle-family); font-weight: var(--display-subtitle-weight); font-size: var(--display-subtitle-size); line-height: var(--display-subtitle-line-height); letter-spacing: var(--display-subtitle-letter-spacing); }
+.body-large { font-family: var(--body-large-family); font-weight: var(--body-large-weight); font-size: var(--body-large-size); line-height: var(--body-large-line-height); letter-spacing: var(--body-large-letter-spacing); }
+.body-default { font-family: var(--body-default-family); font-weight: var(--body-default-weight); font-size: var(--body-default-size); line-height: var(--body-default-line-height); letter-spacing: var(--body-default-letter-spacing); }
+.body-small { font-family: var(--body-small-family); font-weight: var(--body-small-weight); font-size: var(--body-small-size); line-height: var(--body-small-line-height); letter-spacing: var(--body-small-letter-spacing); }
+.chrome { font-family: var(--chrome-family); font-weight: var(--chrome-weight); font-size: var(--chrome-size); line-height: var(--chrome-line-height); letter-spacing: var(--chrome-letter-spacing); text-transform: uppercase; }
+.section-label { font-family: var(--section-label-family); font-weight: var(--section-label-weight); font-size: var(--section-label-size); line-height: var(--section-label-line-height); letter-spacing: var(--section-label-letter-spacing); text-transform: uppercase; }

@@ -1,0 +1,25 @@
+:root {
+  --color-ink:       #1A3B52;
+  --color-paper:     #DCF0FA;
+  --color-rain:      #6AB8D8;
+  --color-amber:     #8DD4B7;
+  --color-rose:      #E8B5C7;
+  --color-rose-mute: #F0D1DE;
+  --bg-primary:      var(--color-ink);
+  --bg-secondary:    var(--color-paper);
+  --text-primary:    var(--color-paper);
+  --text-on-light:   var(--color-ink);
+  --accent:          var(--color-rain);
+  --highlight:       var(--color-amber);
+  --color-ink-rgb:   26, 59, 82;
+  --color-paper-rgb: 220, 240, 250;
+  --color-rain-rgb:  106, 184, 216;
+  --color-amber-rgb: 141, 212, 183;
+  --color-rose-rgb:  232, 181, 199;
+  --iridescent-0:    var(--color-rain);
+  --iridescent-20:   var(--color-rose);
+  --iridescent-40:   #88E0E8;
+  --iridescent-60:   var(--color-amber);
+  --iridescent-80:   #B8A9D4;
+  --iridescent-100:  var(--color-rain);
+}

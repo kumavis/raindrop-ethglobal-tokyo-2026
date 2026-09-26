@@ -1,0 +1,16 @@
+:root {
+  --glass-opacity-matte: 0.9; --glass-opacity-translucent: 0.45;
+  --glass-blur-background: 20px; --glass-blur-orb: 65px;
+  --glass-shadow-edge-glow:    inset 0 0 24px -4px rgba(var(--color-paper-rgb), 0.25);
+  --glass-shadow-rim-light:    inset 0 -10px 22px rgba(255, 255, 255, 0.3);
+  --glass-shadow-depth:        inset 0 10px 18px rgba(var(--color-ink-rgb), 0.08);
+  --glass-shadow-rose-refract: inset 0 6px 30px rgba(var(--color-rose-rgb), 0.08);
+  --glass-shadow-outer-glow:   0 0 36px rgba(var(--color-rain-rgb), 0.2);
+  --glass-shadow-ambient-halo: 0 0 48px rgba(var(--color-rose-rgb), 0.06);
+  --glass-shadow-full: var(--glass-shadow-edge-glow), var(--glass-shadow-rim-light), var(--glass-shadow-depth), var(--glass-shadow-rose-refract), var(--glass-shadow-outer-glow), var(--glass-shadow-ambient-halo);
+  --glass-border-iridescent: linear-gradient(135deg, var(--iridescent-0) 0%, var(--iridescent-20) 20%, var(--iridescent-40) 40%, var(--iridescent-60) 60%, var(--iridescent-80) 80%, var(--iridescent-100) 100%);
+}
+.glass-frosted { background: rgba(var(--color-rain-rgb), var(--glass-opacity-translucent)); backdrop-filter: blur(var(--glass-blur-background)); -webkit-backdrop-filter: blur(var(--glass-blur-background)); box-shadow: var(--glass-shadow-full); border: 1px solid rgba(255,255,255,0.15); }
+.glass-matte { background: rgba(var(--color-paper-rgb), var(--glass-opacity-matte)); backdrop-filter: blur(var(--glass-blur-background)); -webkit-backdrop-filter: blur(var(--glass-blur-background)); box-shadow: var(--glass-shadow-full); border: 1px solid rgba(255,255,255,0.2); }
+.glass-iridescent-border { border: 2px solid transparent; background-clip: padding-box; position: relative; }
+.glass-iridescent-border::before { content: ''; position: absolute; inset: -2px; border-radius: inherit; background: var(--glass-border-iridescent); z-index: -1; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; -webkit-mask-composite: xor; padding: 2px; }
