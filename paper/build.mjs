@@ -141,6 +141,8 @@ function render(source) {
     .map((t) => `<li class="toc-${t.depth}"><a href="#${t.id}">${t.text.replace(/<a[^>]*>|<\/a>/g, '')}</a></li>`)
     .join('\n');
 
+  // The name is a lowercase wordmark in the hero and tab title; the paper's prose keeps "Raindrop".
+  title = title.replace(/^Raindrop\b/, 'raindrop');
   const [heading, subtitle] = title.split(/:\s*(.+)/);
   return { title, heading, subtitle, body, tocHtml };
 }
