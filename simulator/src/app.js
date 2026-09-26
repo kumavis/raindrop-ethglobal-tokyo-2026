@@ -58,18 +58,18 @@ export function createApp({ scenarios = SCENARIOS } = {}) {
       emit('compiled', { reason: 'scenario' });
     },
 
-    /** Changes protocol parameters and re-derives the whole timeline (keeping extra rounds). */
-    setParams(patch) {
+    /** Changes protocol parameters and re-derives the whole timeline (keeping extra rounds, unless told not to). */
+    setParams(patch, { keepExtraRounds = true } = {}) {
       app.params = { ...app.params, ...patch };
-      app.compiled = compile(app.scenario, app.params, { extraRounds: extraRounds() });
+      app.compiled = compile(app.scenario, app.params, { extraRounds: keepExtraRounds ? extraRounds() : 0 });
       emit('params', patch);
       emit('compiled', { reason: 'params' });
     },
 
-    /** Back to the loaded scenario's parameter defaults. */
-    resetParams() {
+    /** Back to the loaded scenario's parameter defaults; `keepExtraRounds: false` also drops the extra rain rounds. */
+    resetParams({ keepExtraRounds = true } = {}) {
       const defaults = { ...DEFAULT_PARAMS, ...app.scenario.params };
-      app.setParams(defaults);
+      app.setParams(defaults, { keepExtraRounds });
     },
 
     setView(patch) {

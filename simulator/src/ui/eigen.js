@@ -1,6 +1,8 @@
-// EigenTrust panel: the inner loop made visible. During a rain step it shows the update
-// rule, the current phase, iteration k / K, the L1 residual against ε, a log-scale
-// residual sparkline and whether the run converged. Collapses to a pill on mobile.
+// EigenTrust panel: the inner loop made visible. Hidden until opened from the (i) next to
+// the Step-by-step | Instant toggle. During a rain step it shows the update rule, the
+// current phase, iteration k / K, the L1 residual against ε, a log-scale residual
+// sparkline and whether the run converged; between rains, EigenTrust on the current graph
+// (what a rain now would use).
 
 import { h, setAttr, setClass, setStyle, setText } from './dom.js';
 import { icon } from './icons.js';
@@ -19,13 +21,9 @@ export function createEigen(ctx) {
   const { app, player } = ctx;
 
   const modeTag = h('span.et-mode');
-  const pinBtn = h('button.btn.icon-btn.et-pin', {
-    type: 'button', 'aria-pressed': 'false', title: 'Keep this panel visible between rain rounds',
-    onclick: () => { pinned = !pinned; pinBtn.setAttribute('aria-pressed', String(pinned)); },
-  }, icon('pin'));
-  const collapseBtn = h('button.btn.icon-btn.et-collapse', {
-    type: 'button', 'aria-label': 'Collapse', onclick: () => ctx.close('eigen'),
-  }, icon('chevronDown'));
+  const closeBtn = h('button.btn.icon-btn.et-close', {
+    type: 'button', 'aria-label': 'Close', title: 'Close', onclick: () => ctx.close('eigen'),
+  }, icon('close'));
 
   const alphaA = h('span.et-a');
   const alphaB = h('span.et-a');
@@ -62,8 +60,8 @@ export function createEigen(ctx) {
   // A one-iteration run with Δ = 0 has no curve to draw, so say why instead.
   const fixedNote = h('p.et-fixed');
 
-  const summary = h('button.et-summary', { type: 'button', onclick: () => ctx.toggle('eigen') },
-    h('span.et-dot'), h('span.et-sum-label', { text: 'EigenTrust' }), h('span.et-sum-text'), icon('chevronDown', 'et-sum-chev'));
+  // One-line result, shown in instant mode in place of the per-iteration rows.
+  const summary = h('div.et-summary', {}, h('span.et-dot'), h('span.et-sum-text'));
   const sumText = summary.querySelector('.et-sum-text');
 
   const details = h('div.et-details', {},
@@ -73,10 +71,9 @@ export function createEigen(ctx) {
     sparkWrap, fixedNote);
 
   const el = h('section.card.eigen', { 'aria-label': 'EigenTrust', 'data-panel': 'eigen' },
-    h('div.et-head', {}, h('span.eyebrow', {}, 'EigenTrust'), modeTag, h('span.grow'), pinBtn, collapseBtn),
-    summary, details);
+    h('div.et-head', {}, h('span.eyebrow', {}, 'EigenTrust'), modeTag, h('span.grow'), closeBtn),
+    details, summary);
 
-  let pinned = false;
   let runKey = '';
   let run = null; // { residuals, K, converged, preview }
   let frameKey = '';
@@ -84,7 +81,6 @@ export function createEigen(ctx) {
   function currentRun() {
     const step = player.step;
     if (step?.type === 'rain') return { detail: step.detail, preview: false, key: `${ctx.version}|${step.index}` };
-    if (!pinned || !app.compiled) return null;
     return { detail: scoresAt(app.compiled, player.cursor), preview: true, key: `${ctx.version}|p${player.cursor}` };
   }
 
@@ -113,11 +109,8 @@ export function createEigen(ctx) {
   }
 
   function update() {
+    if (!ctx.isOpen('eigen')) return;
     const r = currentRun();
-    const visible = !!r;
-    setClass(el, 'visible', visible);
-    ctx.setEigenVisible(visible);
-    if (!visible) return;
     // rebuild on a new run, or when the sparkline box was resized (mobile expand, rotation)
     if (r.key !== runKey || resized) {
       resized = false;
@@ -142,9 +135,9 @@ export function createEigen(ctx) {
     setText(alphaB, (1 - a).toFixed(2));
 
     let label;
-    // The pinned preview is EigenTrust on the graph as it stands; a trust change or a
-    // newcomer before the next rain would still change it.
-    if (r.preview) label = 'Scores for the current graph (if it rained now)';
+    // Between rains the panel shows EigenTrust on the graph as it stands; a trust change
+    // or a newcomer before the next rain would still change it.
+    if (r.preview) label = 'If it rained now, on the current graph';
     else if (idle && instant) label = `Ready: one instantaneous calculation (${run.K} iteration${run.K === 1 ? '' : 's'})`;
     else if (idle) label = player.playing ? 'Starting…' : 'Ready: press play or → to iterate';
     // "Iteration k / K" is already on its own row, so say what the step computes instead
@@ -179,12 +172,10 @@ export function createEigen(ctx) {
     setAttr(dot, 'cy', pk ? pk.y.toFixed(1) : '-10');
 
     const its = `${run.K} iteration${run.K === 1 ? '' : 's'}`;
+    // (the summary shows only in instant mode during a rain: ready, or already done)
     const tail = idle && instant && !r.preview
       ? `ready: ${its} in one go`
-      : done
-      ? (run.converged ? (ctx.mobile ? `✓ ${its}` : `converged in ${its}`) : `stopped at ${run.K} (max)`)
-      : `${ctx.mobile ? '' : 'iteration '}${k}/${run.K}${res !== null ? ' · ‖Δ‖₁ ' + fmtSci(res) : ''}`;
-    // the mode toggle right below already says 'Instant', so the pill needs only the result
+      : run.converged ? `converged in ${its}` : `stopped at ${run.K} (max)`;
     setText(sumText, tail);
     setAttr(summary, 'data-state', verdict);
   }

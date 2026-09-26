@@ -50,9 +50,9 @@ The **EigenTrust: Step-by-step / Instant** toggle picks how a rain round plays:
 
 In step mode, step forward (→) walks EigenTrust one iteration at a time. A rain right after
 another rain runs on the same graph, so its inner loop plays faster (about 1.2 s for all
-iterations); every iteration is still a stop for → and ←. The caption chip names the phase:
-`ROUND 2 › EIGENTRUST 3/17`, then `› RAIN`. The `rain` phase mints `ΔS` and credits it: every
-balance grows by `g_i·ΔS` in one smooth ease, and the EigenTrust panel reads
+iterations); every iteration is still a stop for → and ←. The step chip above the timeline
+names the phase: `ROUND 2 › EIGENTRUST 3/17`, then `› RAIN`. The `rain` phase mints `ΔS` and
+credits it: every balance grows by `g_i·ΔS` in one smooth ease, and the EigenTrust panel reads
 "Mint +ΔS · credited in proportion to trust".
 
 Switching mode or changing a parameter keeps your place: the same phase and iteration (an
@@ -84,16 +84,20 @@ would depend on g₀ and on where the iteration stops (paper §7 takes α ∈ (0
 
 - **Top bar:** scenario picker (grouped Basics → Dynamics → Attacks & limits → Sandbox),
   a "What to watch" card, stats (Round, Supply, Last mint, α), Legend, Parameters.
-- **Playback bar:** restart, step back, play/pause, step forward, speed (0.5×–4×),
-  EigenTrust mode toggle, and a timeline scrubber with one segment per step, colored by type
-  (rain = blue, trust change = amber, join = mint, transfer = gold, note = grey; extra
-  rounds after the script are thinner). Click or drag the scrubber to seek.
-- **EigenTrust panel** (during rain; can be pinned): the formula with α filled in,
+- **Playback bar:** the step chip (`ROUND 2 › EIGENTRUST 3/17`) above a timeline scrubber
+  with one segment per step, colored by type (rain = blue, trust change = amber, join = mint,
+  transfer = gold, note = grey; extra rounds after the script are thinner); click or drag it
+  to seek. Below: rewind to the start, step back, play/pause, step forward, speed (0.5×–4×),
+  and the EigenTrust mode toggle with an (i) that opens the EigenTrust panel. The caption
+  above the bar is the step's subtitle.
+- **EigenTrust panel** (hidden until opened from the (i)): the formula with α filled in,
   iteration k / K, residual ‖Δ‖₁ vs ε, a log-scale residual sparkline, and converged /
-  hit-max badge. Pinned between rains, it shows the scores for the current graph.
+  hit-max badge. Between rains it shows EigenTrust on the current graph (what a rain now would
+  use; a trust change or newcomer before the next rain would still change it).
 - **Parameters:** α; issuance as `% of supply` or a `Fixed amount`; ε (log slider);
-  max iterations; starting vector (`b` or uniform); reset to the scenario's defaults.
-  View options: size by balance/share, halos, labels, keep raining after the script.
+  max iterations; starting vector (`b` or uniform); Reset (the scenario's defaults, drops
+  any extra rain rounds and rewinds the timeline to the start). View options: size by balance/share, halos, labels,
+  keep raining after the script.
 - **Inspector** (tap/click a node): balance (live while the rain is credited), share bᵢ, trust gᵢ,
   gain/dilution (gᵢ − bᵢ in percentage points), what the next rain pays it (looking past any
   trust changes or newcomers before that rain), total received, endorses / endorsed-by lists,
@@ -108,18 +112,20 @@ Keyboard (ignored while typing):
 |---|---|
 | Space / K | play / pause |
 | ← / → | step back / forward (per EigenTrust iteration in step mode) |
-| Home | restart |
+| Home | rewind to the start |
 | E | toggle EigenTrust step-by-step / instant |
 | + / − | speed up / down |
 | P / S / L | parameters / scenarios / legend |
 | F | fit the graph to the view |
-| Esc | close the top popover, then deselect |
+| Esc | close the top popover or panel, then deselect |
 
 Desktop (≥ 900 px) docks the parameters drawer on the right. It starts open at ≥ 1200 px.
-The left column holds the what-to-watch card, the inspector and the EigenTrust panel, and the
-camera keeps the graph clear of both columns. Mobile (< 900 px) uses bottom sheets, one at a
-time and at most 60% of the screen tall (side sheets on landscape phones), and an EigenTrust
-pill above the controls.
+The left column holds the what-to-watch card, the inspector and the EigenTrust panel (when
+open), and the camera keeps the graph clear of both columns. Mobile (< 900 px) uses bottom
+sheets, one at a time and at most 60% of the screen tall (side sheets on landscape phones),
+and opens the EigenTrust panel just above the controls (at the left, beside the graph, on
+landscape phones); it too shares the screen with one sheet or card at a time. Landscape
+phones fold the playback bar into one row, with the step chip over the scrubber.
 
 ## Architecture
 
@@ -208,8 +214,11 @@ events: [
 ],
 ```
 
-With **keep raining** on (the default), playback continues with extra rain rounds after
-the script ends, up to 500. At that cap the play button turns into Replay.
+Playback pauses where the script ends ("That's the end of the scenario"). With **keep
+raining** on (the default), pressing play continues with extra rain rounds, up to 500; at
+that cap the play button turns into Replay. With it off, play replays from the start (or
+plays extra rounds already added). At the script's end, → steps into the next extra round's
+first EigenTrust stop.
 
 Tokens enter only through the rain (paper §3.7, §4.3): newcomers join with `balance: 0` and
 get tokens by endorsement, gift or purchase (`transfer`). `check-scenarios.mjs` fails any

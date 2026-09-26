@@ -14,8 +14,9 @@ const MIN_ALPHA = 0.01;
 export function createParams(ctx) {
   const { app } = ctx;
   const resetBtn = h('button.btn.ghost.small.reset-btn', {
-    type: 'button', title: 'Reset parameters to this scenario\'s defaults',
-    onclick: () => app.resetParams(),
+    type: 'button', title: 'Reset parameters to this scenario\'s defaults and rewind the timeline to the start',
+    // a full reset: default parameters, no extra rain rounds, back at the first step
+    onclick: () => { app.resetParams({ keepExtraRounds: false }); ctx.player.restart(); },
   }, icon('reset'), h('span', { text: 'Reset' }));
   const p = panel(ctx, { name: 'params', title: 'Parameters', eyebrow: 'Protocol & view' });
   p.el.setAttribute('role', 'complementary');
@@ -112,13 +113,13 @@ export function createParams(ctx) {
     h('p.help', { text: 'Balance: disks grow as it rains. Share: disk area is each account\'s fraction of supply.' }));
   const halos = switchRow({ label: 'Trust halos', help: 'Halo area = trust score × supply. Bigger than the disk means gaining share.', onChange: (v) => app.setView({ showHalos: v }) });
   const labels = switchRow({ label: 'Labels', help: 'Names and balances under every node.', onChange: (v) => app.setView({ showLabels: v }) });
-  const keep = switchRow({ label: 'Keep raining', help: 'After the script ends, keep playing extra rain rounds.', onChange: (v) => app.setView({ keepRaining: v }) });
+  const keep = switchRow({ label: 'Keep raining', help: 'Playback pauses when the script ends; with this on, play continues with extra rain rounds.', onChange: (v) => app.setView({ keepRaining: v }) });
 
   const section = (title, ...rows) => h('div.section', {}, h('div.section-head', {}, h('span.eyebrow', { text: title })), ...rows);
   const shortcuts = h('details.shortcuts', {},
     h('summary', {}, icon('keyboard'), h('span', { text: 'Keyboard shortcuts' })),
     h('dl', {}, [
-      ['Space / K', 'Play / pause'], ['← →', 'Step back / forward'], ['Home', 'Restart'],
+      ['Space / K', 'Play / pause'], ['← →', 'Step back / forward'], ['Home', 'Rewind to start'],
       ['E', 'EigenTrust step-by-step / instant'], ['+ −', 'Speed'], ['F', 'Fit graph'],
       ['P', 'Parameters'], ['S', 'Scenarios'], ['L', 'Legend'], ['Esc', 'Close / deselect'],
     ].map(([k, v]) => [h('dt', {}, h('kbd', { text: k })), h('dd', { text: v })])));

@@ -76,6 +76,12 @@ export function createPlayer(app) {
         target = null;
         return;
       }
+      // Pause where the scenario's script ends; playing again continues with extra rain
+      // rounds (when 'Keep raining' is on or some were already added).
+      if (playing && cursor === app.compiled.scriptLength) {
+        playing = false;
+        return;
+      }
       if (playing) gap = GAP;
     }
   }
@@ -85,7 +91,11 @@ export function createPlayer(app) {
     const s = stops.find((x) => x > time + EPS && x < duration - EPS);
     if (s !== undefined) return { cursor, time: s };
     if (cursor < steps().length) return { cursor: cursor + 1, time: 0 };
-    if (extendAtEnd()) return { cursor: cursor + 1, time: 0 };
+    // the new round is the step at `cursor`: aim at its first stop, as play would
+    if (extendAtEnd()) {
+      recompute();
+      return nextStopFrom();
+    }
     return null;
   }
 
@@ -165,6 +175,8 @@ export function createPlayer(app) {
     get time() { return time; },
     get playing() { return playing; },
     get atEnd() { return cursor >= steps().length; },
+    /** Parked where the scenario's script ends (extra rain rounds may follow). */
+    get atScriptEnd() { return !!app.compiled && cursor === app.compiled.scriptLength && time <= EPS; },
     /** At the end with nowhere to go: 'Keep raining' is off or the extra-round cap is hit. */
     get ended() { return cursor >= steps().length && !(app.view.keepRaining && app.canExtend); },
     get step() { return stepAt(cursor); },

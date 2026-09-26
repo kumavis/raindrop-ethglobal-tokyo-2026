@@ -1,6 +1,6 @@
-// Bottom dock: film-style caption, the timeline scrubber (one colored segment per step,
-// extra rain rounds hatched) and the transport controls, including the headline
-// EigenTrust "Step-by-step | Instant" toggle.
+// Bottom dock: film-style caption, then the playback bar: the step chip, the timeline
+// scrubber (one colored segment per step, extra rain rounds hatched) and the transport
+// controls, including the headline EigenTrust "Step-by-step | Instant" toggle.
 
 import { h, setAttr, setClass, setHTML, setStyle, setText } from './dom.js';
 import { icon, iconSVG } from './icons.js';
@@ -13,14 +13,18 @@ export const SPEEDS = [0.5, 1, 2, 4];
 export function createPlayback(ctx) {
   const { app, player } = ctx;
 
-  // ---- caption ----
-  // The chip names the step and, during a rain, where in the round we are: the inner
-  // EigenTrust loop, then the rain (aria-hidden: it changes every iteration).
+  // ---- caption + step chip ----
+  // The chip (in the bar, above the scrubber) names the step and, during a rain, where in
+  // the round we are: the inner EigenTrust loop, then the rain (aria-hidden: it changes
+  // every iteration). The caption above the bar is just the step's text, plus a hidden
+  // copy of the chip's label so screen readers still hear which step it is.
   const capKindText = h('span');
   const capPhase = h('span.cap-phase', { 'aria-hidden': 'true' });
-  const capKind = h('span.cap-kind', {}, capKindText, capPhase);
+  const capKind = h('span.cap-kind', { 'aria-hidden': 'true' }, capKindText, capPhase);
+  const barHead = h('div.bar-head', {}, capKind);
+  const capKindSr = h('span.sr-only');
   const capText = h('span.cap-text');
-  const caption = h('div.caption', { 'aria-live': 'polite' }, h('p.cap-inner', {}, capKind, capText));
+  const caption = h('div.caption', { 'aria-live': 'polite' }, h('p.cap-inner', {}, capKindSr, capText));
 
   // ---- scrubber ----
   const base = h('div.segs.segs-base');
@@ -38,7 +42,7 @@ export function createPlayback(ctx) {
 
   // ---- transport ----
   const btn = (name, label, key, onclick, cls = '') => h(`button.btn.icon-btn.tp-${name}${cls}`, { type: 'button', 'aria-label': label, title: `${label} (${key})`, onclick }, icon(name === 'play' ? 'play' : name));
-  const restartBtn = btn('restart', 'Restart', 'Home', () => player.restart());
+  const restartBtn = btn('restart', 'Rewind to start', 'Home', () => player.restart());
   const backBtn = btn('stepBack', 'Step back', '←', () => player.stepBack());
   const fwdBtn = btn('stepFwd', 'Step forward', '→', () => player.stepForward());
   const playBtn = h('button.btn.play-btn', { type: 'button', 'aria-label': 'Play', title: 'Play (Space)', onclick: () => ctx.togglePlay() });
@@ -47,13 +51,18 @@ export function createPlayback(ctx) {
     { value: 'step', label: 'Step-by-step', short: 'Steps', title: 'Animate each EigenTrust iteration (E)' },
     { value: 'instant', label: 'Instant', short: 'Instant', title: 'Compute EigenTrust in one go (E)' },
   ], (v) => app.setView({ eigenMode: v }), { cls: 'mode-seg', label: 'EigenTrust display' });
-  const modeWrap = h('div.mode', {}, h('span.mode-label', {}, h('span.mode-et', { text: 'EigenTrust' })), mode.el);
+  // The EigenTrust explainer panel stays hidden until asked for.
+  const eigenBtn = h('button.btn.icon-btn.mode-info', {
+    type: 'button', 'aria-pressed': 'false', 'aria-label': 'EigenTrust explainer', title: 'Show how EigenTrust computes the scores',
+    onclick: () => ctx.toggle('eigen'),
+  }, icon('info'));
+  const modeWrap = h('div.mode', {}, h('span.mode-label', {}, h('span.mode-et', { text: 'EigenTrust' }), h('span.mode-et-short', { text: 'ET' }), eigenBtn), mode.el);
 
   const controls = h('div.controls', {},
     h('div.transport', {}, restartBtn, backBtn, playBtn, fwdBtn, speedBtn),
     counter,
     modeWrap);
-  const bar = h('div.bar', {}, h('div.scrub-row', {}, scrub), controls);
+  const bar = h('div.bar', {}, barHead, h('div.scrub-row', {}, scrub), controls);
   const el = h('div.dock', {}, caption, bar);
 
   // ---- scrubber segments ----
@@ -171,6 +180,9 @@ export function createPlayback(ctx) {
     const s = live ? steps[c] : steps[c - 1] ?? null;
     // parked at the extra-round cap with 'Keep raining' on: say why nothing happens
     const capped = !live && player.atEnd && app.view.keepRaining && !app.canExtend;
+    // parked where the script ends (playback pauses there): say how to go on
+    const parkedAtEnd = !live && !capped && c > 0 && player.atScriptEnd;
+    if (parkedAtEnd) return { key: `end|${ctx.version}|${player.ended}`, kind: 'end', step: null, scriptEnd: true };
     if (s) return { key: `s${s.index}|${ctx.version}|${capped}`, kind: STEP_KIND[s.type], step: s, capped };
     return { key: `start|${ctx.version}`, kind: 'start', step: null };
   }
@@ -185,11 +197,14 @@ export function createPlayback(ctx) {
     if (cap.key !== capKey) {
       capKey = cap.key;
       capText.textContent = cap.capped ? `That’s ${MAX_EXTRA_ROUNDS} extra rounds, the limit. Press replay to start over.`
+        : cap.scriptEnd ? (player.ended ? 'That’s the end of the scenario. Press replay to watch it again.' : 'That’s the end of the scenario. Press play to keep it raining.')
         : cap.step ? captionOf(cap.step)
         : app.compiled.steps.length ? 'Press play to run the scenario, or step through it one event at a time.' : 'Nothing to play.';
       caption.dataset.kind = cap.kind;
+      barHead.dataset.kind = cap.kind;
       const s = cap.step;
-      capKindText.textContent = s ? (s.type === 'rain' ? `Round ${s.after.round}` : KIND_LABEL[STEP_KIND[s.type]]) : 'Ready';
+      capKindText.textContent = s ? (s.type === 'rain' ? `Round ${s.after.round}` : KIND_LABEL[STEP_KIND[s.type]]) : cap.scriptEnd ? 'End of scenario' : 'Ready';
+      capKindSr.textContent = `${capKindText.textContent}: `;
       caption.firstChild.animate?.([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: ctx.reducedMotion ? 1 : 240, easing: 'cubic-bezier(.2,.8,.2,1)' });
     }
 
@@ -217,7 +232,6 @@ export function createPlayback(ctx) {
     setAttr(fwdBtn, 'disabled', ended);
     setText(speedBtn, `${app.view.speed}×`);
     if (mode.value !== app.view.eigenMode) mode.set(app.view.eigenMode);
-    setClass(modeWrap, 'active-rain', player.step?.type === 'rain');
   }
   function phaseChip(s) {
     if (s.type !== 'rain' || s !== player.step || !(player.time > 0)) return '';
@@ -240,5 +254,5 @@ export function createPlayback(ctx) {
     return true;
   }
 
-  return { el, bar, caption, update };
+  return { el, bar, caption, eigenBtn, update };
 }
