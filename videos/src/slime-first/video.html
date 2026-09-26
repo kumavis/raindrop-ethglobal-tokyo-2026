@@ -11,14 +11,15 @@ body{margin:0;width:1920px;height:1080px;overflow:hidden;position:relative;backg
 #bg{position:absolute;inset:0;z-index:0}
 #org{position:absolute;inset:0;z-index:3}
 .s{position:absolute;inset:0;display:none;z-index:5}
-.d{font-family:var(--display-heading-family);font-weight:var(--display-heading-weight);font-size:var(--display-heading-size);letter-spacing:-.03em;line-height:var(--display-heading-line-height);margin:0}
+.d{font-family:var(--display-heading-family);font-weight:var(--display-heading-weight);font-size:var(--display-heading-size);letter-spacing:var(--display-heading-letter-spacing);line-height:var(--display-heading-line-height);margin:0}
 .hero{font-weight:var(--display-hero-weight);letter-spacing:var(--display-hero-letter-spacing)}
-.m{font-family:var(--section-label-family);font-weight:var(--section-label-weight);letter-spacing:var(--section-label-letter-spacing);text-transform:uppercase}
+.m{font-family:var(--chrome-nav-family);font-weight:var(--chrome-nav-weight);letter-spacing:var(--chrome-nav-letter-spacing);text-transform:uppercase}
 .a{opacity:0;display:inline-block;will-change:transform,opacity}
-.mk{display:block;overflow:hidden;padding:0 .04em .14em;margin-bottom:-.14em}
-.L{position:absolute;left:150px;top:130px}
+.mk{display:block;overflow:hidden;text-wrap:balance;padding:0 .04em .14em;margin-bottom:-.14em}
+.L{position:absolute;left:150px;right:150px;top:130px}
 .C{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.it{font-style:italic;font-weight:500;letter-spacing:-.02em}
+/* Manrope has no italic: emphasis is extra weight, plus colour where the span sets one */
+.it{font-weight:800}
 .sl{color:var(--slime)}
 .sub{display:block;font-family:var(--body-large-family);font-weight:var(--body-large-weight);font-size:var(--body-large-size);line-height:var(--body-large-line-height);letter-spacing:var(--body-large-letter-spacing);margin-top:28px;opacity:.8}
 svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
@@ -29,14 +30,14 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 .rc .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:3px}
 .rc .arr{font-family:var(--font-body);font-size:56px;opacity:.6}
 #ch{position:absolute;inset:0;z-index:50;pointer-events:none;color:var(--color-paper)}
-#ch .c{position:absolute;top:40px;font-family:var(--chrome-family);font-weight:var(--chrome-weight);font-size:var(--chrome-size);letter-spacing:var(--chrome-letter-spacing);text-transform:uppercase;opacity:.75;display:flex;align-items:center;gap:12px}
+#ch .c{position:absolute;top:40px;font-family:var(--chrome-small-family);font-weight:var(--chrome-small-weight);font-size:var(--chrome-small-size);letter-spacing:var(--chrome-small-letter-spacing);text-transform:uppercase;opacity:.75;display:flex;align-items:center;gap:12px}
 #ch .progress-bar{position:absolute;left:0;bottom:0;border-radius:0}
 #ch .progress-bar::after{border-radius:0 var(--progress-radius) var(--progress-radius) 0}
 .pb-slime{--progress-fill:var(--slime);--progress-glow:0 0 8px 1px rgba(var(--slime-rgb),.4)}
 #warm{position:absolute;visibility:hidden;left:-9999px}
 </style></head>
 <body>
-<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:500;font-style:italic">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
+<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:800">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
 <div id="bg"></div>
 <canvas id="org" width="1920" height="1080"></canvas>
 
@@ -128,7 +129,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 <section data-id="end" class="s" data-s="127" data-e="999" data-bg="ink" data-sec="" style="color:var(--color-paper)">
   <div class="C" style="padding-top:330px">
     <span class="mk"><span class="a d hero" data-i="128.6" data-f="rise" style="font-size:250px">tendril</span></span>
-    <div class="a" data-i="129.6" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);margin-top:30px;opacity:.9">Governance that <span class="sl">grows.</span></div>
+    <div class="a" data-i="129.6" data-f="up" style="font-family:var(--hero-subtitle-family);font-size:var(--hero-subtitle-size);font-weight:var(--hero-subtitle-weight);letter-spacing:var(--hero-subtitle-letter-spacing);margin-top:30px;opacity:.9">Governance that <span class="sl">grows.</span></div>
   </div>
 </section>
 

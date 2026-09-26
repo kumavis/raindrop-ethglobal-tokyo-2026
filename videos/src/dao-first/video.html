@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title>Raindrop networks — explainer film</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Raindrop design system: palette, Cormorant + Albert Sans, glass, backgrounds, progress bar (see design-system/) -->
+<!-- Raindrop design system: palette, Manrope + Albert Sans, glass, backgrounds, progress bar (see design-system/) -->
 <link rel="stylesheet" href="../../../design-system/tokens/index.css">
 <style>
 /* Slow, quiet cut: one headline, at most one line of support, one visual per slide */
@@ -12,14 +12,15 @@ body{margin:0;width:1920px;height:1080px;overflow:hidden;position:relative;backg
 .lay{position:absolute;inset:0;display:none}
 #rain{position:absolute;inset:0;z-index:4}
 .s{position:absolute;inset:0;display:none;z-index:5}
-.d{font-family:var(--display-heading-family);font-weight:var(--display-heading-weight);font-size:var(--display-heading-size);letter-spacing:-.03em;line-height:var(--display-heading-line-height);margin:0}
+.d{font-family:var(--display-heading-family);font-weight:var(--display-heading-weight);font-size:var(--display-heading-size);letter-spacing:var(--display-heading-letter-spacing);line-height:var(--display-heading-line-height);margin:0}
 .hero{font-weight:var(--display-hero-weight);letter-spacing:var(--display-hero-letter-spacing)}
-.m{font-family:var(--section-label-family);font-weight:var(--section-label-weight);letter-spacing:var(--section-label-letter-spacing);text-transform:uppercase}
+.m{font-family:var(--chrome-nav-family);font-weight:var(--chrome-nav-weight);letter-spacing:var(--chrome-nav-letter-spacing);text-transform:uppercase}
 .a{opacity:0;display:inline-block;will-change:transform,opacity}
-.mk{display:block;overflow:hidden;padding:0 .04em .14em;margin-bottom:-.14em}
-.L{position:absolute;left:150px;top:130px}
+.mk{display:block;overflow:hidden;text-wrap:balance;padding:0 .04em .14em;margin-bottom:-.14em}
+.L{position:absolute;left:150px;right:150px;top:130px}
 .C{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.it{font-style:italic;font-weight:500;letter-spacing:-.02em}
+/* Manrope has no italic: emphasis is extra weight, plus colour where the span sets one */
+.it{font-weight:800}
 .rn{color:var(--color-rain)}.am{color:var(--color-amber)}
 .sub{display:block;font-family:var(--body-large-family);font-weight:var(--body-large-weight);font-size:var(--body-large-size);line-height:var(--body-large-line-height);letter-spacing:var(--body-large-letter-spacing);margin-top:28px;opacity:.8}
 .step{display:block;font-size:24px;color:var(--color-rain);margin-bottom:22px}
@@ -38,7 +39,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 .rcg .arr{font-size:52px;opacity:.6}
 /* chrome: just the mark, the section, and the progress bar */
 #ch{position:absolute;inset:0;z-index:50;pointer-events:none;color:var(--color-paper)}
-#ch .c{position:absolute;top:40px;font-family:var(--chrome-family);font-weight:var(--chrome-weight);font-size:var(--chrome-size);letter-spacing:var(--chrome-letter-spacing);text-transform:uppercase;opacity:.75}
+#ch .c{position:absolute;top:40px;font-family:var(--chrome-small-family);font-weight:var(--chrome-small-weight);font-size:var(--chrome-small-size);letter-spacing:var(--chrome-small-letter-spacing);text-transform:uppercase;opacity:.75}
 #ch .c img{width:17px;vertical-align:-3px;margin-right:12px}
 #ch .progress-bar{position:absolute;left:0;bottom:0;border-radius:0}
 #ch .progress-bar::after{border-radius:0 var(--progress-radius) var(--progress-radius) 0}
@@ -46,7 +47,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 #defs{position:absolute;width:0;height:0}
 </style></head>
 <body>
-<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:500;font-style:italic">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
+<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:800">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
 <img id="iDrop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="display:none">
 <svg id="defs" aria-hidden="true"><defs>
   <linearGradient id="gIri" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6AB8D8"/><stop offset=".2" stop-color="#E8B5C7"/><stop offset=".4" stop-color="#88E0E8"/><stop offset=".6" stop-color="#8DD4B7"/><stop offset=".8" stop-color="#B8A9D4"/><stop offset="1" stop-color="#6AB8D8"/></linearGradient>
@@ -120,7 +121,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
   <span class="a sub" data-i="1.0" data-f="up">Small, steady payouts to the people the network trusts.</span></div>
 </section>
 <section data-id="r3" class="s" data-s="76" data-e="83" data-bg="ink" data-sec="The Raindrop network" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">Nobody has to <span class="it rn">crank it.</span></span></span>
+  <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">Nobody has to <span class="it rn">manually push it forward.</span></span></span>
   <span class="a sub" data-i="1.0" data-f="up">It runs in the background, always up to date.</span></div>
 </section>
 
@@ -185,7 +186,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
   <div class="C">
     <img class="a" data-i=".2" data-f="drop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="width:120px;margin-bottom:-6px">
     <span class="mk"><span class="a d hero" data-i=".4" data-f="rise" style="font-size:260px">raindrop</span></span>
-    <div class="a" data-i="1.4" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);margin-top:30px">Fund the mission. Let the network find the people.</div>
+    <div class="a" data-i="1.4" data-f="up" style="font-family:var(--hero-subtitle-family);font-size:var(--hero-subtitle-size);font-weight:var(--hero-subtitle-weight);letter-spacing:var(--hero-subtitle-letter-spacing);margin-top:30px">Fund the mission. Let the network find the people.</div>
     <div class="a gl button cta" data-i="2.4" data-f="pop">raindrop.money</div>
   </div>
 </section>

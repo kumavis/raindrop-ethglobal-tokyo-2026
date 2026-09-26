@@ -10,7 +10,7 @@ Raindrop explainer films, authored as self-contained HTML animations and rendere
 Open any `video.html` in a browser to preview it live.
 
 The protocol-first, dao-first and slime-first films load the design system straight from `../design-system/`: the token CSS
-(palette, Cormorant + Albert Sans, glass, backgrounds, progress bar) and the brand assets (the raindrop
+(palette, Manrope + Albert Sans, glass, backgrounds, progress bar) and the brand assets (the raindrop
 icon and token as rain and value particles, the cloud background and motif, the Sybil split). Keep the
 repo layout intact when previewing or rendering it.
 
@@ -20,7 +20,7 @@ These are not installed by npm and must be on your machine:
 
 - **Node.js** ≥ 18
 - **ffmpeg** with `libx264`, on your `PATH` (`brew install ffmpeg` / `apt install ffmpeg`)
-- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Cormorant / Albert Sans for protocol-first, dao-first and slime-first)
+- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Manrope / Albert Sans for protocol-first, dao-first and slime-first)
 
 Playwright's Chromium is downloaded automatically by this package's `postinstall`.
 On Linux you may also need its OS libraries: `npx playwright install-deps chromium`.
@@ -57,6 +57,8 @@ node render-videos.mjs path/to/film.html   # writes film.mp4 next to the source
 | `FPS`         | `30`           | Frame rate (films are timed for 30)             |
 | `CRF`         | `18`           | x264 quality — lower is better/bigger           |
 | `PRESET`      | `medium`       | x264 preset                                     |
+| `GRAIN`       | `2`            | Faint moving grain that dithers gradients so they don't band; `0` disables |
+| `BITDEPTH`    | `8`            | `10` for 10-bit video (smoother gradients, for YouTube/archival; most browsers can't play it) |
 | `BLOCK_FONTS` | unset          | `1` skips Google Fonts, uses local fonts        |
 | `OUT_DIR`     | source dir     | Where MP4s are written                          |
 
@@ -73,6 +75,7 @@ In PowerShell, `$env:` variables persist for the rest of the session; clear with
 ## How it works
 
 The script loads each page in headless Chromium, replaces `requestAnimationFrame` with a
-virtual clock, steps it one frame at a time, screenshots each frame, and pipes the JPEGs
-into ffmpeg. Rendering is deterministic and independent of machine speed. Films must drive
+virtual clock, steps it one frame at a time, screenshots each frame losslessly as PNG, and pipes them
+into ffmpeg. ffmpeg adds the faint grain, converts to BT.709 with error-diffusion dithering (via zscale,
+when available) and tags the colour space, so gradients stay smooth and colours match the page. Rendering is deterministic and independent of machine speed. Films must drive
 all animation from `requestAnimationFrame` timestamps and declare `const DUR=<seconds>`.

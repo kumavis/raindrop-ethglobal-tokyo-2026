@@ -31,7 +31,7 @@ Timings match `video.html` (each section's animations are timed from the start o
 | 0:56 | Title card: **The Raindrop network** — Let funding follow trust, continuously. | Cloud background, soft rain |
 | 1:02 | *Everyone points at who they trust.* — No proposals. No deadlines. Change it anytime. | The members' network from 0:15; the arrows relight and halos form |
 | 1:09 | *The money follows, every round.* — Small, steady payouts to the people the network trusts. | Gentle rain on the trusted; a round counter ticks by on its own |
-| 1:16 | *Nobody has to crank it.* — It runs in the background, always up to date. | A member re-points; halos and rain follow without anyone pushing |
+| 1:16 | *Nobody has to manually push it forward.* — It runs in the background, always up to date. | A member re-points; halos and rain follow without anyone pushing |
 
 ## 4. How it works
 

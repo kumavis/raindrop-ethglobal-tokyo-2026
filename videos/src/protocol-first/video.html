@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title>Raindrop — explainer film</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Raindrop design system: palette, Cormorant + Albert Sans, glass, backgrounds, progress bar (see design-system/) -->
+<!-- Raindrop design system: palette, Manrope + Albert Sans, glass, backgrounds, progress bar (see design-system/) -->
 <link rel="stylesheet" href="../../../design-system/tokens/index.css">
 <style>
 /* Film roles, bound to design-system tokens */
@@ -11,21 +11,22 @@ body{margin:0;width:1920px;height:1080px;overflow:hidden;position:relative;backg
 #bg{position:absolute;inset:0;z-index:0}
 #rain{position:absolute;inset:0;z-index:2}
 .s{position:absolute;inset:0;display:none;z-index:3}
-/* display-heading: Cormorant 600, 95% leading, -4.5% tracking */
+/* display-heading: Manrope 600, 95% leading, -2% tracking */
 .d{font-family:var(--display-heading-family);font-weight:var(--display-heading-weight);letter-spacing:var(--display-heading-letter-spacing);line-height:var(--display-heading-line-height);margin:0}
 .hero{font-weight:var(--display-hero-weight);letter-spacing:var(--display-hero-letter-spacing)}
-/* section-label / chrome: Albert Sans 500, uppercase, 14% tracking */
-.m{font-family:var(--section-label-family);font-weight:var(--section-label-weight);letter-spacing:var(--section-label-letter-spacing);text-transform:uppercase}
+/* chrome-nav: Albert Sans 500, uppercase */
+.m{font-family:var(--chrome-nav-family);font-weight:var(--chrome-nav-weight);letter-spacing:var(--chrome-nav-letter-spacing);text-transform:uppercase}
 .a{opacity:0;display:inline-block;will-change:transform,opacity}
-.mk{display:block;overflow:hidden;padding:0 .04em .14em;margin-bottom:-.14em}
-.L{position:absolute;left:150px}
+.mk{display:block;overflow:hidden;text-wrap:balance;padding:0 .04em .14em;margin-bottom:-.14em}
+.L{position:absolute;left:150px;right:150px}
 .C{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.it{font-style:italic;font-weight:500;letter-spacing:-.02em}
+/* Manrope has no italic: emphasis is extra weight, plus colour where the span sets one */
+.it{font-weight:800}
 .rn{color:var(--color-rain)}.am{color:var(--color-amber)}.ro{color:var(--color-rose)}
 .h{font-size:var(--display-hero-size)}.hn{font-size:var(--display-heading-size)}
 /* body-large */
 .sub{display:block;font-family:var(--body-large-family);font-weight:var(--body-large-weight);font-size:var(--body-large-size);line-height:var(--body-large-line-height);letter-spacing:var(--body-large-letter-spacing);margin-top:26px;opacity:.8}
-.pl{position:absolute;left:150px;font-size:var(--section-label-size)}
+.pl{position:absolute;left:150px;font-size:var(--chrome-nav-size)}
 .pl small{display:block;font-family:var(--body-large-family);font-size:26px;font-weight:400;letter-spacing:.02em;text-transform:none;opacity:.75;margin-top:10px}
 .tw{position:absolute;top:740px;width:500px;text-align:center}
 .tw b{display:block;font-family:var(--font-display);font-weight:600;font-size:64px;letter-spacing:-.02em;margin-bottom:14px}
@@ -48,7 +49,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 #net text{paint-order:stroke;stroke:var(--bg-ink);stroke-width:7px;stroke-linejoin:round}
 /* chrome */
 #ch{position:absolute;inset:0;z-index:50;pointer-events:none;color:var(--color-paper)}
-#ch .c{position:absolute;font-family:var(--chrome-family);font-weight:var(--chrome-weight);font-size:var(--chrome-size);letter-spacing:var(--chrome-letter-spacing);text-transform:uppercase;opacity:.85}
+#ch .c{position:absolute;font-family:var(--chrome-small-family);font-weight:var(--chrome-small-weight);font-size:var(--chrome-small-size);letter-spacing:var(--chrome-small-letter-spacing);text-transform:uppercase;opacity:.85}
 #ch .c img{width:17px;vertical-align:-3px;margin-right:12px}
 #ch .progress-bar{position:absolute;left:0;bottom:0;border-radius:0}
 #ch .progress-bar::after{border-radius:0 var(--progress-radius) var(--progress-radius) 0}
@@ -57,7 +58,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 </style></head>
 <body>
 <!-- load every face up front so no frame renders in a fallback font -->
-<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:500;font-style:italic">a</span><span style="font-family:var(--font-display);font-weight:600;font-style:italic">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
+<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:800">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
 <!-- design-system sprites: the raindrop and the token are the core icons -->
 <img id="iDrop" class="icon" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="display:none">
 <img id="iTok" class="icon" src="../../../design-system/assets/components/glass-circle-token.svg" alt="" style="display:none">
@@ -167,7 +168,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 
 <!-- mission segment -->
 <section data-id="q1" class="s" data-s="72" data-e="76" data-bg="ink" style="color:var(--color-paper)">
-  <div class="L" style="top:230px"><span class="mk"><span class="a d" data-i="72.1" data-f="rise" style="font-size:130px;">If nobody pays,</span></span><span class="mk"><span class="a d" data-i="72.6" data-f="rise" style="font-size:130px;">where does the <span class="am it">money</span></span></span><span class="mk"><span class="a d" data-i="72.9" data-f="rise" style="font-size:130px;">come from?</span></span></div>
+  <div class="L" style="top:230px"><span class="mk"><span class="a d" data-i="72.1" data-f="rise" style="font-size:112px;">If nobody pays,</span></span><span class="mk"><span class="a d" data-i="72.6" data-f="rise" style="font-size:112px;">where does the <span class="am it">money</span></span></span><span class="mk"><span class="a d" data-i="72.9" data-f="rise" style="font-size:112px;">come from?</span></span></div>
   <div id="qmark" class="a d it" data-i="73.4" data-f="pop" style="position:absolute;right:130px;top:250px;font-size:560px;color:var(--color-amber);line-height:1">?</div>
 </section>
 <section data-id="a1" class="s" data-s="76" data-e="81.5" data-bg="paper" style="color:var(--color-ink)">
@@ -208,7 +209,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 </section>
 <section data-id="s2" class="s" data-s="119" data-e="126" data-bg="ink" style="color:var(--color-paper)">
   <svg id="s2s" width="1920" height="1080" style="position:absolute;inset:0"></svg><div class="L" style="top:110px"><span class="mk"><span class="a d h" data-i="119.3" data-f="rise" style="font-size:140px;">It&#39;s <span class="am it">fertile ground.</span></span></span>
-  <div class="a" data-i="122.2" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);line-height:var(--display-subtitle-line-height);margin-top:26px">for humanity's biggest dreams<br>and hardest problems.</div></div>
+  <div class="a" data-i="122.2" data-f="up" style="font-family:var(--hero-subtitle-family);font-size:var(--hero-subtitle-size);font-weight:var(--hero-subtitle-weight);letter-spacing:var(--hero-subtitle-letter-spacing);line-height:var(--hero-subtitle-line-height);margin-top:26px">for humanity's biggest dreams<br>and hardest problems.</div></div>
 </section>
 
 <!-- end -->
@@ -216,7 +217,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
   <div class="C">
     <img class="a icon" data-i="126.05" data-f="drop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="width:120px;margin-bottom:-6px">
     <span class="mk"><span class="a d hero" data-i="126.15" data-f="rise" style="font-size:260px">raindrop</span></span>
-    <div class="a" data-i="126.9" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);margin-top:30px">Tokens rain on those the network trusts.</div>
+    <div class="a" data-i="126.9" data-f="up" style="font-family:var(--hero-subtitle-family);font-size:var(--hero-subtitle-size);font-weight:var(--hero-subtitle-weight);letter-spacing:var(--hero-subtitle-letter-spacing);margin-top:30px">Tokens rain on those the network trusts.</div>
     <div class="a gl button cta" data-i="127.5" data-f="pop">raindrop.money</div>
   </div>
 </section>

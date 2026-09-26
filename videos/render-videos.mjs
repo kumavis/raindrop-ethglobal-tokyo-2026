@@ -11,6 +11,9 @@
 //   FPS=30         frame rate (the films are timed for 30)
 //   CRF=18         x264 quality (lower = better/bigger)
 //   PRESET=medium  x264 preset
+//   GRAIN=2        strength of the faint moving grain that dithers gradients (0 disables)
+//   BITDEPTH=8     8 (plays everywhere, the default) or 10 (smoother gradients, for YouTube/archival;
+//                  most browsers can't play 10-bit H.264)
 //   BLOCK_FONTS=1  skip Google Fonts and use locally installed fonts instead
 //   OUT_DIR=dir    write MP4s here instead of next to the sources (same as --out-dir)
 
@@ -37,6 +40,19 @@ if (spawnSync('ffmpeg', ['-version']).error) {
 const FPS = +process.env.FPS || 30;
 const CRF = process.env.CRF || '18';
 const PRESET = process.env.PRESET || 'medium';
+const GRAIN = process.env.GRAIN ?? '2';
+const BITDEPTH = process.env.BITDEPTH === '10' ? 10 : 8;
+// Frames are captured losslessly as PNG, then converted to BT.709 video. Gradients band in 8-bit
+// video, so a faint temporal grain and error-diffusion dithering (zscale, when ffmpeg has it) break
+// the bands up. The output is tagged BT.709 so players show the colours the page rendered.
+const hasZscale = /\bzscale\b/.test(spawnSync('ffmpeg', ['-hide_banner', '-filters']).stdout?.toString() ?? '');
+const PIX = BITDEPTH === 10 ? 'yuv420p10le' : 'yuv420p';
+const VF = [
+  +GRAIN > 0 && `format=gbrp,noise=alls=${+GRAIN}:allf=t`,
+  hasZscale ? `zscale=transferin=709:primariesin=709:rangein=full:matrix=709:transfer=709:primaries=709:range=limited:dither=${BITDEPTH === 10 ? 'none' : 'error_diffusion'}`
+            : 'scale=out_color_matrix=bt709:out_range=tv',
+  `format=${PIX}`,
+].filter(Boolean).join(',');
 
 const browser = await chromium.launch();
 
@@ -63,15 +79,16 @@ for (const src of files) {
   await page.goto(pathToFileURL(path.resolve(src)).href, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
 
-  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-    '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', CRF, '-preset', PRESET, '-movflags', '+faststart', out],
+  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'png', '-i', '-',
+    '-vf', VF, '-c:v', 'libx264', '-profile:v', BITDEPTH === 10 ? 'high10' : 'high', '-tune', 'grain', '-crf', CRF, '-preset', PRESET,
+    '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv', '-movflags', '+faststart', out],
     { stdio: ['pipe', 'inherit', 'inherit'] });
   const done = new Promise((res, rej) => ff.on('close', c => c ? rej(new Error('ffmpeg exited ' + c)) : res()));
 
   const t0 = Date.now();
   for (let i = 0; i < N; i++) {
     await page.evaluate(ms => { __frame(ms); __frame(ms); }, i * 1000 / FPS);
-    const buf = await page.screenshot({ type: 'jpeg', quality: 92 });
+    const buf = await page.screenshot({ type: 'png' });
     if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
     if (i % FPS === 0 || i === N - 1) process.stdout.write(`\r  frame ${i + 1}/${N}  (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
   }
