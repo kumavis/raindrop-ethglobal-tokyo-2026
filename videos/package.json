@@ -1,0 +1,15 @@
+{
+  "name": "@raindrop/videos",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "render": "npm run render:mission-first && npm run render:protocol-first",
+    "render:mission-first": "OUT_DIR=dist/mission-first node render-videos.mjs src/mission-first/video.html",
+    "render:protocol-first": "OUT_DIR=dist/protocol-first node render-videos.mjs src/protocol-first/video.html"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}
