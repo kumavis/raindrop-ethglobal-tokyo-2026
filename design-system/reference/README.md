@@ -40,11 +40,11 @@ The spec text below is copied from each sheet.
 
 | Sheet | Spec | Asset |
 |---|---|---|
-| `raindrop@2x.png` | The core symbol. Rain falls on endorsed contributors every round. Used as particle effects across all network and funding beats. | `logo/raindrop-icon.svg` |
+| `raindrop@2x.png` | The core symbol. Rain falls on endorsed contributors every round. Used as particle effects across all network and funding beats. | ⭐ `logo/raindrop-icon.svg` (core icon) |
 | `cloud@2x.png` | Hand-drawn cloud motif. Filled and outline variants. Scattered as background pattern or standalone icon. | `cloud-icon.svg`, `cloud-icon-outline.svg` |
 | `network-node@2x.png` | A person in the trust graph. Glass-treated circle with iridescent border and ambient glow. Label shows identity. | `network-node@2x.png` (PNG only, label baked in) |
 | `trust-halo@2x.png` | Frosted glass circle with iridescent rose-threaded border, inner ring, and glowing center. Background blur + layered shadows. | `glass-circle-trust-halo/` (light + dark) |
-| `token@2x.png` | Compact glass circle with mint tint. Iridescent border, background blur. Used for value transfer animations. | `glass-circle-token.svg` |
+| `token@2x.png` | Compact glass circle with mint tint. Iridescent border, background blur. Used for value transfer animations. | ⭐ `glass-circle-token.svg` (core icon) |
 | `ripple@2x.png` | Expanding concentric rings. Appears on rain impact and network propagation events. Fades out as it expands. | `ripple.svg` |
 | `trust-edge@2x.png` | Directed connection between nodes. Arrow shows endorsement direction. Width scales with weight. Particles flow along path. | None (build in code) |
 | `sybil-split@2x.png` | Single large circle splitting into many small ones. Visualizes the futility of creating fake accounts to game the system. | `sybil-split.svg`, use wherever Sybil attacks or Sybil resistance come up |

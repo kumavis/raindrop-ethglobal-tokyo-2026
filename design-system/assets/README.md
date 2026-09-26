@@ -4,9 +4,17 @@ Brand assets for Raindrop. For the designer's spec sheets and labelled examples 
 
 Every asset ships as an SVG (use this by default) and an `@2x` PNG (for slides, social posts, and anywhere SVG isn't supported). Sizes and paths are also recorded under `components` in [`../tokens.json`](../tokens.json).
 
-## The Raindrop icon — `logo/raindrop-icon.svg`
+## ⭐ Core icons — use these the most
 
-**The primary brand mark and the core symbol of the project.** A glass raindrop (94×109) in a pale-to-rain-blue gradient. Use it wherever the brand appears as a symbol: favicon, avatar, app icon, video bumpers, the paper site header. Always use the SVG (it scales cleanly); `raindrop-icon@2x.png` is for places that can't take SVG. Don't recolour, stretch, or add effects to it.
+The Raindrop icon and the token are the two most important visuals in the project. Reach for them first. Always use the SVG (it scales cleanly); the PNGs are for places that can't take SVG. Don't recolour, stretch, or add effects to either.
+
+### The Raindrop icon — `logo/raindrop-icon.svg`
+
+**The primary brand mark and the core symbol.** A glass raindrop (94×109) in a pale-to-rain-blue gradient. Use it wherever the brand appears as a symbol: favicon, avatar, app icon, video bumpers, the paper site header, and as particles for rain falling on endorsed contributors.
+
+### The token — `components/glass-circle-token.svg`
+
+**The unit of value.** A compact glass circle with a mint tint (56×56 body on a 98×98 canvas that includes the glow). Use it wherever value moves: token issuance, rewards, value transfer animations. PNGs: `glass-circle-token@2x.png` (196×196) and `glass-circle-token@3x.png` (294×294).
 
 ## Logos — `logo/`
 
@@ -37,7 +45,7 @@ Buttons, tags, cards and motifs in the frosted-glass style. The CSS equivalents 
 | Glass card | `glass-card.svg` | 360×123 | 432×195 | Content cards |
 | Glass circle, trust halo (light) | `glass-circle-trust-halo/trust-halo-light.svg` | 160×160 | 232×232 | Trust / endorsement motif (default) |
 | Glass circle, trust halo (dark) | `glass-circle-trust-halo/trust-halo-dark@2x.png` (PNG only) | 160×160 (assumed) | 418×360 @2x | Trust / endorsement motif, dark variant |
-| Glass circle, token | `glass-circle-token.svg` | 56×56 | 98×98 | Token motif |
+| Glass circle, token ⭐ | `glass-circle-token.svg` | 56×56 | 98×98 | **Core icon:** the token (see above) |
 | Cloud icon | `cloud-icon.svg` | 220×140 | 220×140 | Cloud motif |
 | Cloud icon, outline | `cloud-icon-outline.svg` | 231×154 | 231×154 | Cloud motif, line variant |
 | Ripple | `ripple.svg` | 296×180 | 296×180 | Ripple motif (raindrop impact rings) |
