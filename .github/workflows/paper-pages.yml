@@ -42,12 +42,13 @@ jobs:
       # The film takes minutes to render, so reuse it until its source changes.
       # The key covers everything that affects the output; poster.jpg (written
       # by the paper build) lands in the same directory and is cached with it.
+      # The protocol-first film loads the design system's tokens and assets.
       - name: Restore rendered video
         id: video-cache
         uses: actions/cache@v6
         with:
           path: videos/dist/protocol-first
-          key: video-protocol-first-${{ hashFiles('videos/src/protocol-first/**', 'videos/render-videos.mjs', 'package-lock.json') }}
+          key: video-protocol-first-${{ hashFiles('videos/src/protocol-first/**', 'design-system/tokens/**', 'design-system/assets/**', 'videos/render-videos.mjs', 'package-lock.json') }}
 
       - name: Install render dependencies
         if: steps.video-cache.outputs.cache-hit != 'true'

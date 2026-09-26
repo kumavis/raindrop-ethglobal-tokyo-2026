@@ -3,9 +3,14 @@
 Raindrop explainer films, authored as self-contained HTML animations and rendered to 1080p MP4.
 
 - `src/mission-first/video.html` — mission-led cut (~95s)
-- `src/protocol-first/video.html` — protocol-led cut (~131s)
+- `src/protocol-first/video.html` — protocol-led cut (~131s), built on the [design system](../design-system/assets/README.md)
 
 Open any `video.html` in a browser to preview it live.
+
+The protocol-first film loads the design system straight from `../design-system/`: the token CSS
+(palette, Cormorant + Albert Sans, glass, backgrounds, progress bar) and the brand assets (the raindrop
+icon and token as rain and value particles, the cloud background and motif, the Sybil split). Keep the
+repo layout intact when previewing or rendering it.
 
 ## System dependencies
 
@@ -13,7 +18,7 @@ These are not installed by npm and must be on your machine:
 
 - **Node.js** ≥ 18
 - **ffmpeg** with `libx264`, on your `PATH` (`brew install ffmpeg` / `apt install ffmpeg`)
-- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed Poppins / IBM Plex Mono)
+- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Cormorant / Albert Sans for protocol-first)
 
 Playwright's Chromium is downloaded automatically by this package's `postinstall`.
 On Linux you may also need its OS libraries: `npx playwright install-deps chromium`.
