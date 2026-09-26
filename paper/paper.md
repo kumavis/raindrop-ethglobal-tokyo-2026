@@ -1,9 +1,9 @@
 # Raindrop: funding via the social graph.
 
 ## Abstract
-Every cause – be it charity or business – grapples with the problem of funding effectively. Funding usually hits those who are the loudest, who apply for the most grants, or who are obvious "whales", and not necessarily the researchers, builders, teachers and organisers who are really moving things forward. Currently, it is hard for committees to see everyone, have to engage in a lot of guess work, and even when funding is applied for or decided, the proposals and distribution takes months.
+Every cause – be it charity or business – grapples with the problem of funding effectively. Funding usually hits those who are the loudest: those who apply for the most grants, or who are obvious "whales". It is hard for grant committees to see the researchers, builders, teachers and organisers who are really moving things forward, and have to engage in a lot of guess work. Even when funding is applied for or decided by these people, the approval processes and distribution still takes months.
 
-But the people closest to the work already know who is doing it. They know who they learn from, who ships and who shows up. Raindrop turns that knowledge into funding. It is a continuous airdrop steered by trust. Token holders endorse the people they believe in, and every round newly minted tokens "rain" across the network according to a trust score computed from those endorsements with the EigenTrust algorithm [1]. Endorsers keep their coins. Endorsements persist until changed, so participation runs in the background instead of through proposals and deadlines. Anyone can spin up a Raindrop network around a mission, and the social graph decides where the value flows.
+The thing is, the people closest to the work already know who is doing it. They know who they learn from, who is showing up to the quieter hackathons, and who is building consistently. Our goal is to turn that knowledge and trust into a persistent graph that can be used for effective funding distribution. Token holders endorse the people they believe in, and every round newly minted tokens "rain" across the network according to a trust score computed from those endorsements with the EigenTrust algorithm [1]. Endorsers keep their coins, and endorsements persist until changed, so the trust graph can replace grant applications and proposals. Anyone can spin up a Raindrop network around a mission, and the raindrop graph decides where the value flows.
 
 ## 1. It starts with a mission
 
@@ -14,13 +14,13 @@ Anyone who cares about a mission eventually asks the same question: **how do we 
 The tools we have today fit that question poorly:
 
 - **Grant committees** can't see everyone. A handful of reviewers can't know the thousands of contributors in a healthy ecosystem, so funding goes to whoever is visible, well connected or good at writing proposals.
-- **Proposal-based DAO voting** is a chore. Every participant is asked to read every proposal and vote before a deadline, so turnout is low and decisions are episodic.
-- **Airdrops** are one-shot guesses. They take a snapshot of past behavior and hope it predicts future contribution. When the snapshot is wrong, there's no second chance.
-- **Patronage platforms** work, but every dollar of support comes out of the supporter's pocket, which caps how much any community can direct toward its contributors.
+- **Proposal-based DAO voting** is a chore: every participant is asked to read every proposal and vote before a deadline, so turnout is low and decisions are episodic.
+- **Airdrops** are one-shot guesses, usually based on account balances or activity on block explorers, which certainly do not capture the people actually driving research or community engagement. 
+- **Patronage platforms** sometimes work, but every dollar of support comes out of the supporter's pocket, which caps how much any community can direct toward its contributors.
 
 ## 2. The social graph knows
 
-The information a funder needs already exists. It's spread across the relationships of the people around the work. A researcher knows which colleagues produce results. A developer knows which maintainers review their pull requests at 2 a.m. An organizer knows who actually shows up.
+The thesis is that the information a funder needs already exists and known across the relationships of the people around the work. A researcher knows which colleagues produce results, a developer knows which maintainers review their pull requests at 2 a.m., and an organiser knows who actually shows up.
 
 No single person sees the whole picture, but together a community's judgments form a **social graph of trust**. If we can read that graph, we can let funding follow it.
 
@@ -42,7 +42,7 @@ The contrast with a patronage platform such as Patreon is the heart of the desig
 
 ### 3.2 Then it rains
 
-Every round, the protocol mints a small amount of new tokens and distributes them across the network in proportion to each account's **trust score**. Accounts that have earned endorsements get more of the rain. No one's existing balance is spent to fund the round.
+Every round (e.g., when every block is produced), the protocol mints a small amount of new tokens and distributes them across the network in proportion to each account's **trust score**. Accounts that have earned endorsements get more of the rain. No one's existing balance is spent to fund the round.
 
 ### 3.3 Everyone endorses someone
 
@@ -50,9 +50,9 @@ Ada is not alone. Every holder can endorse whoever they believe in: a builder th
 
 ### 3.4 Trust flows through the graph
 
-Endorsements are transitive. When Ada endorses Ben and Ben endorses Carla, some of Ada's trust flows on to Carla. **Being endorsed by the endorsed counts for more.** That lets participants rely on each other's judgment. You don't have to find every deserving contributor yourself. You can endorse a person whose taste you trust, and your trust follows theirs.
+Endorsements are transitive. When Ada endorses Ben and Ben endorses Carla, some of Ada's trust flows on to Carla. **Being endorsed by the endorsed counts for more**, which lets participants rely on each other's judgment.  
 
-Scores settle where trust pools. That is where the rain falls.
+This is the way Google Search works: when a site is cited by another with high citations of its owns, the trust score pools. Accordingly, that is where the most relevant pages are ranked, or in the case of raindrop, is where the rain falls.
 
 ### 3.5 Change your mind anytime
 
@@ -113,7 +113,7 @@ A token that funds its holders by recruiting more holders would be one. The diff
 
 ### 5.2 Give the network a mission
 
-Raindrop doesn't say what a network's goals are. That is chosen by the community that launches it: privacy tech, AI safety, open science, a neighborhood, an art movement. The mission gives endorsements a meaning. The question each holder answers is not "who is my friend?" but **"who is moving this mission forward?"**
+Raindrop doesn't define what a network's goals are: they are independently chosen by the community that launches it. This could be privacy tech, AI safety, open science, a neighbourhood, or an art movement. Each mission gives endorsements a meaning. The question each holder answers is not "who is my friend?" but **"who is moving this mission forward?"**
 
 ### 5.3 Endorse the work, not the wallet
 
@@ -155,11 +155,13 @@ Raindrop is an early design, and we have published an [adversarial review](https
 
 We think these are solvable, and that the core idea is worth solving them for: a community's collective knowledge of who is doing the work is its most underused funding resource.
 
-## 9. Conclusion: fertile ground
+## 9. Conclusion:
 
-Raindrop isn't one network. It's a pattern anyone can use: pick a mission, launch a token and let the social graph route funding to the people moving it forward. Supporters endorse the people they believe in and keep their coins. Contributors are found by the people who know their work, not by committees that can't see them. And every round, it rains again on the latest judgment of the whole community.
+Raindrop isn't one network. It's a pattern anyone can use: pick a mission, launch a token and let the social graph route funding to the people moving it forward. Supporters endorse the people they believe in and keep their coins. 
 
-For humanity's biggest dreams and hardest problems, the people doing the work are already known to someone. Raindrop lets that knowledge fund them.
+Contributors are found by the people who know their work, not by unrelated ETH account balances or rare NFT holders. In every round, the raindrop protocol rains again based on the latest endowment of the whole community.
+
+For humanity's biggest dreams and hardest problems, the people doing the work are already known to someone. Raindrop tracks that knowledge and helps fund them.
 
 **Fund the mission. Let the graph find the people.**
 
