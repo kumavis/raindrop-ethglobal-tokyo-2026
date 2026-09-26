@@ -31,9 +31,10 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 .col{position:absolute;top:470px;width:700px;text-align:center}
 .col .m{font-size:30px}
 .col span{display:block;font-size:30px;margin-top:10px;opacity:.75}
-.rc{display:flex;align-items:baseline;gap:40px;font-size:96px}
-.rc .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:3px}
-.rc .arr{font-family:var(--font-body);font-size:56px;opacity:.6}
+.rcg{position:absolute;left:230px;top:210px;display:grid;grid-template-columns:auto auto auto;column-gap:56px;row-gap:34px;align-items:baseline}
+.rcg .d{font-size:88px}
+.rcg .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:3px}
+.rcg .arr{font-size:52px;opacity:.6}
 /* chrome: just the mark, the section, and the progress bar */
 #ch{position:absolute;inset:0;z-index:50;pointer-events:none;color:var(--color-paper)}
 #ch .c{position:absolute;top:40px;font-family:var(--chrome-family);font-weight:var(--chrome-weight);font-size:var(--chrome-size);letter-spacing:var(--chrome-letter-spacing);text-transform:uppercase;opacity:.75}
@@ -56,6 +57,8 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
   <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#6AB8D8" flood-opacity=".45"/></filter>
   <filter id="fSoft" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1A3B52" flood-opacity=".14"/></filter>
 </defs></svg>
+<!-- a tiny always-painted copy keeps the cloud background decoded, so its first frame is never blank -->
+<div class="bg-cloud" style="position:absolute;left:0;top:0;width:4px;height:4px;z-index:-1"></div>
 <div id="bg"></div>
 
 <!-- shared visual layers (persist across slides) -->
@@ -74,83 +77,94 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
   <div class="L"><span class="mk"><span class="a d" data-i="13.3" data-f="rise">Raindrop turns what your members</span></span><span class="mk"><span class="a d" data-i="13.6" data-f="rise">already know into <span class="it rn">funding.</span></span></span>
   <span class="a sub" data-i="15.2" data-f="up">No meetings. No deadlines. No herding.</span></div>
 </section>
-<section data-id="o4" class="s" data-s="21" data-e="25" data-bg="ink" data-sec="" style="color:var(--color-paper)">
-  <div class="C"><span class="mk"><span class="a d it" data-i="21.4" data-f="rise" style="font-size:120px">Here's what it replaces.</span></span></div>
+<section data-id="o4" class="s" data-s="21" data-e="25" data-bg="white" data-sec="" style="color:var(--color-ink)">
+  <div class="C"><span class="mk"><span class="a d hero" data-i="21.3" data-f="rise" style="font-size:150px">The DAO way</span></span>
+  <span class="a sub" data-i="22.2" data-f="up" style="margin-top:34px">Built like a machine.</span></div>
 </section>
 
-<!-- ============ 2. The old way ============ -->
-<section data-id="p1" class="s" data-s="25" data-e="32" data-bg="white" data-sec="The old way" style="color:var(--color-ink)">
-  <div class="L"><span class="mk"><span class="a d" data-i="25.3" data-f="rise">Today, it runs on <span class="it">proposals.</span></span></span>
+<!-- ============ 2. The DAO way: a machine you have to crank ============ -->
+<section data-id="d1" class="s" data-s="25" data-e="32" data-bg="white" data-sec="The DAO way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="25.3" data-f="rise">It runs on <span class="it">proposals.</span></span></span>
   <span class="a sub" data-i="26.0" data-f="up">A few big asks. Each one all-or-nothing.</span></div>
-  <svg id="p1s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+  <svg id="d1s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
 </section>
-<section data-id="p2" class="s" data-s="32" data-e="40" data-bg="white" data-sec="The old way" style="color:var(--color-ink)">
-  <div class="L"><span class="mk"><span class="a d" data-i="32.3" data-f="rise">Then someone <span class="it">herds</span> the voters.</span></span>
-  <span class="a sub" data-i="33.0" data-f="up">Reminders. Deadlines. Quorum.</span></div>
-  <svg id="p2s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
-  <div id="dl" class="progress-bar progress-bar--on-light a" data-i="32.8" data-f="fade" style="position:absolute;left:150px;top:640px;width:640px;--progress:1"></div>
+<section data-id="d2" class="s" data-s="32" data-e="40" data-bg="white" data-sec="The DAO way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="32.3" data-f="rise">Every decision runs the same <span class="it">slow cycle.</span></span></span>
+  <span class="a sub" data-i="33.0" data-f="up">Draft. Discuss. Vote. Wait. Execute.</span></div>
+  <svg id="d2s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
 </section>
-<section data-id="p3" class="s" data-s="40" data-e="47" data-bg="white" data-sec="The old way" style="color:var(--color-ink)">
-  <div class="L"><span class="mk"><span class="a d" data-i="40.3" data-f="rise">Most people never <span class="it">show up.</span></span></span>
-  <span class="a sub" data-i="41.0" data-f="up">So a handful of votes decide the biggest payouts.</span></div>
-  <svg id="p3s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+<section data-id="d3" class="s" data-s="40" data-e="47" data-bg="white" data-sec="The DAO way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="40.3" data-f="rise">Someone has to keep <span class="it">cranking it.</span></span></span>
+  <span class="a sub" data-i="41.0" data-f="up">Reminders. Deadlines. Quorum.</span></div>
+  <svg id="d3s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+</section>
+<section data-id="d4" class="s" data-s="47" data-e="54" data-bg="white" data-sec="The DAO way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="47.3" data-f="rise">Then it pays out in <span class="it">lump sums.</span></span></span>
+  <span class="a sub" data-i="48.0" data-f="up">A handful of votes decide the biggest payouts.</span></div>
+  <svg id="d4s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+</section>
+<section data-id="d5" class="s" data-s="54" data-e="61" data-bg="white" data-sec="The DAO way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="54.3" data-f="rise">Between cycles, it can't <span class="it">sense anything.</span></span></span>
+  <span class="a sub" data-i="55.0" data-f="up">The work moves on. The machine doesn't notice.</span></div>
+  <svg id="d5s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
 </section>
 
 <!-- ============ 3. The turn ============ -->
-<section data-id="turn" class="s" data-s="47" data-e="53" data-bg="cloud" data-sec="" style="color:var(--color-ink)">
-  <div class="C"><span class="mk"><span class="a d hero" data-i="47.8" data-f="rise" style="font-size:150px">There's a <span class="it">lighter</span> way.</span></span></div>
+<section data-id="turn" class="s" data-s="61" data-e="67" data-bg="cloud" data-sec="" style="color:var(--color-ink)">
+  <div class="C"><span class="mk"><span class="a d hero" data-i="61.6" data-f="rise" style="font-size:150px">The Raindrop way</span></span>
+  <span class="a sub" data-i="62.6" data-f="up" style="margin-top:34px">Grown like a network.</span></div>
 </section>
 
-<!-- ============ 4. How it works ============ -->
-<section data-id="h1" class="s" data-s="53" data-e="60" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="53.3" data-f="rise">It starts with <span class="it am">one token.</span></span></span>
-  <span class="a sub" data-i="54.0" data-f="up">Your DAO issues a Raindrop governance token.</span></div>
+<!-- ============ 4. The Raindrop way: how it works ============ -->
+<section data-id="h1" class="s" data-s="67" data-e="74" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="67.3" data-f="rise">It starts with <span class="it am">one token.</span></span></span>
+  <span class="a sub" data-i="68" data-f="up">Your DAO issues a Raindrop governance token.</span></div>
   <svg id="h1s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
 </section>
-<section data-id="h2" class="s" data-s="60" data-e="68" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="60.3" data-f="rise">Every token carries <span class="it am">two rights.</span></span></span></div>
+<section data-id="h2" class="s" data-s="74" data-e="82" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="74.3" data-f="rise">Every token carries <span class="it am">two rights.</span></span></span></div>
   <svg id="h2s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
-  <div class="a gl tag right" data-i="61.6" data-f="pop" style="left:210px;top:650px">A vote</div>
-  <div class="a gl tag right" data-i="62.6" data-f="pop" style="left:1260px;top:650px">A claim on the treasury</div>
+  <div class="a gl tag right" data-i="75.6" data-f="pop" style="left:210px;top:650px">A vote</div>
+  <div class="a gl tag right" data-i="76.6" data-f="pop" style="left:1260px;top:650px">A claim on the treasury</div>
 </section>
-<section data-id="h3" class="s" data-s="68" data-e="77" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="68.3" data-f="rise">The treasury <span class="it rn">is</span> the market.</span></span>
-  <span class="a sub" data-i="69.0" data-f="up">Donations, investment and revenue all flow in as liquidity.<br>Anyone can sell the token into it, at the market rate.</span></div>
+<section data-id="h3" class="s" data-s="82" data-e="91" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="82.3" data-f="rise">The treasury <span class="it rn">is</span> the market.</span></span>
+  <span class="a sub" data-i="83" data-f="up">Donations, investment and revenue all flow in as liquidity.<br>Anyone can sell the token into it, at the market rate.</span></div>
   <svg id="h3s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
 </section>
-<section data-id="h4" class="s" data-s="77" data-e="85" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="77.3" data-f="rise">Voting means <span class="it am">endorsing</span> people.</span></span>
-  <span class="a sub" data-i="78.0" data-f="up">Point your weight at contributors you trust. You keep your tokens.</span></div>
+<section data-id="h4" class="s" data-s="91" data-e="99" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="91.3" data-f="rise">Voting means <span class="it am">endorsing</span> people.</span></span>
+  <span class="a sub" data-i="92" data-f="up">Point your weight at contributors you trust. You keep your tokens.</span></div>
 </section>
-<section data-id="h5" class="s" data-s="85" data-e="92" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="85.3" data-f="rise">An endorsement says: <span class="it rn">give them more say.</span></span></span>
-  <span class="a sub" data-i="86.0" data-f="up">More voting power. More spending power.</span></div>
+<section data-id="h5" class="s" data-s="99" data-e="106" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="99.3" data-f="rise">An endorsement says: <span class="it rn">give them more say.</span></span></span>
+  <span class="a sub" data-i="100" data-f="up">More voting power. More spending power.</span></div>
 </section>
-<section data-id="h6" class="s" data-s="92" data-e="100" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="92.3" data-f="rise">Trust flows <span class="it rn">through the network.</span></span></span>
-  <span class="a sub" data-i="93.0" data-f="up">Raindrop scores everyone by how the whole network endorses them.</span></div>
+<section data-id="h6" class="s" data-s="106" data-e="114" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="106.3" data-f="rise">Trust flows <span class="it rn">through the network.</span></span></span>
+  <span class="a sub" data-i="107" data-f="up">Raindrop scores everyone by how the whole network endorses them.</span></div>
 </section>
-<section data-id="h7" class="s" data-s="100" data-e="108" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="100.3" data-f="rise">Every round, it <span class="it rn">rains.</span></span></span>
-  <span class="a sub" data-i="101.0" data-f="up">New tokens are minted and airdropped by trust score.</span></div>
+<section data-id="h7" class="s" data-s="114" data-e="122" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="114.3" data-f="rise">Every round, it <span class="it rn">rains.</span></span></span>
+  <span class="a sub" data-i="115" data-f="up">New tokens are minted and airdropped by trust score.</span></div>
 </section>
-<section data-id="h8" class="s" data-s="108" data-e="116" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="108.3" data-f="rise">Keep them, or <span class="it am">sell them.</span></span></span></div>
+<section data-id="h8" class="s" data-s="122" data-e="130" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="122.3" data-f="rise">Keep them, or <span class="it am">sell them.</span></span></span></div>
   <svg id="h8s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
-  <div class="a col" data-i="109.0" data-f="up" style="left:110px"><div class="m">Keep</div><span>your voice in the network grows</span></div>
-  <div class="a col" data-i="110.2" data-f="up" style="left:1110px"><div class="m">Sell</div><span>the treasury pays the market rate</span></div>
+  <div class="a col" data-i="123" data-f="up" style="left:110px"><div class="m">Keep</div><span>your voice in the network grows</span></div>
+  <div class="a col" data-i="124.2" data-f="up" style="left:1110px"><div class="m">Sell</div><span>the treasury pays the market rate</span></div>
 </section>
-<section data-id="h9" class="s" data-s="116" data-e="124" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="116.3" data-f="rise">Change your mind <span class="it am">anytime.</span></span></span>
-  <span class="a sub" data-i="117.0" data-f="up">No proposal. No voting period. The next round follows you.</span></div>
+<section data-id="h9" class="s" data-s="130" data-e="138" data-bg="ink" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="130.3" data-f="rise">Change your mind <span class="it am">anytime.</span></span></span>
+  <span class="a sub" data-i="131" data-f="up">No proposal. No voting period. The next round follows you.</span></div>
 </section>
 
 <!-- ============ 5. Sybil ============ -->
-<section data-id="sy" class="s" data-s="124" data-e="133" data-bg="dark" data-sec="Fair by design" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i="124.3" data-f="rise">Sock puppets <span class="it rn">don't help.</span></span></span>
-  <span class="a sub" data-i="125.0" data-f="up">EigenTrust weighs trust, not accounts.<br>One wallet split ten ways gets the same rain.</span></div>
+<section data-id="sy" class="s" data-s="138" data-e="147" data-bg="dark" data-sec="The Raindrop way" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="138.3" data-f="rise">Sock puppets <span class="it rn">don't help.</span></span></span>
+  <span class="a sub" data-i="139" data-f="up">EigenTrust weighs trust, not accounts.<br>One wallet split ten ways gets the same rain.</span></div>
   <svg id="sys" width="1920" height="1080" style="position:absolute;inset:0"></svg>
-  <div class="a" data-i="125.8" data-f="up" style="position:absolute;left:1120px;top:560px;width:640px">
+  <div class="a" data-i="139.8" data-f="up" style="position:absolute;left:1120px;top:560px;width:640px">
     <div class="m" style="font-size:26px;opacity:.75">Share of the rain</div>
     <div class="d" id="syp" style="font-size:150px;margin:14px 0 26px">20%</div>
     <div class="progress-bar" style="--progress:.2"></div>
@@ -159,19 +173,21 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 </section>
 
 <!-- ============ 6. Close ============ -->
-<section data-id="rc" class="s" data-s="133" data-e="142" data-bg="ink" data-sec="In short" style="color:var(--color-paper)">
-  <div style="position:absolute;left:230px;top:250px;display:flex;flex-direction:column;gap:70px">
-    <div class="a d rc" data-i="133.4" data-f="up"><span class="old">Proposals</span><span class="arr">→</span><span class="it rn">endorsements</span></div>
-    <div class="a d rc" data-i="135.6" data-f="up"><span class="old">Deadlines</span><span class="arr">→</span><span class="it rn">anytime</span></div>
-    <div class="a d rc" data-i="137.8" data-f="up"><span class="old">Lump sums</span><span class="arr">→</span><span class="it rn">steady rain</span></div>
+<section data-id="rc" class="s" data-s="147" data-e="156" data-bg="ink" data-sec="In short" style="color:var(--color-paper)">
+  <div class="rcg">
+    <div class="a m" data-i="147.3" data-f="up" style="font-size:26px;opacity:.6">The DAO way</div><div></div><div class="a m" data-i="147.3" data-f="up" style="font-size:26px;color:var(--color-rain)">The Raindrop way</div>
+    <div class="a d old" data-i="147.6" data-f="up">Cranked</div><div class="a arr" data-i="147.6" data-f="up">→</div><div class="a d it rn" data-i="147.6" data-f="up">sensing</div>
+    <div class="a d old" data-i="149.4" data-f="up">Proposals</div><div class="a arr" data-i="149.4" data-f="up">→</div><div class="a d it rn" data-i="149.4" data-f="up">endorsements</div>
+    <div class="a d old" data-i="151.2" data-f="up">Deadlines</div><div class="a arr" data-i="151.2" data-f="up">→</div><div class="a d it rn" data-i="151.2" data-f="up">anytime</div>
+    <div class="a d old" data-i="153.0" data-f="up">Lump sums</div><div class="a arr" data-i="153.0" data-f="up">→</div><div class="a d it rn" data-i="153.0" data-f="up">steady rain</div>
   </div>
 </section>
-<section data-id="end" class="s" data-s="142" data-e="999" data-bg="cloud" data-sec="" style="color:var(--color-ink)">
+<section data-id="end" class="s" data-s="156" data-e="999" data-bg="cloud" data-sec="" style="color:var(--color-ink)">
   <div class="C">
-    <img class="a" data-i="142.2" data-f="drop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="width:120px;margin-bottom:-6px">
-    <span class="mk"><span class="a d hero" data-i="142.4" data-f="rise" style="font-size:260px">raindrop</span></span>
-    <div class="a" data-i="143.4" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);margin-top:30px">Fund your DAO the way trust flows.</div>
-    <div class="a gl button cta" data-i="144.4" data-f="pop">raindrop.money</div>
+    <img class="a" data-i="156.2" data-f="drop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="width:120px;margin-bottom:-6px">
+    <span class="mk"><span class="a d hero" data-i="156.4" data-f="rise" style="font-size:260px">raindrop</span></span>
+    <div class="a" data-i="157.4" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);margin-top:30px">Fund your DAO the way trust flows.</div>
+    <div class="a gl button cta" data-i="158.4" data-f="pop">raindrop.money</div>
   </div>
 </section>
 
@@ -183,7 +199,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 
 <script>
 (function(){
-const DUR=150,FPS=30,$=id=>document.getElementById(id),Q=s=>[...document.querySelectorAll(s)];
+const DUR=164,FPS=30,$=id=>document.getElementById(id),Q=s=>[...document.querySelectorAll(s)];
 const cl=x=>x<0?0:x>1?1:x,lerp=(a,b,p)=>a+(b-a)*p;
 function bz(a,b,c,d){const X=t=>3*a*t*(1-t)*(1-t)+3*c*t*t*(1-t)+t*t*t,Y=t=>3*b*t*(1-t)*(1-t)+3*d*t*t*(1-t)+t*t*t;
   return x=>{if(x<=0)return 0;if(x>=1)return 1;let lo=0,hi=1,m;for(let i=0;i<22;i++){m=(lo+hi)/2;X(m)<x?lo=m:hi=m}return Y(m)}}
@@ -191,7 +207,7 @@ const eo=bz(.25,.7,.25,1),eio=bz(.45,0,.35,1);
 const ramp=(t,a,d=1)=>eo(cl((t-a)/d));
 function hs(k,s){let x=Math.imul(k+1013904223^s,2654435761);x^=x>>>15;x=Math.imul(x,2246822519);x^=x>>>13;x=Math.imul(x,3266489917);x^=x>>>16;return(x>>>0)/4294967296}
 // design-system palette
-const COL={ink:'#1A3B52',paper:'#DCF0FA',rain:'#6AB8D8',amber:'#8DD4B7',rose:'#E8B5C7',white:'#F7F8F9'};
+const COL={ink:'#1A3B52',paper:'#DCF0FA',rain:'#6AB8D8',amber:'#8DD4B7',rose:'#E8B5C7',white:'#F7F8F9',grey:'#8A97A3'};
 const BG={ink:'bg-gradient-ink',dark:'bg-gradient-dark',white:'bg-white',cloud:'bg-cloud'},DARK={ink:1,dark:1};
 const DS='../../../design-system/assets/',TOKEN=DS+'components/glass-circle-token.svg';
 const scenes=Q('.s'),SX=Object.fromEntries(scenes.map(s=>[s.dataset.id,+s.dataset.s])),NS='http://www.w3.org/2000/svg';
@@ -237,24 +253,59 @@ function openR(t){const out=1-ramp(t,20.6,.9);OS.style.opacity=out;
     oA[k](OP[a],34,OP[b],34,d,(.5-.4*grey)*(1-lit));oA2[k](OP[a],34,OP[b],34,d,.85*lit)});
   rainOn(t,15,20.4,()=>OP.map(([x,y],i)=>({x,y,r:34,w:ODEG[i]})),14,3)}
 
-// ============ old way ============
-const P1=$('p1s'),CARDS=[['Q3 dev budget','120,000 USDC'],['Marketing push','80,000 USDC'],['New website','45,000 USDC']];
+// ============ the DAO way: a grey machine that moves one clunk at a time ============
 function card(parent,x,y,title,amt){const g=sv('g',{},parent);sv('rect',{x,y,width:480,height:210,rx:44,fill:'#fff',stroke:'url(#gIri)','stroke-width':2.5,filter:'url(#fSoft)'},g);
   const t=sv('text',{x:x+48,y:y+86,fill:COL.ink,'font-size':44,style:'font-family:var(--font-display);font-weight:600;letter-spacing:0'},g);t.textContent=title;
   const a=sv('text',{x:x+48,y:y+146,fill:COL.ink,'font-size':22,opacity:.6},g);a.textContent=amt;return g}
-const p1c=CARDS.map(([ti,am],i)=>card(P1,200+i*540,560,ti,am));
-function p1R(t){p1c.forEach((g,i)=>{const p=ramp(t,26.6+i*.8,1.2);g.style.opacity=p;g.setAttribute('transform',`translate(0 ${(1-p)*40})`)})}
-const P2=$('p2s'),dlT=label(P2,150,610,'VOTING CLOSES',{fill:COL.ink,'text-anchor':'start',opacity:.6,'font-size':22});
-const VR=[...Array(24)].map((_,i)=>sv('circle',{cx:1060+(i%8)*84,cy:560+Math.floor(i/8)*96,r:28,fill:'none',stroke:COL.ink,'stroke-width':3,opacity:0},P2));
-const VON=[[5,34.6],[14,36.4],[19,38.2]],vc=label(P2,1060-28,850,'VOTED 0 / 24',{fill:COL.ink,'text-anchor':'start','font-size':22,opacity:.6});
-function p2R(t){const o=ramp(t,33.2,1);VR.forEach((c,i)=>{c.style.opacity=o;const on=VON.find(v=>v[0]==i);c.setAttribute('fill',on&&t>on[1]?COL.ink:'none')});vc.style.opacity=.6*o;dlT.style.opacity=.6*o;
-  vc.textContent=`VOTED ${VON.filter(v=>t>v[1]).length} / 24`;$('dl').style.setProperty('--progress',lerp(1,.04,eio(cl((t-33.2)/6.4))))}
-const P3=$('p3s'),p3c=card(P3,260,560,'Q3 dev budget','120,000 USDC');
-const pass=sv('g',{},P3);sv('rect',{x:560,y:538,width:160,height:44,rx:22,fill:COL.amber,'fill-opacity':.85,stroke:'url(#gIri)','stroke-width':2},pass);label(pass,640,567,'PASSED',{fill:COL.ink,'font-size':18});
-const p3p=sv('circle',{cx:1440,cy:665,r:44,fill:COL.ink},P3),p3l=label(P3,1440,760,'ONE RECIPIENT',{fill:COL.ink,'font-size':22}),p3t=tok(P3);
-function p3R(t){const o=ramp(t,41.2,1);p3c.style.opacity=o;pass.style.opacity=ramp(t,42.2,.6);p3p.style.opacity=o;p3l.style.opacity=o;
-  const u=eio(cl((t-43)/1.6));tokAt(p3t,lerp(740,1440,u),665-Math.sin(u*Math.PI)*140,lerp(34,44,u));p3t.style.opacity=t>43&&t<44.7?1:0;
-  p3p.setAttribute('r',44+22*ramp(t,44.4,.8))}
+function gearPath(R,teeth,depth){let d='';for(let i=0;i<teeth*2;i++){const a0=i/(teeth*2)*6.283,a1=(i+1)/(teeth*2)*6.283,r=i%2?R-depth:R;
+    d+=(i?'L':'M')+(Math.cos(a0+.06)*r).toFixed(1)+' '+(Math.sin(a0+.06)*r).toFixed(1)+'L'+(Math.cos(a1-.06)*r).toFixed(1)+' '+(Math.sin(a1-.06)*r).toFixed(1)}return d+'Z'}
+function gear(parent,x,y,R,teeth){const g=sv('g',{transform:`translate(${x} ${y})`},parent),r=sv('g',{},g);sv('path',{d:gearPath(R,teeth,R*.16),fill:'#E4E9ED',stroke:COL.grey,'stroke-width':3,'stroke-linejoin':'round'},r);
+  sv('circle',{r:R*.55,fill:'none',stroke:COL.grey,'stroke-width':2.5,opacity:.7},r);sv('circle',{r:R*.12,fill:COL.grey},r);return{g,r,teeth}}
+// clunk: rotation advances in jerky steps, one per second
+const clunk=t=>{const f=Math.floor(t),p=t-f;return f+eio(cl((p-.7)/.3))};
+const spin=(G,t)=>{const a=clunk(t)*14;G.forEach((g,i)=>g.r.setAttribute('transform',`rotate(${(i%2?-1:1)*a*(G[0].teeth/g.teeth)})`))};
+const txt=(parent,x,y,s,at={})=>{const e=sv('text',{x,y,fill:COL.ink,'text-anchor':'middle','font-size':22,...at},parent);e.textContent=s;return e};
+// d1: gears and the proposal lever
+const D1=$('d1s'),G1=[gear(D1,760,720,180,16),gear(D1,1098,580,112,10),gear(D1,1245,830,82,8)];
+const lever=sv('g',{},D1);sv('rect',{x:1380,y:450,width:250,height:84,rx:10,fill:'#E4E9ED',stroke:COL.grey,'stroke-width':3},lever);txt(lever,1505,500,'PROPOSAL',{opacity:.7});
+const arm=sv('g',{},lever);sv('line',{x1:0,y1:0,x2:0,y2:120,stroke:COL.grey,'stroke-width':6},arm);sv('circle',{cx:0,cy:128,r:14,fill:COL.grey},arm);
+function d1R(t){D1.style.opacity=ramp(t,26,1.2);spin(G1,t);arm.setAttribute('transform',`translate(1505 534) rotate(${Math.sin(clunk(t)*Math.PI)*12})`)}
+// d2: the conveyor; one proposal stutters through five stations while the days climb
+const D2=$('d2s'),STN=['DRAFT','DISCUSS','VOTE','WAIT','EXECUTE'],SX0=260,SW=300,DAYS=[1,4,9,16,23];
+sv('rect',{x:200,y:760,width:1520,height:14,rx:7,fill:'#E4E9ED',stroke:COL.grey,'stroke-width':2.5},D2);
+const rollers=[...Array(16)].map((_,i)=>{const g=sv('g',{},D2);sv('circle',{r:9,fill:'#fff',stroke:COL.grey,'stroke-width':2.5},g);sv('line',{x1:-7,y1:0,x2:7,y2:0,stroke:COL.grey,'stroke-width':2},g);return g});
+STN.forEach((n,i)=>{sv('rect',{x:SX0+i*SW,y:540,width:220,height:70,rx:12,fill:'#E4E9ED',stroke:COL.grey,'stroke-width':2.5},D2);txt(D2,SX0+i*SW+110,583,n,{'font-size':20,opacity:.75});
+  sv('line',{x1:SX0+i*SW+110,y1:610,x2:SX0+i*SW+110,y2:664,stroke:COL.grey,'stroke-width':3,'stroke-dasharray':'6 6'},D2)});
+const pc=sv('g',{},D2);sv('rect',{x:-90,y:-44,width:180,height:88,rx:14,fill:'#fff',stroke:COL.ink,'stroke-width':2.5},pc);txt(pc,0,-6,'PROPOSAL',{'font-size':17,opacity:.7});txt(pc,0,24,'#42',{style:'font-family:var(--font-display);font-weight:600;letter-spacing:0'});
+const day=txt(D2,1720,880,'DAY 1',{'text-anchor':'end','font-size':26,opacity:.7});
+function d2R(t){D2.style.opacity=ramp(t,33.4,1);const u=t-34.2,st=Math.max(0,Math.min(4,Math.floor(u/1.2))),f=u<0?0:eio(cl((u-st*1.2-.85)/.35));
+  pc.setAttribute('transform',`translate(${SX0+110+Math.min(4,st+(st<4?f:0))*SW} 712)`);rollers.forEach((g,i)=>g.setAttribute('transform',`translate(${220+i*98} 767) rotate(${clunk(t)*40})`));
+  day.textContent='DAY '+(u<0?1:DAYS[Math.min(4,st+(f>.5&&st<4?1:0))])}
+// d3: one person cranks; most members sit it out (3 of 24 vote)
+const D3=$('d3s'),CR=[600,760],wheel=gear(D3,CR[0],CR[1],140,12),crank=sv('g',{},D3);sv('line',{x1:0,y1:0,x2:0,y2:-170,stroke:COL.grey,'stroke-width':10,'stroke-linecap':'round'},crank);sv('circle',{cx:0,cy:-170,r:16,fill:COL.ink},crank);
+const who=sv('g',{},D3);sv('circle',{cx:0,cy:-86,r:28,fill:COL.ink},who);sv('rect',{x:-30,y:-50,width:60,height:110,rx:26,fill:COL.ink},who);
+const crowd=[...Array(24)].map((_,i)=>{const g=sv('g',{transform:`translate(${1060+(i%8)*86} ${600+Math.floor(i/8)*130})`},D3);sv('circle',{cx:0,cy:-40,r:15,fill:'none',stroke:COL.grey,'stroke-width':2.5},g);
+  const b=sv('rect',{x:-17,y:-20,width:34,height:58,rx:15,fill:'none',stroke:COL.grey,'stroke-width':2.5},g);return{g,b,h:g.firstChild}});
+const VOTE=[[5,42.4],[14,43.9],[19,45.3]],vc=txt(D3,1060-17,920,'VOTED 0 / 24',{'text-anchor':'start',opacity:.6});
+function d3R(t){D3.style.opacity=ramp(t,41.2,1);const a=(t-40)*80+Math.sin((t-40)*2.6)*25;wheel.r.setAttribute('transform',`rotate(${a*.4})`);crank.setAttribute('transform',`translate(${CR[0]} ${CR[1]}) rotate(${a})`);
+  who.setAttribute('transform',`translate(${CR[0]+Math.sin(a*Math.PI/180)*170+60} ${CR[1]-Math.cos(a*Math.PI/180)*170+40})`);
+  crowd.forEach((c,i)=>{const v=VOTE.find(x=>x[0]==i&&t>x[1]);[c.h,c.b].forEach(e=>{e.setAttribute('fill',v?COL.ink:'none');e.setAttribute('stroke',v?COL.ink:COL.grey)});c.g.style.opacity=v?1:.55});
+  vc.textContent=`VOTED ${VOTE.filter(x=>t>x[1]).length} / 24`}
+// d4: the machine passes one proposal and drops a lump sum on one recipient
+const D4=$('d4s'),G4=[gear(D4,300,560,70,10),gear(D4,410,650,48,8)],d4c=card(D4,420,560,'Q3 dev budget','120,000 USDC');
+const pass=sv('g',{},D4);sv('rect',{x:720,y:538,width:160,height:44,rx:22,fill:COL.amber,'fill-opacity':.85,stroke:'url(#gIri)','stroke-width':2},pass);txt(pass,800,567,'PASSED',{'font-size':18});
+const rcp=sv('circle',{cx:1480,cy:665,r:44,fill:COL.ink},D4),rcl=txt(D4,1480,770,'ONE RECIPIENT'),lump=tok(D4);
+function d4R(t){const o=ramp(t,48.2,1);D4.style.opacity=o;spin(G4,t);pass.style.opacity=ramp(t,49.2,.6);
+  const u=eio(cl((t-50)/1.6));tokAt(lump,lerp(900,1480,u),665-Math.sin(u*Math.PI)*140,lerp(34,44,u));lump.style.opacity=t>50&&t<51.7?1:0;rcp.setAttribute('r',44+22*ramp(t,51.4,.8))}
+// d5: the machine idles while the work drifts out of reach
+const D5=$('d5s'),G5=[gear(D5,700,740,170,16),gear(D5,1015,600,106,10)];G5.forEach(g=>g.g.style.opacity=.55);
+const drift=[...Array(9)].map((_,i)=>({c:sv('circle',{r:12,fill:COL.rain,opacity:0},D5),a:hs(i,90)*6.283,d:200+hs(i,91)*80}));
+function d5R(t){const o=ramp(t,55,1);D5.style.opacity=o;
+  drift.forEach(p=>{const u=cl((t-55.4)/5.6),d=p.d+u*260;set(p.c,{cx:860+Math.cos(p.a+u*.3)*d*1.4,cy:700+Math.sin(p.a+u*.3)*d*.7});p.c.style.opacity=o*(1-u*.35)})}
+
+// The Raindrop way is timed on its own clock, as authored before the DAO section grew:
+// its scenes run at t - SHIFT (the HTML data-i/s/e times already include the shift).
+const SHIFT=14;
 
 // ============ how it works: the token ============
 const H1=$('h1s'),h1t=tok(H1,1),H2=$('h2s'),h2t=tok(H2,1),h2l=[sv('line',{stroke:COL.paper,'stroke-width':2,opacity:0},H2),sv('line',{stroke:COL.paper,'stroke-width':2,opacity:0},H2)];
@@ -349,11 +400,13 @@ function render(t){
   $('ch').style.color=DARK[bg]?COL.paper:COL.ink;$('sec').textContent=S.dataset.sec;
   $('bar').classList.toggle('progress-bar--on-light',!DARK[bg]);$('bar').style.setProperty('--progress',cl(t/DUR));
   cx.clearRect(0,0,1920,1080);
+  const r=t-SHIFT;
   $('open').style.display=OPEN[id]?'block':'none';if(OPEN[id])openR(t);
-  $('mech').style.display=MECH[id]?'block':'none';if(MECH[id])mechR(t);
-  ({p1:p1R,p2:p2R,p3:p3R,h1:h1R,h2:h2R,h3:h3R,h8:h8R,sy:syR}[id]||(()=>{}))(t);
-  if(id=='turn')ambient(t,47.6,.7);
-  if(id=='end')ambient(t,142,.5);
+  ({d1:d1R,d2:d2R,d3:d3R,d4:d4R,d5:d5R}[id]||(()=>{}))(t);
+  $('mech').style.display=MECH[id]?'block':'none';if(MECH[id])mechR(r);
+  ({h1:h1R,h2:h2R,h3:h3R,h8:h8R,sy:syR}[id]||(()=>{}))(r);
+  if(id=='turn')ambient(r,47.6,.7);
+  if(id=='end')ambient(r,142,.5);
 }
 function loop(ts){render(ts/1000);requestAnimationFrame(loop)}
 render(0);requestAnimationFrame(loop);

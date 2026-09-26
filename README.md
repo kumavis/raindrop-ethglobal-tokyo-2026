@@ -20,7 +20,7 @@ Built for ETHGlobal Tokyo 2026.
 | [`design-system/`](design-system/assets/README.md) | Design tokens (`tokens.json`, `tokens/*.css`), brand assets (logos, backgrounds, glass components) and [design reference](design-system/reference/README.md) spec sheets |
 | [`.github/workflows/paper-pages.yml`](.github/workflows/paper-pages.yml) | Renders the film and deploys the paper site to [raindrop.money](https://raindrop.money/) (GitHub Pages) on push to `main` |
 
-There are four explainer films: a **mission-first** cut (~95 s), a **protocol-first** cut (~131 s), and a slower **dao-first** cut (~150 s) that pitches Raindrop to DAOs as low-friction fund distribution. A fourth, **slime-first** (~135 s), is a brand exploration (*tendril*) that frames the same mechanism as living, adaptive governance. The protocol-first film is embedded at the top of the paper site. To preview either film, open its `videos/src/<film>/video.html` in a browser.
+There are four explainer films: a **mission-first** cut (~95 s), a **protocol-first** cut (~131 s), and a slower **dao-first** cut (~164 s) that contrasts the DAO way with the Raindrop way for fund distribution. A fourth, **slime-first** (~135 s), is a brand exploration (*tendril*) that frames the same mechanism as living, adaptive governance. The protocol-first film is embedded at the top of the paper site. To preview either film, open its `videos/src/<film>/video.html` in a browser.
 
 ## Getting started
 
