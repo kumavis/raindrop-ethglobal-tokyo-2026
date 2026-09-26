@@ -24,4 +24,8 @@ without the video. In CI the render is cached and only redone when the film's so
 The page is styled with the Raindrop design system: `build.mjs` copies the token CSS and the assets it
 uses (listed in `DS_FILES`) from `../design-system/` into `dist/ds/`.
 
+The page ends with a link to the simulator at `simulator/`. The production build copies the
+simulator's `index.html` and `src/` (plain ES modules, no build step) into `dist/simulator/`,
+so it deploys alongside the paper; the dev server serves them straight from `simulator/`.
+
 `dist/` is self-contained (KaTeX CSS + fonts are copied in) and can be deployed to any static host.

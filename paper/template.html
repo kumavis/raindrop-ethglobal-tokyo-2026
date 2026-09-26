@@ -93,7 +93,7 @@
   .layout {
     max-width: 60rem; margin: 0 auto; padding: 3rem 1rem 5rem;
     display: grid; grid-template-columns: 12rem minmax(0, 1fr); column-gap: 3.5rem;
-    grid-template-areas: "toc film" "toc article";
+    grid-template-areas: "toc film" "toc article" "toc explore";
   }
   nav.toc { grid-area: toc; position: sticky; top: 1.5rem; align-self: start; font: 400 .87rem/1.4 var(--font-body); }
   nav.toc h2 { margin: 0 0 .9rem; }
@@ -201,16 +201,61 @@
   .katex { font-size: 1.05em; }
   .katex-display { overflow-x: auto; overflow-y: hidden; }
 
+  /* Explore: the invitation to the simulator, for readers who reached the end (a glass card) */
+  .explore {
+    grid-area: explore; max-width: 42rem; margin-top: 4.5rem;
+    display: grid; grid-template-columns: minmax(0, 1fr) 9rem; align-items: center; gap: 1.5rem;
+    padding: 2.1rem 2rem 2.2rem 2.25rem;
+    color: var(--page-text); text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .explore:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(var(--color-rain-rgb), .26), 0 0 64px rgba(var(--color-rose-rgb), .2); }
+  .explore:active { transform: translateY(0); }
+  .explore:focus-visible { outline: 2px solid var(--color-rain); outline-offset: 4px; }
+  .explore-title {
+    display: block; margin: .8rem 0 .45rem;
+    font: 600 clamp(1.9rem, 4.4vw, 2.3rem)/1.05 var(--font-display); letter-spacing: -.01em; text-wrap: balance;
+  }
+  .explore-copy { display: block; color: var(--page-muted); font-size: 1rem; line-height: 1.6; }
+  /* Primary glass pill button (design-system reference: glass-button-endorse) */
+  .explore-go {
+    display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.4rem;
+    padding: .7rem 1.2rem .75rem 1.45rem; border-radius: var(--radius-pill);
+    background: linear-gradient(rgba(var(--color-ink-rgb), .35), rgba(var(--color-ink-rgb), .35)) padding-box,
+      linear-gradient(var(--color-rain), var(--color-rain)) padding-box, var(--glass-border-iridescent) border-box;
+    border: 1.5px solid transparent; color: #fff;
+    box-shadow: var(--glass-shadow-outer-glow);
+    font: var(--button-weight) 1.3rem/1 var(--button-family);
+    transition: background .2s ease;
+  }
+  .explore-go svg { width: 1.05rem; height: 1.05rem; transition: transform .2s ease; }
+  .explore:hover .explore-go {
+    background: linear-gradient(rgba(var(--color-ink-rgb), .22), rgba(var(--color-ink-rgb), .22)) padding-box,
+      linear-gradient(var(--color-rain), var(--color-rain)) padding-box, var(--glass-border-iridescent) border-box;
+  }
+  .explore:hover .explore-go svg { transform: translateX(3px); }
+  .explore-art { width: 100%; height: auto; overflow: visible; }
+  .explore-art .halo { transition: transform .35s ease; transform-box: fill-box; transform-origin: center; }
+  .explore:hover .explore-art .halo { transform: scale(1.08); }
+  @media (prefers-reduced-motion: reduce) {
+    .explore, .explore-go, .explore-go svg, .explore-art .halo { transition: none; }
+    .explore:hover, .explore:hover .explore-go svg, .explore:hover .explore-art .halo { transform: none; }
+  }
+
   @media (max-width: 52rem) {
-    .layout { grid-template-columns: 1fr; grid-template-areas: "film" "toc" "article"; padding-top: 2rem; }
+    .layout { grid-template-columns: 1fr; grid-template-areas: "film" "toc" "article" "explore"; padding-top: 2rem; }
     nav.toc { position: static; margin-bottom: 1rem; }
     header.hero { padding: 3.5rem 1rem 3rem; }
     .hero-mark { display: none; }
     .anchor { display: none; }
   }
+  @media (max-width: 34rem) {
+    .explore { grid-template-columns: 1fr; gap: .5rem; margin-top: 3.5rem; padding: 1.6rem 1.35rem 1.5rem; }
+    .explore-art { order: -1; width: 7.5rem; margin: 0 0 .25rem -.6rem; }
+  }
   @media print {
     header.hero { background: none; padding: 1rem 0; }
-    .hero-mark, .reading-progress, nav.toc, .film { display: none; }
+    .hero-mark, .reading-progress, nav.toc, .film, .explore { display: none; }
     .glass { box-shadow: none; backdrop-filter: none; }
     .layout { display: block; padding: 0; }
   }
@@ -246,6 +291,39 @@
   <article>
 {{body}}
   </article>
+  <a class="explore glass" href="simulator/">
+    <span>
+      <span class="eyebrow label"><img src="ds/assets/logo/raindrop-icon.svg" alt="" aria-hidden="true">Go deeper</span>
+      <span class="explore-title">Explore the Raindrop simulator</span>
+      <span class="explore-copy">Step through EigenTrust on prebuilt networks, from a single endorsement to Sybil attacks, and watch each round of issuance settle. Tune α and issuance as it runs.</span>
+      <span class="explore-go">Open the simulator
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4.5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </span>
+    <!-- Accounts as glass disks (balance) with rain halos (trust), joined by endorsements -->
+    <svg class="explore-art" viewBox="0 0 152 120" aria-hidden="true">
+      <defs>
+        <linearGradient id="explore-rim" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6AB8D8"/><stop offset=".2" stop-color="#E8B5C7"/><stop offset=".4" stop-color="#88E0E8"/>
+          <stop offset=".6" stop-color="#8DD4B7"/><stop offset=".8" stop-color="#B8A9D4"/><stop offset="1" stop-color="#6AB8D8"/>
+        </linearGradient>
+      </defs>
+      <path d="M52 52 110 30M52 52 104 88M110 30 104 88M52 52 24 96" stroke="#6AB8D8" stroke-opacity=".45" stroke-width="1.2"/>
+      <circle cx="52" cy="52" r="34" fill="none" stroke="#6AB8D8" stroke-opacity=".22"/>
+      <g fill="none" stroke="#6AB8D8" stroke-width="1.6">
+        <circle class="halo" cx="104" cy="88" r="19"/>
+        <circle class="halo" cx="52" cy="52" r="26"/>
+        <circle class="halo" cx="110" cy="30" r="12"/>
+        <circle class="halo" cx="24" cy="96" r="8"/>
+      </g>
+      <g fill="#DCF0FA" stroke="url(#explore-rim)" stroke-width="1.5">
+        <circle cx="52" cy="52" r="22"/>
+        <circle cx="110" cy="30" r="11"/>
+        <circle cx="104" cy="88" r="11"/>
+        <circle cx="24" cy="96" r="6"/>
+      </g>
+    </svg>
+  </a>
 </div>
 
 <script>

@@ -1,6 +1,7 @@
 // Local server for the paper.
 //   node dev.mjs            dev build, rebuild + live reload on paper.md / template.html changes,
-//                           video served from its render directory at media/
+//                           video served from its render directory at media/,
+//                           simulator served from its source directory at simulator/
 //   node dev.mjs --preview  serve the production build in dist/ as-is
 // Supports HTTP Range requests, which browsers (Safari especially) need to play and seek MP4.
 import { createServer } from 'node:http';
@@ -8,7 +9,7 @@ import { createReadStream, watch } from 'node:fs';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build, OUT_DIR, VIDEO } from './build.mjs';
+import { build, OUT_DIR, VIDEO, SIMULATOR_DIR, SIMULATOR_SOURCES } from './build.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const PORT = +process.env.PORT || 4173;
@@ -23,13 +24,25 @@ const TYPES = {
 const RELOAD_SCRIPT = `<script>new EventSource('/__reload').onmessage = () => location.reload();</script>`;
 const clients = new Set();
 
-// Maps a URL path to a file, refusing anything that escapes its root.
+// Maps a URL path to a file, refusing anything that escapes its root (and, for the
+// simulator, anything outside the files its build publishes, e.g. dev.mjs or test/).
+// Returns null (a 404) for malformed percent-encoding like /%E0 too.
 function resolve(urlPath) {
-  const [root, rel] = !preview && urlPath.startsWith('/media/')
-    ? [MEDIA_DIR, urlPath.slice('/media/'.length)]
-    : [OUT_DIR, urlPath.endsWith('/') ? urlPath + 'index.html' : urlPath];
-  const file = path.join(root, decodeURIComponent(rel));
-  return file.startsWith(root + path.sep) ? file : null;
+  let [root, rel] = [OUT_DIR, urlPath.endsWith('/') ? urlPath + 'index.html' : urlPath];
+  if (!preview && rel.startsWith('/media/')) [root, rel] = [MEDIA_DIR, rel.slice('/media/'.length)];
+  if (!preview && rel.startsWith('/simulator/')) [root, rel] = [SIMULATOR_DIR, rel.slice('/simulator/'.length)];
+  let file;
+  try {
+    file = path.join(root, decodeURIComponent(rel));
+  } catch {
+    return null;
+  }
+  if (!file.startsWith(root + path.sep)) return null;
+  if (root === SIMULATOR_DIR) {
+    const published = (f) => file === path.join(root, f) || file.startsWith(path.join(root, f) + path.sep);
+    if (!SIMULATOR_SOURCES.some(published)) return null;
+  }
+  return file;
 }
 
 const server = createServer(async (req, res) => {
@@ -38,6 +51,10 @@ const server = createServer(async (req, res) => {
     res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache' });
     clients.add(res);
     req.on('close', () => clients.delete(res));
+    return;
+  }
+  if (pathname === '/simulator') {
+    res.writeHead(301, { location: '/simulator/' }).end();
     return;
   }
   const file = resolve(pathname);

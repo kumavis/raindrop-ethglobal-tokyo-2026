@@ -4,13 +4,16 @@
 // --workspace videos) it is copied in and embedded above the abstract. In dev
 // builds (see dev.mjs) it isn't copied; the page points at media/, which the dev
 // server maps straight onto the video's directory.
-import { readFile, writeFile, mkdir, cp, access, stat } from 'node:fs/promises';
+// The simulator, linked from the end of the page, is copied to simulator/ the same
+// way (plain ES modules, no build step); in dev the server maps simulator/ onto it.
+import { readFile, writeFile, mkdir, cp, rm, access, stat } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Marked } from 'marked';
 import katex from 'katex';
+import { SOURCES as SIMULATOR_SOURCES } from '../simulator/build.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -32,6 +35,8 @@ const DS_FILES = [
 export const VIDEO = path.resolve(here, process.env.VIDEO ?? '../videos/dist/protocol-first/video.mp4');
 const POSTER = path.join(path.dirname(VIDEO), 'poster.jpg');
 const POSTER_AT = process.env.POSTER_AT ?? '5'; // seconds; the title card
+export const SIMULATOR_DIR = path.resolve(here, '../simulator');
+export { SIMULATOR_SOURCES };
 
 const exists = (f) => access(f).then(() => true, () => false);
 
@@ -166,6 +171,11 @@ export async function build({ dev = false } = {}) {
   });
   for (const f of DS_FILES) {
     await cp(path.join(DESIGN_SYSTEM, f), path.join(OUT_DIR, 'ds', f), { recursive: true });
+  }
+  if (!dev) {
+    const out = path.join(OUT_DIR, 'simulator');
+    await rm(out, { recursive: true, force: true });
+    for (const f of SIMULATOR_SOURCES) await cp(path.join(SIMULATOR_DIR, f), path.join(out, f), { recursive: true });
   }
   await writeFile(path.join(OUT_DIR, 'index.html'), html);
   console.log(`built ${path.relative(process.cwd(), path.join(OUT_DIR, 'index.html'))}`);
