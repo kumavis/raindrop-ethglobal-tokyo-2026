@@ -23,10 +23,12 @@ The paper never states the formula, so the authors should check that this matche
 
 ## 2. Delegation will be bought, not given
 
-Since delegating costs the delegator, recipients will pay for it:
+Since delegating costs the delegator, recipients have a reason to pay for it:
 
-- **Bribe and kickback markets.** A recipient can offer "delegate to me and I'll return 80% of what you send." A smart contract can enforce this trustlessly because trust edges are public. The recipient keeps the spread, and the delegator does better than self-trust. The "endorsed contributor" ends up being whoever runs the best rebate program.
-- **There is direct precedent.** Curve's gauge voting is nearly this mechanism: token-weighted, continuous direction of emissions. It produced Convex, Votium, Hidden Hand and a large market in paid votes. The paper should cite it and explain why Raindrop would turn out differently. Other prior art it omits includes conviction voting, liquid democracy, Gitcoin quadratic funding, Optimism RetroPGF and SourceCred.
+- **Bribe and kickback markets.** A recipient can offer "delegate to me and I'll return 80% of what you send." A smart contract can enforce this trustlessly because trust edges are public. *Correction to an earlier draft of this review:* while self-trust is allowed, a kickback does **not** beat self-trust. A delegator who gets 80% back ends up with \(\alpha + 0.8(1-\alpha)\) of their share, which is less than the 100% they keep by trusting themselves. Kickbacks cause harm in two other ways:
+  - **They outbid honest contributors.** A holder who was willing to endorse someone is better off endorsing whoever pays a rebate than a real contributor who pays nothing back. Rebates draw endorsements away from real work, so the "endorsed contributor" becomes whoever runs the best rebate program.
+  - **They take over once self-trust is blocked.** The obvious fix for Section 1 is to stop holders from directing issuance to themselves. Once that's done, the rebate becomes the best way to get value back, and bribery becomes the main strategy. The self-trust problem and the bribery problem are one trade-off, not two separate problems.
+- **There is direct precedent.** Curve's gauge voting is nearly this mechanism: token-weighted, continuous direction of emissions. Voters cannot direct emissions to themselves, which is exactly the setting where bribes win. It produced Convex, Votium, Hidden Hand and a large market in paid votes. The paper should cite it and explain why Raindrop would turn out differently. Other prior art it omits includes conviction voting, liquid democracy, Gitcoin quadratic funding, Optimism RetroPGF and SourceCred.
 - **Delegation becomes a separate tradable asset.** A wrapped token that delegates programmatically, similar to vlCVX, splits influence from economic exposure.
 
 ## 3. Influence without exposure
