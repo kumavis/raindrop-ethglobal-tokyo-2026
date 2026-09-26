@@ -4,7 +4,7 @@ Raindrop explainer films, authored as self-contained HTML animations and rendere
 
 - `src/mission-first/video.html` — mission-led cut (~95s)
 - `src/protocol-first/video.html` — protocol-led cut (~131s), built on the [design system](../design-system/assets/README.md)
-- `src/dao-first/video.html` — DAO-governance cut (~164s): the DAO way (a machine you have to crank) vs. the Raindrop way (a network that grows toward the work). Slower, one idea per slide, also on the design system
+- `src/dao-first/video.html` — funding cut (~165s) for any organization: the DAO approach (a machine you have to crank) as the old way, a Raindrop network (funding that follows trust) as the new one. Slower, one idea per slide, also on the design system
 - `src/slime-first/video.html` — **tendril** brand exploration (~135s): DAOs as clunky machines vs. governance as a living, adaptive organism (a slime mold). Same mechanism, same type and palette, no rain motif
 
 Open any `video.html` in a browser to preview it live.
