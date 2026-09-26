@@ -2,9 +2,11 @@
   "name": "raindrop-ethglobal-tokyo-2026",
   "private": true,
   "workspaces": [
-    "videos"
+    "videos",
+    "paper"
   ],
   "scripts": {
-    "render-videos": "npm run render --workspace videos"
+    "render-videos": "npm run render --workspace videos",
+    "build-paper": "npm run build --workspace paper"
   }
 }
