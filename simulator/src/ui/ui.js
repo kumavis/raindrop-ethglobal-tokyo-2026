@@ -3,7 +3,7 @@
 // one (bottom sheets, one at a time), keeps stage insets in sync with the chrome, and
 // handles keyboard shortcuts. createUI(...).update() runs every frame and is cheap.
 
-import { isTyping, setClass } from './dom.js';
+import { isTyping } from './dom.js';
 import { createTopbar } from './topbar.js';
 import { createInfo, createPicker } from './picker.js';
 import { createPlayback, SPEEDS } from './playback.js';
@@ -26,7 +26,6 @@ export function createUI(root, app, player, stage) {
   const sideSheets = matchMedia(SIDE_SHEET_QUERY);
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const open = new Set();
-  let eigenVisible = false;
 
   const ctx = {
     app, player, stage, root,
@@ -39,12 +38,6 @@ export function createUI(root, app, player, stage) {
     toggle: (n) => setOpen(n, !open.has(n)),
     togglePlay,
     cycleSpeed,
-    setEigenVisible: (v) => {
-      if (v === eigenVisible) return;
-      eigenVisible = v;
-      setClass(root, 'eigen-on', v);
-      if (ctx.mobile) relayout();
-    },
   };
   app.on('compiled', () => { ctx.version += 1; });
 
@@ -68,8 +61,10 @@ export function createUI(root, app, player, stage) {
     const dialog = name === 'picker' || (ctx.mobile && SHEETS.includes(name));
     if (on) {
       if (dialog) openers[name] = document.activeElement;
-      if (ctx.mobile && (SHEETS.includes(name) || name === 'info')) {
-        for (const s of [...SHEETS, 'info']) if (s !== name) setOpen(s, false);
+      // on a phone there is room for one of these at a time (the EigenTrust panel included)
+      const single = [...SHEETS, 'info', 'eigen'];
+      if (ctx.mobile && single.includes(name)) {
+        for (const s of single) if (s !== name) setOpen(s, false);
       }
       // the info card and the inspector share the top-left corner on desktop
       if (name === 'inspector') setOpen('info', false);
@@ -80,9 +75,10 @@ export function createUI(root, app, player, stage) {
     } else {
       open.delete(name);
       if (name === 'inspector' && app.selectedId) app.select(null);
-      // hand focus back to whatever opened the panel, if it was inside it
+      // hand focus back to whatever opened the panel (for EigenTrust, its (i)), if it was inside it
       const el = panels[name]?.el;
-      if (el?.contains(document.activeElement)) openers[name]?.focus?.({ preventScroll: true });
+      const back = openers[name] ?? (name === 'eigen' ? playback.eigenBtn : null);
+      if (el?.contains(document.activeElement)) back?.focus?.({ preventScroll: true });
       delete openers[name];
     }
     root.classList.toggle(`open-${name}`, on);
@@ -90,6 +86,7 @@ export function createUI(root, app, player, stage) {
     if (name === 'picker') topbar.scenarioBtn.setAttribute('aria-expanded', String(on));
     if (name === 'params') topbar.paramsBtn.setAttribute('aria-pressed', String(on));
     if (name === 'legend') topbar.legendBtn.setAttribute('aria-pressed', String(on));
+    if (name === 'eigen') playback.eigenBtn.setAttribute('aria-pressed', String(on));
     if (on) panels[name]?.onOpen?.();
     if (name === 'inspector' && on) inspector.update();
     // The picker and the mobile sheets act as dialogs: move focus in so keyboard users
@@ -145,7 +142,6 @@ export function createUI(root, app, player, stage) {
     } else {
       // Below 1200 px the drawer plus the left column would squeeze the graph, so start closed.
       setOpen('params', innerWidth >= 1200);
-      setOpen('eigen', true);
     }
     relayout();
   }
@@ -176,11 +172,13 @@ export function createUI(root, app, player, stage) {
       // offsetHeight ignores the slide-in transform, so this is the settled height
       if (sheet && sideSheets.matches) next.right = panels[sheet].el.offsetWidth + 8;
       else if (sheet) next.bottom = Math.max(next.bottom, panels[sheet].el.offsetHeight + 8);
-      // the expanded EigenTrust panel is opt-in, so it may push the graph up
-      else if (eigenVisible && open.has('eigen')) next.bottom += eigen.el.offsetHeight + 8;
-      // otherwise keep the row above the dock clear: the EigenTrust pill (during rains) and
-      // the fit button share it, and reserving it always stops the camera jumping each round
-      else next.bottom += Math.max(zoom.el.offsetHeight, open.has('eigen') ? 0 : eigen.el.offsetHeight) + 8;
+      // the EigenTrust panel is opt-in, so it may push the graph up (landscape: aside, below)
+      else if (open.has('eigen') && !sideSheets.matches) next.bottom += eigen.el.offsetHeight + 8;
+      // otherwise keep the fit button's row above the dock clear (it hides under the panel)
+      else if (!open.has('eigen')) next.bottom += zoom.el.offsetHeight + 8;
+      // landscape: the panel sits at the left between the top bar and the dock, so keep the
+      // graph beside it rather than squeezing it into the strip above
+      if (open.has('eigen') && sideSheets.matches) next.left = Math.round(eigen.el.offsetLeft + eigen.el.offsetWidth + 8);
       if (open.has('info')) {
         // Keep the graph clear of the intro card until it is dismissed: beside it when the
         // card leaves a wide enough column (landscape, small tablets), else below it, unless
@@ -197,8 +195,7 @@ export function createUI(root, app, player, stage) {
       const drawer = open.has('params') ? params.el.offsetWidth + 28 : 0;
       next.right = Math.round(16 + drawer + zoom.el.offsetWidth + 8);
       // The left column holds the intro card, the inspector and the EigenTrust panel. Keep the
-      // graph beside them rather than under them. The EigenTrust column is reserved even
-      // between rains (while the panel is expanded), so the camera doesn't jump every round.
+      // graph beside them rather than under them.
       const col = ['info', 'inspector', 'eigen']
         .filter((n) => open.has(n))
         .map((n) => panels[n].el.offsetLeft + panels[n].el.offsetWidth);
@@ -289,7 +286,7 @@ export function createUI(root, app, player, stage) {
   function escape() {
     const order = ctx.mobile
       ? ['picker', 'params', 'legend', 'inspector', 'info', 'eigen']
-      : ['picker', 'info', 'inspector', 'legend'];
+      : ['picker', 'info', 'inspector', 'legend', 'eigen'];
     const name = order.find((n) => open.has(n));
     if (name) setOpen(name, false);
     else if (app.selectedId) app.select(null);

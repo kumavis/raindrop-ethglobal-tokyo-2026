@@ -124,6 +124,15 @@ describe('setParams / resetParams', () => {
     assert.equal(app.compiled.steps.length, app.compiled.scriptLength + 2);
     assert.deepEqual(log.map(([t]) => t), ['params', 'compiled']);
   });
+  test('resetParams({ keepExtraRounds: false }) also drops the extra rounds', () => {
+    const app = createApp({ scenarios: [one] });
+    app.loadScenario('one');
+    app.setParams({ alpha: 0.9 });
+    app.extendRain(2);
+    app.resetParams({ keepExtraRounds: false });
+    assert.deepEqual(app.params, { ...DEFAULT_PARAMS, ...one.params });
+    assert.equal(app.compiled.steps.length, app.compiled.scriptLength);
+  });
 });
 
 describe('extendRain', () => {

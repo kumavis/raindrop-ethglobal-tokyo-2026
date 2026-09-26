@@ -1,7 +1,7 @@
 // The timeline player (src/view/player.js) needs no DOM: these check that switching the
 // EigenTrust display mode and changing parameters keep the viewer's place, that repeated
-// rains walk their inner loop faster, that the rain phase grows every balance smoothly, and
-// that playback ends cleanly at the extra-round cap.
+// rains walk their inner loop faster, that the rain phase grows every balance smoothly,
+// that playback pauses where the script ends, and that it ends cleanly at the extra-round cap.
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { createApp, MAX_EXTRA_ROUNDS } from '../src/app.js';
@@ -102,6 +102,37 @@ describe('player', () => {
       assert.deepEqual(player.frame().nodes.map((n) => n.balance), end, 'the rain ends exactly on the next state');
     });
   }
+
+  test('playback pauses where the script ends, and play keeps it raining', () => {
+    const { app, player } = setup('first-drop');
+    const n = app.compiled.scriptLength;
+    player.seek(n - 1);
+    player.play();
+    for (let k = 0; k < 400 && player.playing; k++) player.tick(0.1);
+    assert.equal(player.playing, false, 'paused at the end of the script');
+    assert.equal(player.cursor, n);
+    assert.equal(player.atScriptEnd, true);
+    assert.equal(app.compiled.steps.length, n, 'no extra round yet');
+    assert.equal(player.ended, false, 'Keep raining is on, so there is more to play');
+    player.play();
+    for (let k = 0; k < 400 && player.cursor <= n; k++) player.tick(0.1);
+    assert.equal(player.playing, true, 'extra rounds play on without pausing again');
+    assert.ok(app.compiled.steps.length > n);
+    assert.equal(app.compiled.steps[n].extra, true);
+  });
+
+  test('→ at the script end steps into the new rain round rather than past it', () => {
+    const { app, player } = setup('first-drop');
+    const n = app.compiled.scriptLength;
+    player.seek(n);
+    player.stepForward();
+    assert.equal(app.compiled.steps.length, n + 1, 'one extra round added');
+    assert.equal(player.target.cursor, n, 'aimed inside the new round');
+    assert.ok(player.target.time > 0);
+    for (let k = 0; k < 400 && player.target; k++) player.tick(0.05);
+    assert.equal(player.cursor, n);
+    assert.ok(player.time > 0, 'stopped at the first EigenTrust stop of the round');
+  });
 
   test('at the extra-round cap playback has ended even with Keep raining on', () => {
     const { app, player } = setup('empty-canvas');

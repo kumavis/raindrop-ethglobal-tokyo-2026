@@ -8,7 +8,7 @@
 <link rel="icon" href="ds/assets/logo/raindrop-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Raindrop design system: palette, Cormorant + Albert Sans, glass, progress bar (see design-system/) -->
+<!-- Raindrop design system: palette, Manrope + Albert Sans, glass, progress bar (see design-system/) -->
 <link rel="stylesheet" href="ds/tokens/index.css">
 <link rel="stylesheet" href="katex/katex.min.css">
 <style>
@@ -73,8 +73,8 @@
   .eyebrow { display: flex; align-items: center; gap: .6rem; color: var(--page-text); }
   .eyebrow img { width: 18px; height: auto; }
   h1 {
-    font: 700 clamp(3.4rem, 9vw, 6.2rem)/.95 var(--font-display);
-    letter-spacing: -.02em;
+    font: 700 clamp(3.2rem, 8.5vw, 5.6rem)/.95 var(--font-display);
+    letter-spacing: -.03em;
     margin: 1.1rem 0 .9rem;
   }
   .subtitle {
@@ -108,9 +108,9 @@
 
   /* Article */
   article { grid-area: article; max-width: 42rem; }
-  article h2, article h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.1; font-variant-numeric: lining-nums; position: relative; }
-  article h2 { font-size: 2.3rem; letter-spacing: -.01em; margin: 3.2rem 0 1rem; }
-  article h3 { font-size: 1.55rem; margin: 2.2rem 0 .5rem; }
+  article h2, article h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; position: relative; }
+  article h2 { font-size: 1.8rem; letter-spacing: -.02em; margin: 3.2rem 0 1rem; }
+  article h3 { font-size: 1.25rem; letter-spacing: -.01em; margin: 2.2rem 0 .5rem; }
   .anchor {
     position: absolute; left: -1em; color: var(--page-rule); text-decoration: none; opacity: 0;
     transition: opacity .15s;
@@ -174,7 +174,7 @@
     background: linear-gradient(rgba(var(--color-rain-rgb), .45), rgba(var(--color-rain-rgb), .45)) padding-box, var(--glass-border-iridescent) border-box;
     border: 1.5px solid transparent; color: #fff;
     box-shadow: var(--glass-shadow-outer-glow);
-    font: var(--button-weight) 1.05rem/1 var(--button-family);
+    font: var(--button-weight) .9rem/1 var(--button-family);
   }
   .theatre-close:hover { background: linear-gradient(rgba(var(--color-rain-rgb), .65), rgba(var(--color-rain-rgb), .65)) padding-box, var(--glass-border-iridescent) border-box; }
   .theatre-close:focus-visible { outline: 2px solid var(--color-rain); outline-offset: 3px; }
@@ -187,7 +187,7 @@
   /* Figures (e.g. the Sybil split) */
   .figure { margin: 1.8rem 0 2rem; text-align: center; }
   .figure img { width: min(100%, 26rem); height: auto; border-radius: var(--radius-md); box-shadow: var(--page-shadow); }
-  .figure figcaption { margin-top: .8rem; font: italic 500 1.2rem/1.4 var(--font-display); color: var(--page-muted); }
+  .figure figcaption { margin-top: .8rem; font: italic 400 1rem/1.5 var(--font-body); color: var(--page-muted); }
 
   .cite { font-size: .85em; text-decoration: none; font-variant-numeric: tabular-nums; font-weight: 500; }
   .ref {
@@ -214,7 +214,7 @@
   .explore:focus-visible { outline: 2px solid var(--color-rain); outline-offset: 4px; }
   .explore-title {
     display: block; margin: .8rem 0 .45rem;
-    font: 600 clamp(1.9rem, 4.4vw, 2.3rem)/1.05 var(--font-display); letter-spacing: -.01em; text-wrap: balance;
+    font: 600 clamp(1.6rem, 3.8vw, 1.9rem)/1.15 var(--font-display); letter-spacing: -.02em; text-wrap: balance;
   }
   .explore-copy { display: block; color: var(--page-muted); font-size: 1rem; line-height: 1.6; }
   /* Primary glass pill button (design-system reference: glass-button-endorse) */
@@ -225,7 +225,7 @@
       linear-gradient(var(--color-rain), var(--color-rain)) padding-box, var(--glass-border-iridescent) border-box;
     border: 1.5px solid transparent; color: #fff;
     box-shadow: var(--glass-shadow-outer-glow);
-    font: var(--button-weight) 1.3rem/1 var(--button-family);
+    font: var(--button-weight) 1.05rem/1 var(--button-family);
     transition: background .2s ease;
   }
   .explore-go svg { width: 1.05rem; height: 1.05rem; transition: transform .2s ease; }
