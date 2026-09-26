@@ -21,4 +21,7 @@ The protocol-first film is embedded above the abstract when it has been rendered
 (override with `VIDEO=path` / `POSTER_AT=seconds`). Without a render, the page builds
 without the video. In CI the render is cached and only redone when the film's source changes.
 
+The page is styled with the Raindrop design system: `build.mjs` copies the token CSS and the assets it
+uses (listed in `DS_FILES`) from `../design-system/` into `dist/ds/`.
+
 `dist/` is self-contained (KaTeX CSS + fonts are copied in) and can be deployed to any static host.

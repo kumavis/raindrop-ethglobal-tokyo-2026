@@ -18,6 +18,17 @@ const SRC = path.join(here, 'paper.md');
 const TEMPLATE = path.join(here, 'template.html');
 export const OUT_DIR = path.join(here, 'dist');
 const KATEX_DIST = path.dirname(require.resolve('katex/dist/katex.min.css'));
+const DESIGN_SYSTEM = path.resolve(here, '../design-system');
+// Design-system files the page uses, copied to dist/ds/ (same layout, so the CSS's relative URLs hold).
+// Only the 1x cloud background: the 8 MB @2x is too heavy for the web.
+const DS_FILES = [
+  'tokens',
+  'assets/logo/raindrop-icon.svg',
+  'assets/components/glass-circle-token.svg',
+  'assets/components/ripple.svg',
+  'assets/components/sybil-split.svg',
+  'assets/backgrounds/cloud-background.png',
+];
 export const VIDEO = path.resolve(here, process.env.VIDEO ?? '../videos/dist/protocol-first/video.mp4');
 const POSTER = path.join(path.dirname(VIDEO), 'poster.jpg');
 const POSTER_AT = process.env.POSTER_AT ?? '5'; // seconds; the title card
@@ -118,7 +129,12 @@ function render(source) {
   // Wrap the abstract section so it can be styled as a lead block
   body = body.replace(
     /(<h2 id="abstract">[\s\S]*?)(?=<h2 )/,
-    '<section class="abstract">$1</section>\n',
+    '<section class="abstract glass">$1</section>\n',
+  );
+  // Sybil split figure after the first paragraph of the Sybil resistance section
+  body = body.replace(
+    /(<h2 id="6-sybil-resistance">[\s\S]*?<\/p>\n)/,
+    `$1<figure class="figure"><img src="ds/assets/components/sybil-split.svg" width="296" height="180" alt="One large circle splitting into many small circles"><figcaption>One balance split across many accounts carries the same total weight.</figcaption></figure>\n`,
   );
 
   const tocHtml = toc
@@ -146,6 +162,9 @@ export async function build({ dev = false } = {}) {
     recursive: true,
     filter: (f) => !/\.(js|mjs)$/.test(f) && !f.includes(`${path.sep}contrib`),
   });
+  for (const f of DS_FILES) {
+    await cp(path.join(DESIGN_SYSTEM, f), path.join(OUT_DIR, 'ds', f), { recursive: true });
+  }
   await writeFile(path.join(OUT_DIR, 'index.html'), html);
   console.log(`built ${path.relative(process.cwd(), path.join(OUT_DIR, 'index.html'))}`);
 }

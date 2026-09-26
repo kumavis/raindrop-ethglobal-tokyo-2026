@@ -6,6 +6,7 @@ on:
     paths:
       - 'paper/**'
       - 'videos/**'
+      - 'design-system/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/paper-pages.yml'

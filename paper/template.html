@@ -5,87 +5,89 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{title}}</title>
 <meta name="description" content="{{title}}">
+<link rel="icon" href="ds/assets/logo/raindrop-icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,600;1,14..32,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Raindrop design system: palette, Cormorant + Albert Sans, glass, progress bar (see design-system/) -->
+<link rel="stylesheet" href="ds/tokens/index.css">
 <link rel="stylesheet" href="katex/katex.min.css">
 <style>
+  /* Page roles, bound to design-system tokens */
   :root {
-    --bg: #fbfcfe;
-    --surface: #eef4fb;
-    --text: #1b2433;
-    --muted: #5d6b80;
-    --rule: #d8e2ee;
-    --accent: #2f8cff;
-    --accent-ink: #1667cf;
-    --warm: #ffb547;
-    --hero-bg: #0a1a2f;
-    --hero-text: #eaf2f8;
-    --hero-muted: #8fb3d9;
+    --page-bg: #F7F8F9;                               /* --bg-white */
+    --page-surface: #EEF6FB;                          /* paper, lifted toward white */
+    --page-text: var(--color-ink);
+    --page-muted: rgba(var(--color-ink-rgb), .68);
+    --page-rule: rgba(var(--color-rain-rgb), .35);
+    --page-link-line: var(--color-rain);
+    --page-hero-overlay: transparent;
+    --page-shadow: 0 0 36px rgba(var(--color-rain-rgb), .16), 0 0 48px rgba(var(--color-rose-rgb), .14);
+    --progress-track: var(--progress-track-on-light); --progress-fill: var(--progress-fill-on-light); --progress-glow: var(--progress-glow-on-light);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0a1a2f;
-      --surface: #13294a;
-      --text: #dce6f0;
-      --muted: #8a96a8;
-      --rule: #213a5e;
-      --accent: #5fb0ff;
-      --accent-ink: #8cc6ff;
-      --hero-bg: #061223;
+      --page-bg: #141A28;                             /* --bg-dark */
+      --page-surface: #1A2A3E;                          /* ink, sunk toward --bg-dark */
+      --page-text: var(--color-paper);
+      --page-muted: rgba(var(--color-paper-rgb), .66);
+      --page-rule: rgba(var(--color-paper-rgb), .14);
+      --page-hero-overlay: rgba(20, 26, 40, .8);
+      --page-shadow: 0 0 36px rgba(var(--color-rain-rgb), .12), 0 0 48px rgba(var(--color-rose-rgb), .06);
+      --progress-track: rgba(255, 255, 255, .15); --progress-fill: var(--color-rose); --progress-glow: 0 0 8px 1px rgba(var(--color-rose-rgb), .4);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0a1a2f;
-    --surface: #13294a;
-    --text: #dce6f0;
-    --muted: #8a96a8;
-    --rule: #213a5e;
-    --accent: #5fb0ff;
-    --accent-ink: #8cc6ff;
-    --hero-bg: #061223;
+    --page-bg: #141A28;
+    --page-surface: #1A2A3E;                          /* ink, sunk toward --bg-dark */
+    --page-text: var(--color-paper);
+    --page-muted: rgba(var(--color-paper-rgb), .66);
+    --page-rule: rgba(var(--color-paper-rgb), .14);
+    --page-hero-overlay: rgba(20, 26, 40, .8);
+    --page-shadow: 0 0 36px rgba(var(--color-rain-rgb), .12), 0 0 48px rgba(var(--color-rose-rgb), .06);
+    --progress-track: rgba(255, 255, 255, .15); --progress-fill: var(--color-rose); --progress-glow: 0 0 8px 1px rgba(var(--color-rose-rgb), .4);
   }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 400 1.0625rem/1.75 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-optical-sizing: auto;
-    letter-spacing: -.003em;
+    background: var(--page-bg);
+    color: var(--page-text);
+    font: 400 1.0625rem/1.75 var(--font-body);
     -webkit-font-smoothing: antialiased;
   }
-  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a { color: inherit; text-decoration-color: var(--page-link-line); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  .label { font: 500 .75rem/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--page-muted); }
 
-  /* Hero */
+  /* Reading progress: design-system progress bar pinned to the top */
+  .reading-progress { position: fixed; top: 0; left: 0; z-index: 50; border-radius: 0; }
+  .reading-progress::after { border-radius: 0 var(--progress-radius) var(--progress-radius) 0; }
+
+  /* Hero: cloud background, Raindrop icon falling into a ripple */
   header.hero {
-    background:
-      radial-gradient(1200px 400px at 80% -10%, rgba(47,140,255,.35), transparent 60%),
-      radial-gradient(600px 300px at 10% 120%, rgba(255,181,71,.18), transparent 60%),
-      var(--hero-bg);
-    color: var(--hero-text);
-    padding: 5rem 1rem 4rem;
+    background: linear-gradient(var(--page-hero-overlay), var(--page-hero-overlay)), url('ds/assets/backgrounds/cloud-background.png') center / cover no-repeat, var(--bg-rose);
+    padding: 5.5rem 1rem 4.5rem;
   }
-  .hero-inner { max-width: 60rem; margin: 0 auto; }
-  .eyebrow {
-    font: 500 .8rem/1 "IBM Plex Mono", monospace;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--warm);
-    display: flex; align-items: center; gap: .6rem;
-  }
-  .eyebrow svg { width: 14px; height: 18px; }
+  .hero-inner { max-width: 60rem; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .eyebrow { display: flex; align-items: center; gap: .6rem; color: var(--page-text); }
+  .eyebrow img { width: 18px; height: auto; }
   h1 {
-    font: 700 clamp(2.6rem, 7vw, 4.5rem)/1.05 Poppins, sans-serif;
+    font: 700 clamp(3.4rem, 9vw, 6.2rem)/.95 var(--font-display);
     letter-spacing: -.02em;
-    margin: 1rem 0 .75rem;
+    margin: 1.1rem 0 .9rem;
   }
   .subtitle {
-    font: 500 clamp(1.15rem, 2.6vw, 1.5rem)/1.4 Poppins, sans-serif;
-    color: var(--hero-muted);
-    max-width: 38rem; margin: 0;
+    font: 500 clamp(1.15rem, 2.6vw, 1.5rem)/1.35 var(--font-body);
+    letter-spacing: -.01em;
+    color: var(--page-muted);
+    max-width: 34rem; margin: 0;
   }
+  .hero-mark { flex: none; display: grid; justify-items: center; }
+  .hero-mark .drop { width: 116px; height: auto; filter: drop-shadow(0 10px 24px rgba(var(--color-rain-rgb), .35)); animation: fall 3.2s ease-in-out infinite; }
+  .hero-mark .ripple { width: 260px; height: auto; margin-top: -66px; }
+  @keyframes fall { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .hero-mark .drop { animation: none; } }
 
   /* Layout */
   .layout {
@@ -93,42 +95,61 @@
     display: grid; grid-template-columns: 12rem minmax(0, 1fr); column-gap: 3.5rem;
     grid-template-areas: "toc film" "toc article";
   }
-  nav.toc { grid-area: toc; position: sticky; top: 1.5rem; align-self: start; font: 400 .85rem/1.4 Poppins, sans-serif; }
-  nav.toc h2 {
-    font: 500 .72rem/1 "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--muted); margin: 0 0 .9rem;
-  }
-  nav.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--rule); }
+  nav.toc { grid-area: toc; position: sticky; top: 1.5rem; align-self: start; font: 400 .87rem/1.4 var(--font-body); }
+  nav.toc h2 { margin: 0 0 .9rem; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--page-rule); }
   nav.toc li a {
     display: block; padding: .3rem 0 .3rem .9rem; margin-left: -1px;
-    color: var(--muted); text-decoration: none; border-left: 2px solid transparent;
+    color: var(--page-muted); text-decoration: none; border-left: 2px solid transparent;
   }
-  nav.toc li.toc-3 a { padding-left: 1.7rem; font-size: .8rem; }
-  nav.toc li a:hover { color: var(--text); }
-  nav.toc li a.active { color: var(--accent-ink); border-left-color: var(--accent); }
+  nav.toc li.toc-3 a { padding-left: 1.7rem; font-size: .82rem; }
+  nav.toc li a:hover { color: var(--page-text); }
+  nav.toc li a.active { color: var(--page-text); font-weight: 500; border-left-color: var(--color-rain); }
 
   /* Article */
   article { grid-area: article; max-width: 42rem; }
-  article h2, article h3 { font-family: Poppins, sans-serif; line-height: 1.25; position: relative; }
-  article h2 { font-size: 1.55rem; font-weight: 600; margin: 3rem 0 1rem; }
-  article h3 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 .6rem; }
+  article h2, article h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.1; font-variant-numeric: lining-nums; position: relative; }
+  article h2 { font-size: 2.3rem; letter-spacing: -.01em; margin: 3.2rem 0 1rem; }
+  article h3 { font-size: 1.55rem; margin: 2.2rem 0 .5rem; }
   .anchor {
-    position: absolute; left: -1.2em; color: var(--rule); text-decoration: none; opacity: 0;
+    position: absolute; left: -1em; color: var(--page-rule); text-decoration: none; opacity: 0;
     transition: opacity .15s;
   }
   h2:hover .anchor, h3:hover .anchor { opacity: 1; }
   article p { margin: 0 0 1.1rem; }
-  article ul, article ol { padding-left: 1.3rem; margin: 0 0 1.2rem; }
+  article ul, article ol { padding-left: 1.6rem; margin: 0 0 1.2rem; }
   article li { margin: .45rem 0; }
-  article li::marker { color: var(--accent); }
+  article ol li::marker { color: var(--page-muted); font-weight: 500; }
+  /* Bullets are the token */
+  article ul { list-style: none; }
+  article ul > li { position: relative; }
+  article ul > li::before {
+    content: ''; position: absolute; left: -1.85rem; top: .05em;
+    width: 1.6rem; height: 1.6rem;
+    background: url('ds/assets/components/glass-circle-token.svg') center / contain no-repeat;
+  }
   article strong { font-weight: 600; }
+  article table { width: 100%; border-collapse: collapse; margin: 1.2rem 0 1.8rem; font-size: .98rem; line-height: 1.5; }
+  article th { font: 500 .75rem/1.2 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--page-muted); text-align: left; }
+  article th, article td { padding: .65rem .9rem .65rem 0; border-bottom: 1px solid var(--page-rule); vertical-align: top; }
+  article td:first-child { font-weight: 500; }
+
+  /* Glass card: frosted surface, iridescent rim, rain/rose halo */
+  .glass {
+    background: linear-gradient(var(--page-surface), var(--page-surface)) padding-box, var(--glass-border-iridescent) border-box;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(var(--glass-blur-background)); -webkit-backdrop-filter: blur(var(--glass-blur-background));
+    box-shadow: var(--page-shadow);
+  }
 
   /* Film: the figure keeps its 16:9 slot so the page doesn't reflow in theatre mode */
   .film { grid-area: film; max-width: 42rem; margin: 0 0 2.5rem; aspect-ratio: 16 / 9; }
   .film video {
     display: block; width: 100%; height: 100%;
-    background: var(--hero-bg); border-radius: 12px;
-    box-shadow: 0 1px 2px rgba(10,26,47,.12), 0 12px 32px -8px rgba(10,26,47,.35);
+    background: var(--color-ink); border-radius: var(--radius-md);
+    border: 1.5px solid rgba(var(--color-rain-rgb), .45);
+    box-shadow: var(--page-shadow), 0 12px 32px -8px rgba(15, 36, 56, .35);
   }
 
   /* Theatre mode: entered on play; the video floats centered over a dimmed page */
@@ -137,81 +158,87 @@
     --w: min(94vw, calc((100vh - 7rem) * 16 / 9));
     position: fixed; inset: 0; margin: auto; z-index: 101;
     width: var(--w); height: calc(var(--w) * 9 / 16);
-    border-radius: 8px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 90px -20px rgba(0,0,0,.8);
+    border-radius: var(--radius-sm); box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 90px -20px rgba(0,0,0,.8);
   }
   .theatre-backdrop {
     position: fixed; inset: 0; z-index: 100;
-    background: rgba(3, 8, 16, .92);
+    background: rgba(15, 20, 32, .93);
     opacity: 0; pointer-events: none; transition: opacity .35s ease;
   }
   html.theatre .theatre-backdrop { opacity: 1; pointer-events: auto; }
+  /* Glass pill button (design-system reference: glass-button) */
   .theatre-close {
     position: absolute; top: 1rem; right: 1rem;
     display: flex; align-items: center; gap: .5rem;
-    padding: .5rem .8rem; border: 1px solid rgba(255,255,255,.18); border-radius: 999px;
-    background: rgba(255,255,255,.06); color: #eaf2f8; cursor: pointer;
-    font: 500 .75rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase;
+    padding: .55rem 1.2rem; border-radius: var(--radius-pill); cursor: pointer;
+    background: linear-gradient(rgba(var(--color-rain-rgb), .45), rgba(var(--color-rain-rgb), .45)) padding-box, var(--glass-border-iridescent) border-box;
+    border: 1.5px solid transparent; color: #fff;
+    box-shadow: var(--glass-shadow-outer-glow);
+    font: var(--button-weight) 1.05rem/1 var(--button-family);
   }
-  .theatre-close:hover { background: rgba(255,255,255,.14); }
-  .theatre-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .theatre-close:hover { background: linear-gradient(rgba(var(--color-rain-rgb), .65), rgba(var(--color-rain-rgb), .65)) padding-box, var(--glass-border-iridescent) border-box; }
+  .theatre-close:focus-visible { outline: 2px solid var(--color-rain); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { .theatre-backdrop { transition: none; } }
 
-  .abstract {
-    background: var(--surface);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 10px 10px 0;
-    padding: 1.4rem 1.6rem .4rem;
-    font-size: 1.1rem;
-  }
-  .abstract h2 {
-    font: 500 .75rem/1 "IBM Plex Mono", monospace; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--muted); margin: 0 0 .9rem;
-  }
+  .abstract { padding: 1.6rem 1.8rem .5rem; font-size: 1.1rem; }
+  .abstract h2 { font: 500 .75rem/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--page-muted); margin: 0 0 .9rem; }
   .abstract .anchor { display: none; }
 
-  .cite { font-size: .85em; text-decoration: none; font-variant-numeric: tabular-nums; }
+  /* Figures (e.g. the Sybil split) */
+  .figure { margin: 1.8rem 0 2rem; text-align: center; }
+  .figure img { width: min(100%, 26rem); height: auto; border-radius: var(--radius-md); box-shadow: var(--page-shadow); }
+  .figure figcaption { margin-top: .8rem; font: italic 500 1.2rem/1.4 var(--font-display); color: var(--page-muted); }
+
+  .cite { font-size: .85em; text-decoration: none; font-variant-numeric: tabular-nums; font-weight: 500; }
   .ref {
     display: grid; grid-template-columns: 2.4rem 1fr; gap: .2rem;
-    font-size: .95rem; line-height: 1.55; color: var(--muted);
+    font-size: .95rem; line-height: 1.55; color: var(--page-muted);
     overflow-wrap: anywhere;
   }
-  .ref-num { font-family: "IBM Plex Mono", monospace; color: var(--accent-ink); }
-  .ref:target { background: var(--surface); border-radius: 6px; }
+  .ref-num { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--page-text); }
+  .ref:target { background: rgba(var(--color-rain-rgb), .14); border-radius: var(--radius-sm); }
 
   .katex { font-size: 1.05em; }
   .katex-display { overflow-x: auto; overflow-y: hidden; }
-
 
   @media (max-width: 52rem) {
     .layout { grid-template-columns: 1fr; grid-template-areas: "film" "toc" "article"; padding-top: 2rem; }
     nav.toc { position: static; margin-bottom: 1rem; }
     header.hero { padding: 3.5rem 1rem 3rem; }
+    .hero-mark { display: none; }
     .anchor { display: none; }
   }
   @media print {
-    header.hero { background: none; color: #000; padding: 1rem 0; }
-    .subtitle { color: #333; }
-    nav.toc, .film { display: none; }
+    header.hero { background: none; padding: 1rem 0; }
+    .hero-mark, .reading-progress, nav.toc, .film { display: none; }
+    .glass { box-shadow: none; backdrop-filter: none; }
     .layout { display: block; padding: 0; }
   }
 </style>
 </head>
 <body>
+<div class="progress-bar reading-progress" aria-hidden="true"></div>
 <header class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">
-      <svg viewBox="0 0 14 18" aria-hidden="true"><path d="M7 0C7 0 0 8.2 0 11.5A7 7 0 0 0 14 11.5C14 8.2 7 0 7 0Z" fill="currentColor"/></svg>
-      Whitepaper
+    <div>
+      <div class="eyebrow label">
+        <img src="ds/assets/logo/raindrop-icon.svg" alt="" aria-hidden="true">
+        Whitepaper
+      </div>
+      <h1>{{heading}}</h1>
+      <p class="subtitle">{{subtitle}}</p>
     </div>
-    <h1>{{heading}}</h1>
-    <p class="subtitle">{{subtitle}}</p>
+    <div class="hero-mark" aria-hidden="true">
+      <img class="drop" src="ds/assets/logo/raindrop-icon.svg" alt="">
+      <img class="ripple" src="ds/assets/components/ripple.svg" alt="">
+    </div>
   </div>
 </header>
 
 <div class="layout">
 {{video}}
   <nav class="toc" aria-label="Contents">
-    <h2>Contents</h2>
+    <h2 class="label">Contents</h2>
     <ol>
 {{toc}}
     </ol>
@@ -232,6 +259,16 @@
     }
   }, { rootMargin: '0px 0px -70% 0px' });
   document.querySelectorAll('article h2[id], article h3[id]').forEach((h) => obs.observe(h));
+
+  // Reading progress: how far through the page, 0 to 1.
+  const progress = document.querySelector('.reading-progress');
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.setProperty('--progress', max > 0 ? Math.min(1, scrollY / max) : 0);
+  };
+  addEventListener('scroll', updateProgress, { passive: true });
+  addEventListener('resize', updateProgress);
+  updateProgress();
 
   // Theatre mode: playing the film dims the page and enlarges the video.
   const film = document.querySelector('.film video');
