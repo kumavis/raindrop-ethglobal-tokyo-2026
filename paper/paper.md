@@ -1,84 +1,167 @@
-# Raindrop: Continuous token issuance via delegated trust propagation
+# Raindrop: Funding the mission through the social graph
 
 ## Abstract
-We present Raindrop, a cryptoeconomic mechanism that continuously allocates new token issuance according to a token‑weighted trust network. Accounts publish persistent trust weights (trust delegations); the protocol aggregates these signals via the EigenTrust trust propagation algorithm to produce allocation weights each issuance round. The result is an adaptive, passive participation alternative to episodic votes or static distributions, with strong Sybil resistance properties.
+Every cause worth fighting for runs on people: researchers, builders, teachers and organizers who move it forward. Funding them is hard. Committees can't see everyone, grant proposals take months, and one-time airdrops have to guess the right recipients up front. But the people closest to the work already know who is doing it. They know who they learn from, who ships and who shows up. Raindrop turns that knowledge into funding. It is a continuous airdrop steered by trust. Token holders endorse the people they believe in, and every round newly minted tokens "rain" across the network according to a trust score computed from those endorsements with the EigenTrust algorithm [1]. Endorsers keep their coins. Endorsements persist until changed, so participation runs in the background instead of through proposals and deadlines. Anyone can spin up a Raindrop network around a mission, and the social graph decides where the value flows.
 
-## 1. Overview
+## 1. It starts with a mission
 
-Raindrop replaces discrete governance payouts and one‑time airdrops with ongoing micro‑allocations. Each issuance round mints a small quantity of tokens and distributes them in proportion to an allocation vector computed from (i) current token balances and (ii) account‑specified trust weights. Trust updates and balance changes alter subsequent allocations, producing a steady‑state, self‑adjusting flow of value.
+Every movement begins with a cause bigger than any one person: open-source privacy tools, AI safety research, local climate resilience, a public-health campaign. Causes like these don't advance on their own. They advance because particular people do the work: writing the code, running the experiments, teaching the classes, organizing the meetups and spreading the word.
 
-## 2. Conceptual Framing
+Anyone who cares about a mission eventually asks the same question: **how do we fund the people moving it forward?**
 
-Raindrop is proposed as a mechanism for allocating newly issued tokens to accounts that advance the goals of a network, as inferred from the aggregated preferences of its participants. Throughout this paper, we use the term “trust” to denote an endorsement: a signal that a given account is expected to further the network’s objectives if allocated additional tokens.
+The tools we have today fit that question poorly:
 
-Accounts holding the token are considered stakeholders, as their token balances reflect economic exposure to the network. We assume that the token is freely tradable on external markets. Consequently, one way to acquire influence within the system is to purchase tokens. This behavior is interpreted as supportive of the network’s goals, insofar as external demand puts upward pressure on the token’s price and thereby increases the network’s overall resource capacity.
+- **Grant committees** can't see everyone. A handful of reviewers can't know the thousands of contributors in a healthy ecosystem, so funding goes to whoever is visible, well connected or good at writing proposals.
+- **Proposal-based DAO voting** is a chore. Every participant is asked to read every proposal and vote before a deadline, so turnout is low and decisions are episodic.
+- **Airdrops** are one-shot guesses. They take a snapshot of past behavior and hope it predicts future contribution. When the snapshot is wrong, there's no second chance.
+- **Patronage platforms** work, but every dollar of support comes out of the supporter's pocket, which caps how much any community can direct toward its contributors.
 
-Conversely, market participants who sell tokens may be doing so either to cover operational costs involved in contributing to the network or to express diminished confidence in the network’s ability to achieve its objectives. In either case, market actions indirectly communicate information about participants’ expectations and constraints, but Raindrop itself remains agnostic to individual motives.
+## 2. The social graph knows
 
-Importantly, the definition of a network’s goals is determined by the community or system deploying Raindrop and is not encoded in, or constrained by, the Raindrop algorithm itself. Raindrop provides a general-purpose issuance and allocation mechanism; the substantive aims of any particular network lie outside its formal specification.
+The information a funder needs already exists. It's spread across the relationships of the people around the work. A researcher knows which colleagues produce results. A developer knows which maintainers review their pull requests at 2 a.m. An organizer knows who actually shows up.
 
-## 3. Mechanism
+No single person sees the whole picture, but together a community's judgments form a **social graph of trust**. If we can read that graph, we can let funding follow it.
 
-Raindrop employs the [EigenTrust trust propagation algorithm](https://nlp.stanford.edu/pubs/eigentrust.pdf) [1] to aggregate local trust delegations into a global allocation vector. EigenTrust provides a simple, convergent method to compute reputation under standard damping and normalization. 
+Raindrop is a mechanism for doing that: **funding that follows trust.**
 
-The system maintains two classes of state for each account:
-  - token balance
-  - outgoing trust weights of other accounts
+## 3. How Raindrop works
 
-The system also encodes some static parameters:
-  - Issuance policy parameters including issuance rate and issuance cadence
-  - EigenTrust damping factor \(\alpha\), and convergence thresholds.
+### 3.1 Endorse, don't pay
 
-Each issuance round proceeds as follows: 
-- The protocol computes the balance vector \(b\) of relative token balances
-- The protocol encodes the trust network as a row‑stochastic trust matrix \(T\) (where row \(i\) encodes account \(i\)'s outgoing trust weights)
-- The protocol computes the allocation vector \(g = \text{EigenTrust}(T, b, \alpha)\) [1], which aggregates local trust delegations into a normalized distribution of allocation weights that blends token balance‑proportional issuance influence with transitive endorsement.
-- Second, the system mints \(\Delta S\) tokens according to the configured rate and cadence. 
-- Third, it distributes \(\Delta S\) to accounts in proportion to \(g\), updating balances accordingly. Optionally, a fraction of transaction fees or issuance directed to a null address is burned, introducing deflationary pressure. 
+Suppose Ada holds tokens in a Raindrop network, and she thinks Ben's work is moving the mission forward. She **endorses** Ben. This is not a payment: Ada keeps her coins. Her endorsement says *"I think Ben should receive future funding."* It works more like electing Ben for future issuance than like tipping him.
 
-Outside of issuance rounds, accounts may submit signed transactions to update their outgoing trust weights or send tokens at any time. These updated values will be used in the next issuance round. 
+The contrast with a patronage platform such as Patreon is the heart of the design:
 
-## 4. Sybil Resistance
+| | Patreon | Raindrop |
+|---|---|---|
+| Supporter action | subscribe | endorse |
+| Supporter's balance | goes down every month | stays put |
+| Where funding comes from | the supporter's wallet | new issuance, directed by the network |
 
-In Raindrop, an account’s direct issuance influence is proportional to its token balance. For the purposes of this allocation mechanism, we define Sybil resistance as the property that total issuance influence is conserved with respect to underlying capital. That is, an account cannot increase its aggregate issuance influence by dividing its holdings among multiple pseudonymous accounts. Because the system normalizes influence using the balance vector \(b\), the total issuance influence attributable to a given amount of capital remains constant regardless of how it is distributed across identities.
+### 3.2 Then it rains
 
-Under this construction, Sybil resistance emerges without requiring external identity systems, attestations, or verification mechanisms; it holds purely by virtue of the issuance rule and balance-anchored trust propagation.
+Every round, the protocol mints a small amount of new tokens and distributes them across the network in proportion to each account's **trust score**. Accounts that have earned endorsements get more of the rain. No one's existing balance is spent to fund the round.
 
-## 5. Properties
+### 3.3 Everyone endorses someone
 
-### 5.1 Structural Properties
+Ada is not alone. Every holder can endorse whoever they believe in: a builder they work with, a teacher they learned from, a curator whose judgment they trust. Together these endorsements form a single graph that captures the community's collective judgment about who is advancing the mission.
 
-The Raindrop allocation mechanism exhibits several properties that follow directly from its construction:
-- Sybil-resistant issuance influence: As discussed previously, issuance influence is anchored to token balances, and dividing a balance across multiple identities does not increase aggregate issuance influence. This yields Sybil resistance without reliance on external identity systems.
-- Real-time adaptability: Because trust weight updates immediately affect subsequent issuance rounds, Raindrop avoids the “snapshot problem” inherent in one-time airdrops or grant rounds, where allocations must be accurately decided up front.
+### 3.4 Trust flows through the graph
 
-### 5.2 Behavioral and Governance Considerations
+Endorsements are transitive. When Ada endorses Ben and Ben endorses Carla, some of Ada's trust flows on to Carla. **Being endorsed by the endorsed counts for more.** That lets participants rely on each other's judgment. You don't have to find every deserving contributor yourself. You can endorse a person whose taste you trust, and your trust follows theirs.
 
-The design also interacts with behavioral and governance dynamics noted in prior work, although these are interpretations rather than formal guarantees:
-- Endorsement without asset transfer: Trust delegations redirect future issuance rather than existing balances. From a behavioral perspective, this may reduce the perceived cost of supporting others, consistent with findings on the endowment effect [2].
-- Higher participation: Persistent trust delegations lower the frequency with which participants must actively submit preferences, potentially mitigating low participation rates observed in episodic voting or grant processes. Participants may endorse curators or trusted experts instead of directly seekings out funding candidates.
-- Adaptive responsiveness: Continuous recomputation allows the allocation to adjust as community assessments evolve, which may address limitations of systems that rely on infrequent, discrete decision points.
+Scores settle where trust pools. That is where the rain falls.
 
+### 3.5 Change your mind anytime
 
-## 6. Parameters
+Endorsements persist until you change them. There are no proposals and no voting periods. If you meet someone building something great, you can endorse them the same afternoon. If a project stalls, you can move your endorsement. The next round uses the latest graph.
 
-The system exposes several tunable parameters that jointly define the inflationary envelope and the responsiveness of the system to trust updates.
+### 3.6 Every round, it rains again
 
-- **Initial token distribution** specifies the starting allocation across accounts. Because subsequent issuance is balance‑weighted, this distribution must be non‑zero.
-- **Issuance rate** specifies the quantity minted per issuance round, either as a fraction of total supply or a fixed amount.
-- **Issuance cadence** (e.g., hourly, daily, or weekly) determines the frequency of issuance rounds. While a frequent cadence is reccomended, it must be balanced against the engineering constraints of calculating and performing the distribution.
-- **Damping factor** \(\alpha \in (0,1)\) is an EigenTrust parameter that balances inherited token weight against delegated trust in the propagation step.
-- **Convergence threshold** is an EigenTrust parameter that defines the stopping criteria for the iterative trust propagation and issuance computation (e.g., maximum norm change between successive trust vectors or a fixed iteration budget), trading off computational cost against numerical precision. Note that the calculator of a distribution could shift the distribution in their favor up to the numerical precision of convergence threshold.
+Because issuance is continuous, Raindrop has no "snapshot problem." An airdrop has to be right the first time. Raindrop only has to be roughly right *this round*, and it corrects itself as the community's assessments change.
 
-## 7. Conclusion
+### 3.7 Newcomers get found
 
-Raindrop implements a live issuance policy that channels a portion of monetary flow toward socially endorsed contributors while preserving market participation and avoiding reliance on external identity systems. By coupling continuous issuance with delegated trust propagation, the mechanism transforms static distributions and episodic governance into an ongoing process of collective valuation. 
+A newcomer with no tokens and no history can still get funded: once someone endorses them, the rain finds them. Discovery is spread across the whole community rather than bottlenecked on a committee's attention.
 
-The design aims to produce adaptive, fairer token allocation that responds to sustained contribution and community endorsement, offering a path toward self‑adjusting economic systems in which issuance influence flows according to the evolving trust and participation of network members.
+### 3.8 Three ways to get rain
+
+An account's share of each round grows in three ways:
+
+1. **Get endorsed.** Someone points their trust, and therefore the rain, your way.
+2. **Get a gift.** Someone sends you tokens to jumpstart you. A balance carries its own baseline share of issuance.
+3. **Buy in.** Anyone can buy tokens on the open market. Buying earns a baseline share, and market demand lifts the value of the whole network.
+
+## 4. The mechanism
+
+### 4.1 State
+
+For each account \(i\), the protocol keeps:
+
+- a token balance \(B_i\), and
+- a set of outgoing endorsement weights \(w_{ij} \ge 0\) toward other accounts \(j\).
+
+It also fixes a small set of parameters: the issuance rate, the issuance cadence, the damping factor \(\alpha\) and a convergence threshold.
+
+### 4.2 Each round
+
+1. **Balance vector.** Compute relative balances \(b_i = B_i / \sum_k B_k\).
+2. **Trust matrix.** Normalize each account's outgoing endorsements into a row-stochastic matrix \(C\), with \(C_{ij} = w_{ij} / \sum_k w_{ik}\). An account with no endorsements keeps its own weight (\(C_{ii} = 1\)).
+3. **Trust propagation.** Compute the trust score vector \(g\) as the fixed point of EigenTrust [1], using balances as the pre-trusted distribution:
+\[
+g = \alpha\, b + (1-\alpha)\, C^{\top} g
+\]
+Each round, a fraction \(\alpha\) of every account's weight stays anchored to its balance, and the remaining \((1-\alpha)\) flows along its endorsements. The computation iterates until successive vectors differ by less than the convergence threshold.
+4. **Mint.** Create \(\Delta S\) new tokens according to the issuance rate.
+5. **Rain.** Credit each account \(i\) with \(g_i \cdot \Delta S\).
+
+Between rounds, accounts may transfer tokens or update their endorsements at any time. Changes take effect in the next round.
+
+### 4.3 Where does the money come from?
+
+If nobody pays out of pocket, who pays? The honest answer is that **issuance doesn't create value, it moves it.** Minting new tokens doesn't make the pie bigger. It redraws the slices, shifting a share of the network toward the places the community says it's needed. Holders who don't receive endorsements are diluted slightly. That dilution is the collective budget a Raindrop community spends on its contributors, and the graph decides how it is spent.
+
+**To grow the pie, grow the network.** The value of every slice depends on how many people care about the network, use it and want to hold its token. Funding the people who advance the mission is how a network earns that demand.
+
+## 5. The mission is what makes it work
+
+### 5.1 Isn't that a pyramid scheme?
+
+A token that funds its holders by recruiting more holders would be one. The difference is **what the network is for**. A Raindrop network that exists only to pump its own price has nothing to fund except its own promotion. A network organized around a mission has something real to point its issuance at.
+
+### 5.2 Give the network a mission
+
+Raindrop doesn't say what a network's goals are. That is chosen by the community that launches it: privacy tech, AI safety, open science, a neighborhood, an art movement. The mission gives endorsements a meaning. The question each holder answers is not "who is my friend?" but **"who is moving this mission forward?"**
+
+### 5.3 Endorse the work, not the wallet
+
+In a privacy-tech network, that might be the cryptographer shipping a new library, the educator writing tutorials, the organizer running workshops or the advocate spreading the word. Raindrop is agnostic about *what kind* of work counts. Whatever moves the mission is fair game, and the community's endorsements decide.
+
+### 5.4 Value flows to the real work
+
+Put the pieces together and you get a funding loop:
+
+1. Supporters of a mission buy into its network, which raises the value of its tokens.
+2. The community's endorsements, propagated through the trust graph, route new issuance to the people advancing the mission.
+3. Those contributors do the work, which makes the mission more credible and attracts more supporters.
+
+Anyone can buy in. **The graph decides where the value goes.**
+
+## 6. Sybil resistance
+
+A common failure of social funding systems is the fake crowd: one person creating a thousand accounts to look like a movement. Raindrop's baseline share is anchored to token balances, so splitting a balance across many accounts doesn't increase its total weight. The pre-trust term \(\alpha\, b\) is the same whether a given amount of capital sits in one account or a thousand. Splitting into many accounts doesn't fool the rain.
+
+We want to be precise about what this does and doesn't guarantee. Balance anchoring makes each holder's *own* influence conserved under splitting. It does not stop a single entity from posing as many contributors to collect endorsements from others. That depends on endorsers exercising judgment about who they endorse, which is exactly the local knowledge the social graph is meant to capture. Section 8 discusses this and other open problems.
+
+## 7. Parameters
+
+- **Initial distribution.** Raindrop needs a non-zero starting distribution, because issuance weight is anchored to balances. The genesis distribution shapes early influence and should be designed deliberately, for example spread across a mission's existing contributor community.
+- **Issuance rate.** The quantity minted per round, either as a fraction of supply or as a fixed amount. This sets the size of the community's funding budget, and the dilution holders accept to pay for it.
+- **Issuance cadence.** How often it rains: hourly, daily or weekly. More frequent rounds make the network more responsive but cost more to compute and distribute.
+- **Damping factor \(\alpha \in (0,1)\).** The share of each account's weight that stays anchored to its balance, compared with the share that flows along endorsements. A lower \(\alpha\) gives endorsements more power.
+- **Convergence threshold.** The stopping criterion for trust propagation. Whoever computes the distribution can bias it by up to this precision, so it should be tight, and the computation should be verifiable.
+
+## 8. Limitations and open problems
+
+Raindrop is an early design, and we have published an [adversarial review](https://github.com/kumavis/raindrop-ethglobal-tokyo-2026/blob/main/paper/adversarial-review.md) alongside this paper. The most important open problems are:
+
+- **Endorsement has an opportunity cost.** Under the formula in Section 4.2, an account that endorses others passes on \((1-\alpha)\) of its own share, while an account that endorses no one (or a ring of its own accounts) keeps all of it. A purely self-interested holder earns more by not endorsing. Raindrop relies on holders who care about the mission more than about maximizing their share. Designs that make endorsing free, for example by burning or pooling the non-delegated share, are an active area of work.
+- **Bribery.** Public endorsements make it possible to pay holders for endorsements with enforceable kickbacks, as seen in the bribe markets around token-weighted emission voting. Receipt-free (private) endorsements are a candidate mitigation.
+- **Borrowed influence.** Balances can be borrowed around snapshots, or held with a hedge so the holder has no price exposure. Time-weighted or locked balances would reduce this.
+- **Trust sinks.** Accounts or rings that receive endorsements but never pass them on keep more of the trust flowing into them than honest curators do, a known weakness of EigenTrust-style propagation.
+- **Verifiable computation.** Computing \(g\) for a large network each round will likely happen off-chain. It should be accompanied by a validity or fraud proof so the computer cannot bias the result.
+
+We think these are solvable, and that the core idea is worth solving them for: a community's collective knowledge of who is doing the work is its most underused funding resource.
+
+## 9. Conclusion: fertile ground
+
+Raindrop isn't one network. It's a pattern anyone can use: pick a mission, launch a token and let the social graph route funding to the people moving it forward. Supporters endorse the people they believe in and keep their coins. Contributors are found by the people who know their work, not by committees that can't see them. And every round, it rains again on the latest judgment of the whole community.
+
+For humanity's biggest dreams and hardest problems, the people doing the work are already known to someone. Raindrop lets that knowledge fund them.
+
+**Fund the mission. Let the graph find the people.**
 
 ## References
 
 [1] Kamvar, S. D., Schlosser, M. T., & Garcia-Molina, H. (2003). The EigenTrust algorithm for reputation management in P2P networks. *Proceedings of the 12th International Conference on World Wide Web*, 640–651. https://nlp.stanford.edu/pubs/eigentrust.pdf
-
-[2] Kahneman, D., Knetsch, J. L., & Thaler, R. H. (1991). Anomalies: The endowment effect, loss aversion, and status quo bias. *Journal of Economic Perspectives*, 5(1), 193–206. https://pubs.aeaweb.org/doi/pdfplus/10.1257/jep.5.1.193
 
