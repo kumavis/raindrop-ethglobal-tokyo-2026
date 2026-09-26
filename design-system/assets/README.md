@@ -2,7 +2,7 @@
 
 Brand assets for Raindrop. For the designer's spec sheets and labelled examples (how each component should look and behave), see [`../reference/`](../reference/README.md).
 
-Brand assets for Raindrop. Every asset ships as an SVG (use this by default) and an `@2x` PNG (for slides, social posts, and anywhere SVG isn't supported). Sizes and paths are also recorded under `components` in [`../tokens.json`](../tokens.json).
+Every asset ships as an SVG (use this by default) and an `@2x` PNG (for slides, social posts, and anywhere SVG isn't supported). Sizes and paths are also recorded under `components` in [`../tokens.json`](../tokens.json).
 
 ## The Raindrop icon — `logo/raindrop-icon.svg`
 
