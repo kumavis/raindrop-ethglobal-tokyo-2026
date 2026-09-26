@@ -8,9 +8,9 @@ Rendered components with real labels, showing text placement and styling.
 
 | File | Shows |
 |---|---|
-| `glass-button-endorse@2x.png` | Primary glass button with the label "Endorse" (Cormorant, white) |
+| `glass-button-endorse@2x.png` | Primary glass button with the label "Endorse" (white; rendered in Cormorant, now Manrope, the `button` preset) |
 | `glass-tag-ai-safety@2x.png` | Glass tag with the label "AI Safety" (Albert Sans, ink, on mint fill) |
-| `glass-card-title-body@2x.png` | Glass card with a title (Cormorant, ink) and body text (Albert Sans) |
+| `glass-card-title-body@2x.png` | Glass card with a title (ink; rendered in Cormorant, now Manrope) and body text (Albert Sans) |
 | `progress-bar.svg` | **Visual reference for every progress bar.** Shown on a dark panel (SVG only) |
 
 ### Progress bar values (from `progress-bar.svg`)
