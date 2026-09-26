@@ -38,6 +38,7 @@ Buttons, tags, cards and motifs in the frosted-glass style. The CSS equivalents 
 | Glass circle, token | `glass-circle-token.svg` | 56×56 | 98×98 | Token motif |
 | Cloud icon | `cloud-icon.svg` | 220×140 | 220×140 | Cloud motif |
 | Cloud icon, outline | `cloud-icon-outline.svg` | 231×154 | 231×154 | Cloud motif, line variant |
+| Ripple | `ripple.svg` | 296×180 | 296×180 | Ripple motif (raindrop impact rings) |
 | Network node | `network-node@2x.png` (PNG only) | 62×104 | 231×294 @2x | Person/node in the social-graph diagrams |
 
 **Usage notes**
