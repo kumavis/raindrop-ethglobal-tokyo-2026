@@ -38,11 +38,11 @@ export function iconSVG(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[name] ?? ''}</svg>`;
 }
 
-/** The brand rain drop (same path as the paper's eyebrow). */
+/** The brand rain drop: the design system's Raindrop icon (src/assets/raindrop-icon.svg). */
 export function dropMark(cls = 'drop') {
   const span = document.createElement('span');
   span.className = cls;
   span.setAttribute('aria-hidden', 'true');
-  span.innerHTML = '<svg viewBox="0 0 14 18"><path d="M7 0C7 0 0 8.2 0 11.5A7 7 0 0 0 14 11.5C14 8.2 7 0 7 0Z" fill="currentColor"/></svg>';
+  span.innerHTML = '<img src="src/assets/raindrop-icon.svg" alt="">';
   return span;
 }

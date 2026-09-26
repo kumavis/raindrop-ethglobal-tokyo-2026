@@ -1,19 +1,19 @@
 // Visual tokens and small math helpers shared by the canvas view.
 //
-// Colors mirror the films and the paper; easing is the films' `eo` curve.
+// Colors follow the Raindrop design system (design-system/tokens); easing is the films' `eo` curve.
 
 export const COLORS = Object.freeze({
-  ink: '#0A1A2F',
-  ink2: '#0E2240',
-  surface: '#13294A',
-  paper: '#EAF2F8',
-  muted: '#8FB3D9',
-  rain: '#2F8CFF',
-  rainLight: '#5FB0FF',
-  rainGlow: '#CFE6FF',
+  ink: '#0F2438',
+  ink2: '#1A3B52',
+  surface: '#1A3B52',
+  paper: '#DCF0FA',
+  muted: '#9CC3D5',
+  rain: '#6AB8D8',
+  rainLight: '#97CDE4',
+  rainGlow: '#DCF0FA',
   amber: '#FFB547',
-  mint: '#4FD1A5',
-  rose: '#FF6B81',
+  mint: '#8DD4B7',
+  rose: '#E8B5C7',
   gold: '#F5C542',
   violet: '#A78BFA',
 });
@@ -27,9 +27,10 @@ export const TONES = Object.freeze({
   violet: COLORS.violet,
 });
 
-export const FONT_MONO = '"IBM Plex Mono", ui-monospace, Menlo, monospace';
-export const FONT_DISPLAY = 'Poppins, system-ui, sans-serif';
-export const FONT_UI = 'Inter, system-ui, sans-serif';
+// Raindrop design system type; it has no monospace, so canvas labels use Albert Sans.
+export const FONT_MONO = '"Albert Sans", system-ui, sans-serif';
+export const FONT_DISPLAY = 'Manrope, system-ui, sans-serif';
+export const FONT_UI = '"Albert Sans", system-ui, sans-serif';
 
 export const clamp = (x, lo = 0, hi = 1) => (x < lo ? lo : x > hi ? hi : x);
 export const lerp = (a, b, p) => a + (b - a) * p;
