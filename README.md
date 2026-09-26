@@ -4,6 +4,8 @@
 
 Raindrop is a continuous airdrop steered by trust. Token holders endorse the people they believe are moving a mission forward, and every round newly issued tokens "rain" across the network according to trust scores computed from those endorsements with [EigenTrust](https://nlp.stanford.edu/pubs/eigentrust.pdf). Endorsers keep their coins, endorsements persist until changed, and anyone can spin up a Raindrop network around a cause.
 
+**Read the whitepaper and watch the explainer at [raindrop.money](https://raindrop.money/).**
+
 Built for ETHGlobal Tokyo 2026.
 
 ## What's here
@@ -15,7 +17,7 @@ Built for ETHGlobal Tokyo 2026.
 | [`paper/stablecoin-variant.md`](paper/stablecoin-variant.md) | Design note on funding the rain from stablecoin yield instead of issuance |
 | [`paper/`](paper/README.md) | Static-site renderer for the paper (Markdown + KaTeX → `paper/dist/`) |
 | [`videos/`](videos/README.md) | Explainer films as self-contained HTML animations, rendered to 1080p MP4 |
-| [`.github/workflows/paper-pages.yml`](.github/workflows/paper-pages.yml) | Renders the film and deploys the paper site to GitHub Pages on push to `main` |
+| [`.github/workflows/paper-pages.yml`](.github/workflows/paper-pages.yml) | Renders the film and deploys the paper site to [raindrop.money](https://raindrop.money/) (GitHub Pages) on push to `main` |
 
 There are two explainer films: a **mission-first** cut (~95 s) and a **protocol-first** cut (~131 s). The protocol-first film is embedded at the top of the paper site. To preview either film, open its `videos/src/<film>/video.html` in a browser.
 
