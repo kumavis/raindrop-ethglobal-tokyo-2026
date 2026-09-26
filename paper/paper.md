@@ -28,7 +28,7 @@ Raindrop is a mechanism for doing that: **funding that follows trust.**
 
 ### 3.1 Endorse, don't pay
 
-Suppose Ada holds tokens in a Raindrop network, and she thinks Ben's work is moving the mission forward. She **endorses** Ben. This is not a payment: Ada keeps her coins. Her endorsement says *"I think Ben should receive future funding."* It works more like electing Ben for future issuance than like tipping him.
+Suppose Ada holds tokens in a Raindrop network, and she thinks Ben's work is moving the mission forward. She **endorses** Ben. This is not a payment: Ada keeps her coins. Her endorsement says *"I think Ben should receive future funding."* It works more like electing Ben for future issuance than like tipping him. Because endorsing never reduces a supporter's balance, it may feel far cheaper than donating, consistent with findings on the endowment effect and loss aversion [2].
 
 The contrast with a patronage platform such as Patreon is the heart of the design:
 
@@ -165,3 +165,4 @@ For humanity's biggest dreams and hardest problems, the people doing the work ar
 
 [1] Kamvar, S. D., Schlosser, M. T., & Garcia-Molina, H. (2003). The EigenTrust algorithm for reputation management in P2P networks. *Proceedings of the 12th International Conference on World Wide Web*, 640–651. https://nlp.stanford.edu/pubs/eigentrust.pdf
 
+[2] Kahneman, D., Knetsch, J. L., & Thaler, R. H. (1991). Anomalies: The endowment effect, loss aversion, and status quo bias. *Journal of Economic Perspectives*, 5(1), 193–206. https://pubs.aeaweb.org/doi/pdfplus/10.1257/jep.5.1.193
