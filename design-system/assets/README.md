@@ -2,6 +2,10 @@
 
 Brand assets for Raindrop. Every asset ships as an SVG (use this by default) and an `@2x` PNG (for slides, social posts, and anywhere SVG isn't supported). Sizes and paths are also recorded under `components` in [`../tokens.json`](../tokens.json).
 
+## The Raindrop icon — `logo/raindrop-icon.svg`
+
+**The primary brand mark and the core symbol of the project.** A glass raindrop (94×109) in a pale-to-rain-blue gradient. Use it wherever the brand appears as a symbol: favicon, avatar, app icon, video bumpers, the paper site header. Always use the SVG (it scales cleanly); `raindrop-icon@2x.png` is for places that can't take SVG. Don't recolour, stretch, or add effects to it.
+
 ## Logos — `logo/`
 
 | File | Variant |
