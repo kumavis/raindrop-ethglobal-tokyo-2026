@@ -1,0 +1,13 @@
+{
+  "name": "@raindrop/simulator",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev.mjs",
+    "build": "node build.mjs",
+    "preview": "node build.mjs && node dev.mjs --preview",
+    "test": "node --test test/*.test.js",
+    "check": "node scripts/check-scenarios.mjs"
+  }
+}

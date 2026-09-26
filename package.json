@@ -3,11 +3,15 @@
   "private": true,
   "workspaces": [
     "videos",
-    "paper"
+    "paper",
+    "simulator"
   ],
   "scripts": {
     "render-videos": "npm run render --workspace videos",
     "build-paper": "npm run build --workspace paper",
-    "dev-paper": "npm run dev --workspace paper"
+    "dev-paper": "npm run dev --workspace paper",
+    "dev-simulator": "npm run dev --workspace simulator",
+    "build-simulator": "npm run build --workspace simulator",
+    "test-simulator": "npm test --workspace simulator"
   }
 }
