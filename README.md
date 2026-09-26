@@ -17,6 +17,7 @@ Built for ETHGlobal Tokyo 2026.
 | [`paper/stablecoin-variant.md`](paper/stablecoin-variant.md) | Design note on funding the rain from stablecoin yield instead of issuance |
 | [`paper/`](paper/README.md) | Static-site renderer for the paper (Markdown + KaTeX → `paper/dist/`) |
 | [`videos/`](videos/README.md) | Explainer films as self-contained HTML animations, rendered to 1080p MP4 |
+| [`design-system/`](design-system/assets/README.md) | Design tokens (`tokens.json`, `tokens/*.css`) and brand assets: logos, backgrounds, glass components |
 | [`.github/workflows/paper-pages.yml`](.github/workflows/paper-pages.yml) | Renders the film and deploys the paper site to [raindrop.money](https://raindrop.money/) (GitHub Pages) on push to `main` |
 
 There are two explainer films: a **mission-first** cut (~95 s) and a **protocol-first** cut (~131 s). The protocol-first film is embedded at the top of the paper site. To preview either film, open its `videos/src/<film>/video.html` in a browser.
