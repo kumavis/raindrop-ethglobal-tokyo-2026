@@ -1,0 +1,19 @@
+<svg width="296" height="180" viewBox="0 0 296 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="296" height="180" rx="16" fill="url(#paint0_linear_3_169)"/>
+<circle cx="55" cy="90" r="35" fill="#DCF0FA"/>
+<path d="M130.01 94.37C130.27 93.77 130.54 93.24 130.82 92.78C131.1 92.3 131.38 91.89 131.66 91.55H114.59V89.93H131.66C131.38 89.57 131.1 89.16 130.82 88.7C130.54 88.22 130.27 87.69 130.01 87.11H131.42C132.68 88.57 134.01 89.65 135.41 90.35V91.13C134.01 91.81 132.68 92.89 131.42 94.37H130.01Z" fill="#DCF0FA"/>
+<circle cx="171" cy="61" r="11" fill="#DCF0FA"/>
+<circle cx="201" cy="53" r="11" fill="#DCF0FA"/>
+<circle cx="231" cy="67" r="11" fill="#DCF0FA"/>
+<circle cx="181" cy="96" r="11" fill="#DCF0FA"/>
+<circle cx="211" cy="106" r="11" fill="#DCF0FA"/>
+<circle cx="241" cy="93" r="11" fill="#DCF0FA"/>
+<circle cx="196" cy="131" r="11" fill="#DCF0FA"/>
+<circle cx="226" cy="126" r="11" fill="#DCF0FA"/>
+<defs>
+<linearGradient id="paint0_linear_3_169" x1="0" y1="90" x2="296" y2="90" gradientUnits="userSpaceOnUse">
+<stop stop-color="#14293D"/>
+<stop offset="1" stop-color="#0F1F33"/>
+</linearGradient>
+</defs>
+</svg>

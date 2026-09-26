@@ -35,5 +35,5 @@ The spec text below is copied from each sheet.
 | `token@2x.png` | Compact glass circle with mint tint. Iridescent border, background blur. Used for value transfer animations. | `glass-circle-token.svg` |
 | `ripple@2x.png` | Expanding concentric rings. Appears on rain impact and network propagation events. Fades out as it expands. | `ripple.svg` |
 | `trust-edge@2x.png` | Directed connection between nodes. Arrow shows endorsement direction. Width scales with weight. Particles flow along path. | None (build in code) |
-| `sybil-split@2x.png` | Single large circle splitting into many small ones. Visualizes the futility of creating fake accounts to game the system. | None (build in code) |
+| `sybil-split@2x.png` | Single large circle splitting into many small ones. Visualizes the futility of creating fake accounts to game the system. | `sybil-split.svg`, use wherever Sybil attacks or Sybil resistance come up |
 | `progress-bar@2x.png` | Full-width bar at the bottom of every frame. Shows playback position. Uses paper/ink color depending on background. | None (build in code) |

@@ -41,6 +41,7 @@ Buttons, tags, cards and motifs in the frosted-glass style. The CSS equivalents 
 | Cloud icon | `cloud-icon.svg` | 220×140 | 220×140 | Cloud motif |
 | Cloud icon, outline | `cloud-icon-outline.svg` | 231×154 | 231×154 | Cloud motif, line variant |
 | Ripple | `ripple.svg` | 296×180 | 296×180 | Ripple motif (raindrop impact rings) |
+| Sybil split | `sybil-split.svg` | 296×180 | 296×180 | **Use wherever Sybil attacks or Sybil resistance come up.** One circle splitting into many (fake accounts). Dark panel background is baked in |
 | Network node | `network-node@2x.png` (PNG only) | 62×104 | 231×294 @2x | Person/node in the social-graph diagrams |
 
 **Usage notes**
