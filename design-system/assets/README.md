@@ -33,7 +33,8 @@ Buttons, tags, cards and motifs in the frosted-glass style. The CSS equivalents 
 | Glass pill button, secondary | `glass-pill-button-secondary.svg` | 150×54 | 222×126 | Secondary CTA |
 | Glass pill tag | `glass-pill-tag.svg` | 98×37 | 142×81 | Tags, badges, labels |
 | Glass card | `glass-card.svg` | 360×123 | 432×195 | Content cards |
-| Glass circle, trust halo | `glass-circle-trust-halo.svg` | 160×160 | 232×232 | Trust / endorsement motif |
+| Glass circle, trust halo (light) | `glass-circle-trust-halo/trust-halo-light.svg` | 160×160 | 232×232 | Trust / endorsement motif (default) |
+| Glass circle, trust halo (dark) | `glass-circle-trust-halo/trust-halo-dark@2x.png` (PNG only) | 160×160 (assumed) | 418×360 @2x | Trust / endorsement motif, dark variant |
 | Glass circle, token | `glass-circle-token.svg` | 56×56 | 98×98 | Token motif |
 | Cloud icon | `cloud-icon.svg` | 220×140 | 220×140 | Cloud motif |
 | Cloud icon, outline | `cloud-icon-outline.svg` | 231×154 | 231×154 | Cloud motif, line variant |
@@ -42,5 +43,6 @@ Buttons, tags, cards and motifs in the frosted-glass style. The CSS equivalents 
 **Usage notes**
 
 - **Export canvas includes the glow.** The glass exports are padded (36px each side; 21–22px for the token) so the outer glow isn't clipped. Position by the body size, not the canvas: centre the SVG on the element, or offset it by the padding.
+- **Trust halo has two variants, kept together in `components/glass-circle-trust-halo/`.** Light is the default. Dark is PNG-only on a non-square canvas with the glow cropped; replace it with a square SVG export.
 - **Network node is a stopgap.** It's PNG-only and has the name "ADA" baked in, so it can't be reused for other nodes as-is. Replace it with a textless SVG export and render the name in code.
 - **No label text is baked in** (except the network node). Buttons, tags and cards are blank shapes. Put the label in code over the SVG, using the `button` or `body-small` typography tokens.
