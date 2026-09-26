@@ -1,0 +1,362 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Raindrop for DAOs — explainer film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Raindrop design system: palette, Cormorant + Albert Sans, glass, backgrounds, progress bar (see design-system/) -->
+<link rel="stylesheet" href="../../../design-system/tokens/index.css">
+<style>
+/* Slow, quiet cut: one headline, at most one line of support, one visual per slide */
+:root{--fill-tag:#9ED8C1;--fill-button:#4E8CAE}
+*{box-sizing:border-box}
+body{margin:0;width:1920px;height:1080px;overflow:hidden;position:relative;background:var(--bg-ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+#bg{position:absolute;inset:0;z-index:0}
+.lay{position:absolute;inset:0;display:none}
+#rain{position:absolute;inset:0;z-index:4}
+.s{position:absolute;inset:0;display:none;z-index:5}
+.d{font-family:var(--display-heading-family);font-weight:var(--display-heading-weight);font-size:var(--display-heading-size);letter-spacing:-.03em;line-height:var(--display-heading-line-height);margin:0}
+.hero{font-weight:var(--display-hero-weight);letter-spacing:var(--display-hero-letter-spacing)}
+.m{font-family:var(--section-label-family);font-weight:var(--section-label-weight);letter-spacing:var(--section-label-letter-spacing);text-transform:uppercase}
+.a{opacity:0;display:inline-block;will-change:transform,opacity}
+.mk{display:block;overflow:hidden;padding:0 .04em .14em;margin-bottom:-.14em}
+.L{position:absolute;left:150px;top:130px}
+.C{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.it{font-style:italic;font-weight:500;letter-spacing:-.02em}
+.rn{color:var(--color-rain)}.am{color:var(--color-amber)}
+.sub{display:block;font-family:var(--body-large-family);font-weight:var(--body-large-weight);font-size:var(--body-large-size);line-height:var(--body-large-line-height);letter-spacing:var(--body-large-letter-spacing);margin-top:28px;opacity:.8}
+svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
+.gl{background:linear-gradient(var(--fill),var(--fill)) padding-box,var(--glass-border-iridescent) border-box;border:3px solid transparent;box-shadow:var(--glass-shadow-full)}
+.gl.tag{--fill:var(--fill-tag);color:var(--color-ink);font-weight:500}
+.gl.button{--fill:var(--fill-button);color:#fff;font-family:var(--button-family);font-weight:var(--button-weight)}
+.right{position:absolute;font-size:40px;padding:16px 40px;border-radius:var(--radius-pill);white-space:nowrap}
+.cta{font-size:44px;padding:18px 64px 22px;border-radius:var(--radius-pill);margin-top:64px}
+.col{position:absolute;top:470px;width:700px;text-align:center}
+.col .m{font-size:30px}
+.col span{display:block;font-size:30px;margin-top:10px;opacity:.75}
+.rc{display:flex;align-items:baseline;gap:40px;font-size:96px}
+.rc .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:3px}
+.rc .arr{font-family:var(--font-body);font-size:56px;opacity:.6}
+/* chrome: just the mark, the section, and the progress bar */
+#ch{position:absolute;inset:0;z-index:50;pointer-events:none;color:var(--color-paper)}
+#ch .c{position:absolute;top:40px;font-family:var(--chrome-family);font-weight:var(--chrome-weight);font-size:var(--chrome-size);letter-spacing:var(--chrome-letter-spacing);text-transform:uppercase;opacity:.75}
+#ch .c img{width:17px;vertical-align:-3px;margin-right:12px}
+#sec{transition:none}
+#ch .progress-bar{position:absolute;left:0;bottom:0;border-radius:0}
+#ch .progress-bar::after{border-radius:0 var(--progress-radius) var(--progress-radius) 0}
+#warm{position:absolute;visibility:hidden;left:-9999px}
+#defs{position:absolute;width:0;height:0}
+</style></head>
+<body>
+<div id="warm"><span style="font-family:var(--font-display);font-weight:500">a</span><span style="font-family:var(--font-display);font-weight:600">a</span><span style="font-family:var(--font-display);font-weight:700">a</span><span style="font-family:var(--font-display);font-weight:500;font-style:italic">a</span><span style="font-family:var(--font-body);font-weight:400">a</span><span style="font-family:var(--font-body);font-weight:500">a</span></div>
+<img id="iDrop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="display:none">
+<img src="../../../design-system/assets/backgrounds/cloud-background.png" alt="" style="display:none">
+<svg id="defs" aria-hidden="true"><defs>
+  <linearGradient id="gIri" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6AB8D8"/><stop offset=".2" stop-color="#E8B5C7"/><stop offset=".4" stop-color="#88E0E8"/><stop offset=".6" stop-color="#8DD4B7"/><stop offset=".8" stop-color="#B8A9D4"/><stop offset="1" stop-color="#6AB8D8"/></linearGradient>
+  <radialGradient id="gGlass" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#DCF0FA" stop-opacity=".92"/><stop offset=".6" stop-color="#9FD0E6" stop-opacity=".78"/><stop offset="1" stop-color="#6AB8D8" stop-opacity=".7"/></radialGradient>
+  <radialGradient id="gHalo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6AB8D8" stop-opacity=".22"/><stop offset=".8" stop-color="#DCF0FA" stop-opacity=".08"/><stop offset="1" stop-color="#E8B5C7" stop-opacity=".14"/></radialGradient>
+  <linearGradient id="gLiquid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#88E0E8" stop-opacity=".85"/><stop offset="1" stop-color="#6AB8D8" stop-opacity=".9"/></linearGradient>
+  <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#6AB8D8" flood-opacity=".45"/></filter>
+  <filter id="fSoft" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1A3B52" flood-opacity=".14"/></filter>
+</defs></svg>
+<div id="bg"></div>
+
+<!-- shared visual layers (persist across slides) -->
+<svg id="open" class="lay" width="1920" height="1080" style="z-index:2"></svg>
+<svg id="mech" class="lay" width="1920" height="1080" style="z-index:2"></svg>
+<canvas id="rain" width="1920" height="1080"></canvas>
+
+<!-- ============ 1. Cold open ============ -->
+<section data-id="o1" class="s" data-s="0" data-e="7" data-bg="ink" data-sec="" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="0.4" data-f="rise">Everyone in your DAO knows</span></span><span class="mk"><span class="a d" data-i="0.8" data-f="rise">who's doing the <span class="it rn">real work.</span></span></span></div>
+</section>
+<section data-id="o2" class="s" data-s="7" data-e="13" data-bg="ink" data-sec="" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="7.3" data-f="rise">Almost nobody has time</span></span><span class="mk"><span class="a d" data-i="7.6" data-f="rise">to vote on it.</span></span></div>
+</section>
+<section data-id="o3" class="s" data-s="13" data-e="21" data-bg="ink" data-sec="" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="13.3" data-f="rise">Raindrop turns what your members</span></span><span class="mk"><span class="a d" data-i="13.6" data-f="rise">already know into <span class="it rn">funding.</span></span></span>
+  <span class="a sub" data-i="15.2" data-f="up">No meetings. No deadlines. No herding.</span></div>
+</section>
+<section data-id="o4" class="s" data-s="21" data-e="25" data-bg="ink" data-sec="" style="color:var(--color-paper)">
+  <div class="C"><span class="mk"><span class="a d it" data-i="21.4" data-f="rise" style="font-size:120px">Here's what it replaces.</span></span></div>
+</section>
+
+<!-- ============ 2. The old way ============ -->
+<section data-id="p1" class="s" data-s="25" data-e="32" data-bg="white" data-sec="The old way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="25.3" data-f="rise">Today, it runs on <span class="it">proposals.</span></span></span>
+  <span class="a sub" data-i="26.0" data-f="up">A few big asks. Each one all-or-nothing.</span></div>
+  <svg id="p1s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+</section>
+<section data-id="p2" class="s" data-s="32" data-e="40" data-bg="white" data-sec="The old way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="32.3" data-f="rise">Then someone <span class="it">herds</span> the voters.</span></span>
+  <span class="a sub" data-i="33.0" data-f="up">Reminders. Deadlines. Quorum.</span></div>
+  <svg id="p2s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+  <div id="dl" class="progress-bar progress-bar--on-light a" data-i="32.8" data-f="fade" style="position:absolute;left:150px;top:640px;width:640px;--progress:1"></div>
+</section>
+<section data-id="p3" class="s" data-s="40" data-e="47" data-bg="white" data-sec="The old way" style="color:var(--color-ink)">
+  <div class="L"><span class="mk"><span class="a d" data-i="40.3" data-f="rise">Most people never <span class="it">show up.</span></span></span>
+  <span class="a sub" data-i="41.0" data-f="up">So a handful of votes decide the biggest payouts.</span></div>
+  <svg id="p3s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+</section>
+
+<!-- ============ 3. The turn ============ -->
+<section data-id="turn" class="s" data-s="47" data-e="53" data-bg="cloud" data-sec="" style="color:var(--color-ink)">
+  <div class="C"><span class="mk"><span class="a d hero" data-i="47.8" data-f="rise" style="font-size:150px">There's a <span class="it">lighter</span> way.</span></span></div>
+</section>
+
+<!-- ============ 4. How it works ============ -->
+<section data-id="h1" class="s" data-s="53" data-e="60" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="53.3" data-f="rise">It starts with <span class="it am">one token.</span></span></span>
+  <span class="a sub" data-i="54.0" data-f="up">Your DAO issues a Raindrop governance token.</span></div>
+  <svg id="h1s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+</section>
+<section data-id="h2" class="s" data-s="60" data-e="68" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="60.3" data-f="rise">Every token carries <span class="it am">two rights.</span></span></span></div>
+  <svg id="h2s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+  <div class="a gl tag right" data-i="61.6" data-f="pop" style="left:210px;top:650px">A vote</div>
+  <div class="a gl tag right" data-i="62.6" data-f="pop" style="left:1260px;top:650px">A claim on the treasury</div>
+</section>
+<section data-id="h3" class="s" data-s="68" data-e="77" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="68.3" data-f="rise">The treasury <span class="it rn">is</span> the market.</span></span>
+  <span class="a sub" data-i="69.0" data-f="up">Donations, investment and revenue all flow in as liquidity.<br>Anyone can sell the token into it, at the market rate.</span></div>
+  <svg id="h3s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+</section>
+<section data-id="h4" class="s" data-s="77" data-e="85" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="77.3" data-f="rise">Voting means <span class="it am">endorsing</span> people.</span></span>
+  <span class="a sub" data-i="78.0" data-f="up">Point your weight at contributors you trust. You keep your tokens.</span></div>
+</section>
+<section data-id="h5" class="s" data-s="85" data-e="92" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="85.3" data-f="rise">An endorsement says: <span class="it rn">give them more say.</span></span></span>
+  <span class="a sub" data-i="86.0" data-f="up">More voting power. More spending power.</span></div>
+</section>
+<section data-id="h6" class="s" data-s="92" data-e="100" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="92.3" data-f="rise">Trust flows <span class="it rn">through the network.</span></span></span>
+  <span class="a sub" data-i="93.0" data-f="up">Raindrop scores everyone by how the whole network endorses them.</span></div>
+</section>
+<section data-id="h7" class="s" data-s="100" data-e="108" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="100.3" data-f="rise">Every round, it <span class="it rn">rains.</span></span></span>
+  <span class="a sub" data-i="101.0" data-f="up">New tokens are minted and airdropped by trust score.</span></div>
+</section>
+<section data-id="h8" class="s" data-s="108" data-e="116" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="108.3" data-f="rise">Keep them, or <span class="it am">sell them.</span></span></span></div>
+  <svg id="h8s" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+  <div class="a col" data-i="109.0" data-f="up" style="left:110px"><div class="m">Keep</div><span>your voice in the network grows</span></div>
+  <div class="a col" data-i="110.2" data-f="up" style="left:1110px"><div class="m">Sell</div><span>the treasury pays the market rate</span></div>
+</section>
+<section data-id="h9" class="s" data-s="116" data-e="124" data-bg="ink" data-sec="How it works" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="116.3" data-f="rise">Change your mind <span class="it am">anytime.</span></span></span>
+  <span class="a sub" data-i="117.0" data-f="up">No proposal. No voting period. The next round follows you.</span></div>
+</section>
+
+<!-- ============ 5. Sybil ============ -->
+<section data-id="sy" class="s" data-s="124" data-e="133" data-bg="dark" data-sec="Fair by design" style="color:var(--color-paper)">
+  <div class="L"><span class="mk"><span class="a d" data-i="124.3" data-f="rise">Sock puppets <span class="it rn">don't help.</span></span></span>
+  <span class="a sub" data-i="125.0" data-f="up">EigenTrust weighs trust, not accounts.<br>One wallet split ten ways gets the same rain.</span></div>
+  <svg id="sys" width="1920" height="1080" style="position:absolute;inset:0"></svg>
+  <div class="a" data-i="125.8" data-f="up" style="position:absolute;left:1120px;top:560px;width:640px">
+    <div class="m" style="font-size:26px;opacity:.75">Share of the rain</div>
+    <div class="d" id="syp" style="font-size:150px;margin:14px 0 26px">20%</div>
+    <div class="progress-bar" style="--progress:.2"></div>
+    <div class="m" id="syn" style="font-size:24px;margin-top:22px;opacity:.75">1 account</div>
+  </div>
+</section>
+
+<!-- ============ 6. Close ============ -->
+<section data-id="rc" class="s" data-s="133" data-e="142" data-bg="ink" data-sec="In short" style="color:var(--color-paper)">
+  <div style="position:absolute;left:230px;top:250px;display:flex;flex-direction:column;gap:70px">
+    <div class="a d rc" data-i="133.4" data-f="up"><span class="old">Proposals</span><span class="arr">→</span><span class="it rn">endorsements</span></div>
+    <div class="a d rc" data-i="135.6" data-f="up"><span class="old">Deadlines</span><span class="arr">→</span><span class="it rn">anytime</span></div>
+    <div class="a d rc" data-i="137.8" data-f="up"><span class="old">Lump sums</span><span class="arr">→</span><span class="it rn">steady rain</span></div>
+  </div>
+</section>
+<section data-id="end" class="s" data-s="142" data-e="999" data-bg="cloud" data-sec="" style="color:var(--color-ink)">
+  <div class="C">
+    <img class="a" data-i="142.2" data-f="drop" src="../../../design-system/assets/logo/raindrop-icon.svg" alt="" style="width:120px;margin-bottom:-6px">
+    <span class="mk"><span class="a d hero" data-i="142.4" data-f="rise" style="font-size:260px">raindrop</span></span>
+    <div class="a" data-i="143.4" data-f="up" style="font-family:var(--display-subtitle-family);font-size:var(--display-subtitle-size);font-weight:var(--display-subtitle-weight);letter-spacing:var(--display-subtitle-letter-spacing);margin-top:30px">Fund your DAO the way trust flows.</div>
+    <div class="a gl button cta" data-i="144.4" data-f="pop">raindrop.money</div>
+  </div>
+</section>
+
+<div id="ch">
+  <div class="c" style="left:48px"><img src="../../../design-system/assets/logo/raindrop-icon.svg" alt="">Raindrop for DAOs</div>
+  <div class="c" id="sec" style="right:48px"></div>
+  <div id="bar" class="progress-bar"></div>
+</div>
+
+<script>
+(function(){
+const DUR=150,FPS=30,$=id=>document.getElementById(id),Q=s=>[...document.querySelectorAll(s)];
+const cl=x=>x<0?0:x>1?1:x,lerp=(a,b,p)=>a+(b-a)*p;
+function bz(a,b,c,d){const X=t=>3*a*t*(1-t)*(1-t)+3*c*t*t*(1-t)+t*t*t,Y=t=>3*b*t*(1-t)*(1-t)+3*d*t*t*(1-t)+t*t*t;
+  return x=>{if(x<=0)return 0;if(x>=1)return 1;let lo=0,hi=1,m;for(let i=0;i<22;i++){m=(lo+hi)/2;X(m)<x?lo=m:hi=m}return Y(m)}}
+const eo=bz(.25,.7,.25,1),eio=bz(.45,0,.35,1);
+const ramp=(t,a,d=1)=>eo(cl((t-a)/d));
+function hs(k,s){let x=Math.imul(k+1013904223^s,2654435761);x^=x>>>15;x=Math.imul(x,2246822519);x^=x>>>13;x=Math.imul(x,3266489917);x^=x>>>16;return(x>>>0)/4294967296}
+// design-system palette
+const COL={ink:'#1A3B52',paper:'#DCF0FA',rain:'#6AB8D8',amber:'#8DD4B7',rose:'#E8B5C7',white:'#F7F8F9'};
+const BG={ink:'bg-gradient-ink',dark:'bg-gradient-dark',white:'bg-white',cloud:'bg-cloud'},DARK={ink:1,dark:1};
+const DS='../../../design-system/assets/',TOKEN=DS+'components/glass-circle-token.svg';
+const scenes=Q('.s'),SX=Object.fromEntries(scenes.map(s=>[s.dataset.id,+s.dataset.s])),NS='http://www.w3.org/2000/svg';
+const sv=(tag,at,parent)=>{const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);parent.appendChild(e);return e};
+const set=(e,at)=>{for(const k in at)e.setAttribute(k,at[k])};
+const glass=(at,parent)=>sv('circle',{fill:'url(#gGlass)',stroke:'url(#gIri)','stroke-width':3,filter:'url(#fGlow)',...at},parent);
+const tok=(parent,op=0)=>sv('image',{href:TOKEN,opacity:op},parent);
+const tokAt=(e,x,y,r)=>{const w=98*r/28;set(e,{x:x-w/2,y:y-w/2,width:w,height:w})};
+const label=(parent,x,y,txt,at={})=>{const e=sv('text',{x,y,fill:COL.paper,'text-anchor':'middle','font-size':24,...at},parent);e.textContent=txt;return e};
+// arrow between two circles, slightly curved; returns updater
+function arrow(parent,color,w=4){const p=sv('path',{fill:'none',stroke:color,'stroke-width':w,'stroke-linecap':'round',pathLength:1,'stroke-dasharray':'1 1'},parent),h=sv('polygon',{fill:color},parent);
+  return(a,ra,b,rb,draw,op)=>{const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,nx=-uy,ny=ux,off=L*.1;
+    const p0=[a[0]+ux*(ra+8),a[1]+uy*(ra+8)],p2=[b[0]-ux*(rb+18),b[1]-uy*(rb+18)],c=[(a[0]+b[0])/2+nx*off,(a[1]+b[1])/2+ny*off];
+    set(p,{d:`M${p0[0]} ${p0[1]} Q${c[0]} ${c[1]} ${p2[0]} ${p2[1]}`});p.style.strokeDashoffset=1-draw;p.style.opacity=op;
+    const an=Math.atan2(p2[1]-c[1],p2[0]-c[0]),z=14+w;set(h,{points:`${p2[0]+Math.cos(an)*z} ${p2[1]+Math.sin(an)*z},${p2[0]+Math.cos(an+2.5)*z} ${p2[1]+Math.sin(an+2.5)*z},${p2[0]+Math.cos(an-2.5)*z} ${p2[1]+Math.sin(an-2.5)*z}`});h.style.opacity=draw>.97?op:0}}
+
+// ============ sprites & rain ============
+let dropC=null;
+function dropSprite(){if(dropC)return dropC;const im=$('iDrop');if(!im.complete||!im.naturalWidth)return null;dropC=document.createElement('canvas');dropC.width=282;dropC.height=327;dropC.getContext('2d').drawImage(im,0,0,282,327);return dropC}
+const cv=$('rain'),cx=cv.getContext('2d');
+function drop(x,y,s,a=1){const im=dropSprite();if(!im)return;const k=3.3*s/78;cx.globalAlpha=a;cx.drawImage(im,x-47*k,y-2.3*s-10*k,94*k,109*k);cx.globalAlpha=1}
+function ripple(x,y,rx,a,lw=2){cx.strokeStyle=COL.rain;cx.lineWidth=lw;[[1,.2],[.69,.45],[.42,.7],[.19,.95]].forEach(([f,o])=>{cx.globalAlpha=a*o;cx.beginPath();cx.ellipse(x,y,rx*f,rx*f*.375,0,0,6.283);cx.stroke()});cx.globalAlpha=1}
+// calm rain: drops appear below the headline, fall slowly, and ripple where they land
+// T(s) -> [{x,y,r,w}] targets at spawn time s; drops land on circles (or flat when r=0)
+function rainOn(t,a,b,T,rate,seed,V=820,Y0=420){const dt=1/rate;
+  for(let k=Math.ceil((t-1.4)/dt);k<=Math.floor(t/dt);k++){const s0=k*dt;if(s0<a||s0>b)continue;const ts=T(s0),tot=ts.reduce((q,c)=>q+c.w,0);if(!tot)continue;
+    let v=hs(k,seed)*tot,j=0;while(j<ts.length-1&&v>ts[j].w){v-=ts[j].w;j++}const c=ts[j];
+    const x=c.x+(hs(k,seed+9)-.5)*(c.r?c.r*1.2:c.span||0),top=c.r?c.y-Math.sqrt(Math.max(0,c.r*c.r-(x-c.x)**2)):c.y,y=Math.min(Y0,top-260)+V*(t-s0);
+    if(y<top)drop(x,y,6.5,cl((y-Y0+120)/80));else{const z=(y-top)/V/.35;if(z<1)ripple(x,top,8+z*30,1-z)}}}
+function ambient(t,t0,alpha,rate=14){const dt=1/rate,V=700;
+  for(let k=Math.ceil((t-1.8)/dt);k<=Math.floor(t/dt);k++){const s=k*dt;if(s<t0)continue;drop(hs(k,3)*1920,-40+V*(t-s)*(0.85+hs(k,5)*.3),6+hs(k,11)*4,alpha)}}
+
+// ============ cold open: the members already know ============
+const OS=$('open'),OP=[[420,640],[700,500],[980,720],[1270,520],[1560,700],[760,900],[1200,910]],OE=[[0,1],[2,1],[3,2],[4,3],[5,2],[6,2],[1,3],[6,4]];
+const ODEG=OP.map((_,i)=>OE.filter(e=>e[1]==i).length),OT=ODEG.reduce((a,b)=>a+b,0);
+const oH=OP.map(()=>sv('circle',{fill:'url(#gHalo)',stroke:'url(#gIri)','stroke-width':2.5,opacity:0},OS));
+const oA=OE.map(()=>arrow(OS,COL.paper,4)),oA2=OE.map(()=>arrow(OS,COL.rain,5));
+const oN=OP.map(([x,y])=>glass({cx:x,cy:y,r:34,opacity:0},OS));
+function openR(t){const out=1-ramp(t,20.6,.9);OS.style.opacity=out;
+  OP.forEach(([x,y],i)=>{const ap=ramp(t,.6+i*.18,1.2),dim=1-.55*ramp(t,8,1.4)*(1-ramp(t,14,1.2));oN[i].style.opacity=ap*dim;
+    const hr=ODEG[i]?(34+18+ODEG[i]*22)*ramp(t,14.6+i*.1,1.8):0;set(oH[i],{cx:x,cy:y,r:hr});oH[i].style.opacity=.9})
+  OE.forEach(([a,b],k)=>{const d=ramp(t,2.2+k*.5,.9),grey=ramp(t,8,1.4),lit=ramp(t,14,1.2);
+    oA[k](OP[a],34,OP[b],34,d,(.5-.4*grey)*(1-lit));oA2[k](OP[a],34,OP[b],34,d,.85*lit)});
+  rainOn(t,15,20.4,()=>OP.map(([x,y],i)=>({x,y,r:34,w:ODEG[i]})),14,3)}
+
+// ============ old way ============
+const P1=$('p1s'),CARDS=[['Q3 dev budget','120,000 USDC'],['Marketing push','80,000 USDC'],['New website','45,000 USDC']];
+function card(parent,x,y,title,amt){const g=sv('g',{},parent);sv('rect',{x,y,width:480,height:210,rx:44,fill:'#fff',stroke:'url(#gIri)','stroke-width':2.5,filter:'url(#fSoft)'},g);
+  const t=sv('text',{x:x+48,y:y+86,fill:COL.ink,'font-size':44,style:'font-family:var(--font-display);font-weight:600;letter-spacing:0'},g);t.textContent=title;
+  const a=sv('text',{x:x+48,y:y+146,fill:COL.ink,'font-size':22,opacity:.6},g);a.textContent=amt;return g}
+const p1c=CARDS.map(([ti,am],i)=>card(P1,200+i*540,560,ti,am));
+function p1R(t){p1c.forEach((g,i)=>{const p=ramp(t,26.6+i*.8,1.2);g.style.opacity=p;g.setAttribute('transform',`translate(0 ${(1-p)*40})`)})}
+const P2=$('p2s'),dlT=label(P2,150,610,'VOTING CLOSES',{fill:COL.ink,'text-anchor':'start',opacity:.6,'font-size':22});
+const VR=[...Array(24)].map((_,i)=>sv('circle',{cx:1060+(i%8)*84,cy:560+Math.floor(i/8)*96,r:28,fill:'none',stroke:COL.ink,'stroke-width':3,opacity:0},P2));
+const VON=[[5,34.6],[14,36.4],[19,38.2]],vc=label(P2,1060-28,850,'VOTED 0 / 24',{fill:COL.ink,'text-anchor':'start','font-size':22,opacity:.6});
+function p2R(t){const o=ramp(t,33.2,1);VR.forEach((c,i)=>{c.style.opacity=o;const on=VON.find(v=>v[0]==i);c.setAttribute('fill',on&&t>on[1]?COL.ink:'none')});vc.style.opacity=.6*o;dlT.style.opacity=.6*o;
+  vc.textContent=`VOTED ${VON.filter(v=>t>v[1]).length} / 24`;$('dl').style.setProperty('--progress',lerp(1,.04,eio(cl((t-33.2)/6.4))))}
+const P3=$('p3s'),p3c=card(P3,260,560,'Q3 dev budget','120,000 USDC');
+const pass=sv('g',{},P3);sv('rect',{x:560,y:538,width:160,height:44,rx:22,fill:COL.amber,'fill-opacity':.85,stroke:'url(#gIri)','stroke-width':2},pass);label(pass,640,567,'PASSED',{fill:COL.ink,'font-size':18});
+const p3p=sv('circle',{cx:1440,cy:665,r:44,fill:COL.ink},P3),p3l=label(P3,1440,760,'ONE RECIPIENT',{fill:COL.ink,'font-size':22}),p3t=tok(P3);
+function p3R(t){const o=ramp(t,41.2,1);p3c.style.opacity=o;pass.style.opacity=ramp(t,42.2,.6);p3p.style.opacity=o;p3l.style.opacity=o;
+  const u=eio(cl((t-43)/1.6));tokAt(p3t,lerp(740,1440,u),665-Math.sin(u*Math.PI)*140,lerp(34,44,u));p3t.style.opacity=t>43&&t<44.7?1:0;
+  p3p.setAttribute('r',44+22*ramp(t,44.4,.8))}
+
+// ============ how it works: the token ============
+const H1=$('h1s'),h1t=tok(H1,1),H2=$('h2s'),h2t=tok(H2,1),h2l=[sv('line',{stroke:COL.paper,'stroke-width':2,opacity:0},H2),sv('line',{stroke:COL.paper,'stroke-width':2,opacity:0},H2)];
+function h1R(t){const o=ramp(t,54.8,1.4);h1t.style.opacity=o;tokAt(h1t,960,700+Math.sin((t-53)*1.1)*8,lerp(70,88,o))}
+function h2R(t){const r=lerp(88,64,ramp(t,60.2,1.2));tokAt(h2t,960,690+Math.sin((t-53)*1.1)*8,r);
+  set(h2l[0],{x1:960-r-20,y1:690,x2:lerp(960-r-20,500,ramp(t,61.2,.8)),y2:690});set(h2l[1],{x1:960+r+20,y1:690,x2:lerp(960+r+20,1250,ramp(t,62.2,.8)),y2:690});h2l.forEach(l=>l.style.opacity=.4)}
+
+// ============ treasury: the market for the token ============
+const H3=$('h3s'),PX=1100,PY=520,PW=560,PH=380,SRC=[['DONATIONS',560],['INVESTMENT',700],['REVENUE',840]];
+const clip=sv('clipPath',{id:'poolClip'},H3);sv('rect',{x:PX,y:PY,width:PW,height:PH,rx:48},clip);
+const pool=sv('g',{},H3);sv('rect',{x:PX,y:PY,width:PW,height:PH,rx:48,fill:'rgba(220,240,250,.08)'},pool);
+const liq=sv('rect',{x:PX,width:PW,fill:'url(#gLiquid)','clip-path':'url(#poolClip)'},pool);
+const wave=sv('path',{fill:'rgba(220,240,250,.35)','clip-path':'url(#poolClip)'},pool);
+sv('rect',{x:PX,y:PY,width:PW,height:PH,rx:48,fill:'none',stroke:'url(#gIri)','stroke-width':3,filter:'url(#fGlow)'},pool);
+const pl=label(H3,PX+PW/2,PY+PH+60,'TREASURY · LIQUIDITY FOR THE TOKEN',{'font-size':22,opacity:.8});
+const srcL=SRC.map(([n,y])=>label(H3,160,y+8,n,{'text-anchor':'start','font-size':24,opacity:0}));
+const flow=[...Array(18)].map(()=>tok(H3));
+const lvl=t=>lerp(.25,.62,eio(cl((t-70.6)/5.6)));
+function h3R(t){const o=ramp(t,69.6,1.2);pool.style.opacity=o;pl.style.opacity=.8*o;srcL.forEach((l,i)=>l.style.opacity=.85*ramp(t,70+i*.4,.8));
+  const L=lvl(t),y=PY+PH*(1-L);set(liq,{y,height:PH*L+4});
+  let d=`M${PX} ${y}`;for(let x=0;x<=PW;x+=20)d+=` L${PX+x} ${y+Math.sin(x/60+t*1.6)*5}`;d+=` L${PX+PW} ${y+14} L${PX} ${y+14}Z`;wave.setAttribute('d',d);
+  flow.forEach((e,k)=>{const si=k%3,st=70.4+si*.4+Math.floor(k/3)*.95,u=cl((t-st)/1.5),q=eio(u),[,sy]=SRC[si];
+    const x0=440,x1=PX+60+si*80,y1=y+30;tokAt(e,lerp(x0,x1,q),lerp(sy,y1,q)-Math.sin(q*Math.PI)*60,15);e.style.opacity=u>0&&u<1?Math.min(1,u*6,(1-u)*6):0})}
+
+// ============ the network: endorse, score, rain, change your mind ============
+const MS=$('mech'),MN=[['YOU',[480,720]],['ADA',[880,560]],['BEN',[880,880]],['CLEO',[1260,500]],['DEV',[1300,800]],['FERN',[1640,640]]];
+const MP=MN.map(m=>m[1]),MR=[38,34,34,34,34,34];
+// network endorsements (besides yours)
+const ME=[[1,3],[2,4],[3,4],[4,5],[5,3],[4,1]];
+const SA=[.06,.26,.07,.2,.27,.14],SB=[.06,.17,.16,.2,.27,.14];
+const mH=MN.map(()=>sv('circle',{fill:'url(#gHalo)',stroke:'url(#gIri)','stroke-width':2.5},MS)),mHi=MN.map(()=>sv('circle',{fill:'none',stroke:COL.rain,'stroke-width':2,opacity:0},MS));
+const mA=ME.map(()=>arrow(MS,COL.paper,4)),yA=arrow(MS,COL.amber,7),yB=arrow(MS,COL.amber,7);
+const mN=MN.map(([n,p],i)=>glass({cx:p[0],cy:p[1],r:MR[i]},MS)),mL=MN.map(([n,p])=>label(MS,p[0],p[1]+MR[0]+44,n));
+const APPM=[77.6,77.9,92.6,92.9,93.2,93.5];
+// trust score over time: Ada alone gains, then the whole network settles, then your switch moves it
+function score(t){const a=ramp(t,86.2,2),n=ramp(t,94,2.4),sw=ramp(t,118.4,2.2);
+  return SA.map((s,i)=>{const early=i==1?.3*a:0,full=lerp(s,SB[i],sw);return lerp(early,full,n)})}
+function mechR(t){const g=score(t);
+  MN.forEach(([n,[x,y]],i)=>{const ap=ramp(t,APPM[i],1.1);mN[i].style.opacity=ap;mL[i].style.opacity=.9*ap;
+    const hr=g[i]>.001?MR[i]+10+Math.sqrt(g[i])*190:0;set(mH[i],{cx:x,cy:y,r:hr});mH[i].style.opacity=ap;
+    set(mHi[i],{cx:x,cy:y,r:hr*.72});mHi[i].style.opacity=hr*.72>MR[i]+12?.45*ap:0;
+    mL[i].setAttribute('y',y+Math.max(MR[i]+44,0))});
+  ME.forEach(([a,b],k)=>mA[k](MP[a],MR[a],MP[b],MR[b],ramp(t,94+k*.35,.9),.45));
+  const sw=ramp(t,118,1.0);yA(MP[0],MR[0],MP[1],MR[1],ramp(t,78.8,1.2),.95*(1-sw));yB(MP[0],MR[0],MP[2],MR[2],ramp(t,118.3,1.2),.95);
+  rainOn(t,101.2,107.6,s=>{const gs=score(s);return MP.map(([x,y],i)=>({x,y,r:MR[i],w:gs[i]}))},30,17);
+  rainOn(t,117.2,123.6,s=>{const gs=score(s);return MP.map(([x,y],i)=>({x,y,r:MR[i],w:gs[i]}))},30,29)}
+
+// ============ keep or sell ============
+const H8=$('h8s');sv('line',{x1:960,y1:470,x2:960,y2:960,stroke:COL.paper,'stroke-width':2,opacity:.18},H8);
+const kN=glass({cx:460,cy:780,r:40},H8),kH=sv('circle',{cx:460,cy:780,fill:'url(#gHalo)',stroke:'url(#gIri)','stroke-width':2.5},H8);H8.insertBefore(kH,kN);
+const kT=[0,1,2].map(()=>tok(H8));
+const SPX=1300,SPY=720,SPW=320,SPH=210;const sclip=sv('clipPath',{id:'sClip'},H8);sv('rect',{x:SPX,y:SPY,width:SPW,height:SPH,rx:36},sclip);
+const sl=sv('rect',{x:SPX,width:SPW,fill:'url(#gLiquid)','clip-path':'url(#sClip)'},H8);sv('rect',{x:SPX,y:SPY,width:SPW,height:SPH,rx:36,fill:'none',stroke:'url(#gIri)','stroke-width':3,filter:'url(#fGlow)'},H8);
+label(H8,SPX+SPW/2,SPY+SPH+48,'TREASURY',{'font-size':20,opacity:.75});
+const sN=glass({cx:1150,cy:640,r:36},H8),sT=tok(H8),sV=sv('circle',{r:12,fill:COL.rain,filter:'url(#fGlow)',opacity:0},H8);
+function h8R(t){const kg=ramp(t,109.4,1);kN.style.opacity=kg;
+  kT.forEach((e,i)=>{const st=110+i*.8,q=eio(cl((t-st)/1.2));tokAt(e,460,lerp(520,780,q),16);e.style.opacity=t>st&&q<1?1:0});
+  const got=kT.filter((_,i)=>t>110+i*.8+1.2).length;kN.setAttribute('r',40+got*6);set(kH,{r:got?40+got*6+20+got*14:0});kH.style.opacity=kg;
+  const so=ramp(t,110.6,1);sN.style.opacity=so;const sold=ramp(t,113.2,.8);
+  const L=lerp(.62,.55,sold),yy=SPY+SPH*(1-L);set(sl,{y:yy,height:SPH*L+2});sl.style.opacity=so;
+  const q=eio(cl((t-111.6)/1.4));tokAt(sT,lerp(1150,SPX+SPW/2,q),lerp(640,yy+20,q)-Math.sin(q*Math.PI)*80,16);sT.style.opacity=t>111.6&&q<1?1:0;
+  const r2=eio(cl((t-113.4)/1.4));set(sV,{cx:lerp(SPX+60,1150,r2),cy:lerp(yy+10,640,r2)-Math.sin(r2*Math.PI)*70});sV.style.opacity=t>113.4&&r2<1?1:0;}
+
+// ============ sybil ============
+const SYS=$('sys'),SC=[600,760],ONE=120;
+function slay(n){if(n==1)return[{x:SC[0],y:SC[1],r:ONE}];const r=ONE/Math.sqrt(n)*.92,P=[];const cols=4;
+  for(let i=0;i<n;i++){const row=Math.floor(i/cols),inRow=Math.min(cols,n-row*cols),c=i%cols;P.push({x:SC[0]+(c-(inRow-1)/2)*(2*r+20),y:SC[1]+(row-(Math.ceil(n/cols)-1)/2)*(2*r+20),r})}return P}
+const L1=slay(1),L10=slay(10),sb=[...Array(10)].map(()=>sv('circle',{fill:COL.paper},SYS));
+const syS=t=>eio(cl((t-127.6)/1.4));
+function syR(t){const p=syS(t),o=ramp(t,125.6,1);
+  sb.forEach((c,i)=>{const a=L1[0],b=L10[i];set(c,{cx:lerp(a.x,b.x,p),cy:lerp(a.y,b.y,p),r:lerp(i?0:a.r,b.r,p)});c.style.opacity=o});
+  $('syn').textContent=p>.5?'10 accounts':'1 account';
+  rainOn(t,126,132.6,s=>{const q=syS(s);return sb.map((_,i)=>{const a=L1[0],b=L10[i],r=lerp(i?0:a.r,b.r,q);return{x:lerp(a.x,b.x,q),y:lerp(a.y,b.y,q),r,w:r*r}})},16,41)}
+
+// ============ fx ============
+const anim=Q('.a');
+function fx(el,t){const i=+el.dataset.i,d=+(el.dataset.d||1),f=el.dataset.f||'up';if(isNaN(i))return;
+  const p=eo(cl((t-i)/d)),on=t>=i?1:0;let o=p,tr='';
+  if(f=='rise'){o=on;tr=`translateY(${(1-p)*110}%)`}else if(f=='up')tr=`translateY(${(1-p)*36}px)`;
+  else if(f=='pop')tr=`scale(${.85+.15*p})`;else if(f=='fade')tr='';
+  else if(f=='drop'){const q=cl((t-i)/.8);o=cl(q*3);tr=`translateY(${-(1-q*q)*240}px)`}
+  el.style.opacity=o;el.style.transform=tr}
+
+let bgNow='';const OPEN={o1:1,o2:1,o3:1},MECH={h4:1,h5:1,h6:1,h7:1,h9:1};
+function render(t){
+  t=Math.min(t,DUR);let si=0;
+  scenes.forEach((s,k)=>{const on=t>=+s.dataset.s&&t<+s.dataset.e;s.style.display=on?'block':'none';if(on)si=k});
+  const S=scenes[si],id=S.dataset.id,bg=S.dataset.bg;if(bg!=bgNow){$('bg').className=BG[bg];bgNow=bg}
+  // every slide eases out over its last half second
+  S.style.opacity=1-eo(cl((t-(+S.dataset.e-.55))/.55));
+  anim.forEach(e=>fx(e,t));
+  $('ch').style.color=DARK[bg]?COL.paper:COL.ink;$('sec').textContent=S.dataset.sec;
+  $('bar').classList.toggle('progress-bar--on-light',!DARK[bg]);$('bar').style.setProperty('--progress',cl(t/DUR));
+  cx.clearRect(0,0,1920,1080);
+  $('open').style.display=OPEN[id]?'block':'none';if(OPEN[id])openR(t);
+  $('mech').style.display=MECH[id]?'block':'none';if(MECH[id])mechR(t);
+  ({p1:p1R,p2:p2R,p3:p3R,h1:h1R,h2:h2R,h3:h3R,h8:h8R,sy:syR}[id]||(()=>{}))(t);
+  if(id=='turn')ambient(t,47.6,.7);
+  if(id=='end')ambient(t,142,.5);
+}
+function loop(ts){render(ts/1000);requestAnimationFrame(loop)}
+render(0);requestAnimationFrame(loop);
+})();
+</script>
+</body></html>

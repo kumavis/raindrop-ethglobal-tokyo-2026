@@ -4,10 +4,11 @@ Raindrop explainer films, authored as self-contained HTML animations and rendere
 
 - `src/mission-first/video.html` — mission-led cut (~95s)
 - `src/protocol-first/video.html` — protocol-led cut (~131s), built on the [design system](../design-system/assets/README.md)
+- `src/dao-first/video.html` — DAO-governance cut (~150s): Raindrop as low-friction fund distribution for DAOs. Slower, one idea per slide, also on the design system
 
 Open any `video.html` in a browser to preview it live.
 
-The protocol-first film loads the design system straight from `../design-system/`: the token CSS
+The protocol-first and dao-first films load the design system straight from `../design-system/`: the token CSS
 (palette, Cormorant + Albert Sans, glass, backgrounds, progress bar) and the brand assets (the raindrop
 icon and token as rain and value particles, the cloud background and motif, the Sybil split). Keep the
 repo layout intact when previewing or rendering it.
@@ -18,7 +19,7 @@ These are not installed by npm and must be on your machine:
 
 - **Node.js** ≥ 18
 - **ffmpeg** with `libx264`, on your `PATH` (`brew install ffmpeg` / `apt install ffmpeg`)
-- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Cormorant / Albert Sans for protocol-first)
+- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Cormorant / Albert Sans for protocol-first and dao-first)
 
 Playwright's Chromium is downloaded automatically by this package's `postinstall`.
 On Linux you may also need its OS libraries: `npx playwright install-deps chromium`.
@@ -29,7 +30,7 @@ From the repo root:
 
 ```bash
 npm install
-npm run render-videos          # renders both films
+npm run render-videos          # renders all three films
 ```
 
 Or from this directory:
@@ -37,6 +38,7 @@ Or from this directory:
 ```bash
 npm run render:mission-first
 npm run render:protocol-first
+npm run render:dao-first
 ```
 
 Output lands in `dist/<film>/video.mp4` (gitignored). To render an arbitrary file:
