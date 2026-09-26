@@ -24,7 +24,7 @@ The thesis is that the information a funder needs already exists and known acros
 
 No single person sees the whole picture, but together a community's judgments form a **social graph of trust**. If we can read that graph, we can let funding follow it.
 
-Raindrop is a mechanism for doing that: **funding that follows trust.**
+Raindrop is a mechanism for funding that follows trust.
 
 ## 3. How Raindrop works
 
