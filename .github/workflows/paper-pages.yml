@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'paper/**'
+      - 'videos/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/paper-pages.yml'
@@ -20,16 +21,41 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
-      # Only install the paper workspace; --ignore-scripts skips the videos
-      # package's Playwright browser download.
-      - run: npm ci --workspace paper --ignore-scripts
+      # --ignore-scripts skips the videos package's Playwright browser download;
+      # Chromium is only installed below if the film actually needs rendering.
+      - run: npm ci --workspace paper --workspace videos --ignore-scripts
+
+      # The film takes minutes to render, so reuse it until its source changes.
+      # The key covers everything that affects the output; poster.jpg (written
+      # by the paper build) lands in the same directory and is cached with it.
+      - name: Restore rendered video
+        id: video-cache
+        uses: actions/cache@v6
+        with:
+          path: videos/dist/protocol-first
+          key: video-protocol-first-${{ hashFiles('videos/src/protocol-first/**', 'videos/render-videos.mjs', 'package-lock.json') }}
+
+      - name: Install render dependencies
+        if: steps.video-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          npm exec --workspace videos -- playwright install --with-deps chromium
+
+      - name: Render protocol-first video
+        if: steps.video-cache.outputs.cache-hit != 'true'
+        run: npm run render:protocol-first --workspace videos
+
       - run: npm run build --workspace paper
+      - name: Check video was embedded
+        run: test -f paper/dist/video.mp4 && test -f paper/dist/poster.jpg
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

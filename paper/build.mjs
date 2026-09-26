@@ -1,6 +1,11 @@
 // Renders paper.md into a static site at dist/index.html.
 // Math (\( \) and \[ \]) is pre-rendered with KaTeX; no client-side JS is needed.
-import { readFile, writeFile, mkdir, cp, watch } from 'node:fs/promises';
+// If the protocol-first film has been rendered (npm run render:protocol-first
+// --workspace videos) it is copied in and embedded above the abstract. In dev
+// builds (see dev.mjs) it isn't copied; the page points at media/, which the dev
+// server maps straight onto the video's directory.
+import { readFile, writeFile, mkdir, cp, access, stat } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,8 +16,43 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 const SRC = path.join(here, 'paper.md');
 const TEMPLATE = path.join(here, 'template.html');
-const OUT_DIR = path.join(here, 'dist');
+export const OUT_DIR = path.join(here, 'dist');
 const KATEX_DIST = path.dirname(require.resolve('katex/dist/katex.min.css'));
+export const VIDEO = path.resolve(here, process.env.VIDEO ?? '../videos/dist/protocol-first/video.mp4');
+const POSTER = path.join(path.dirname(VIDEO), 'poster.jpg');
+const POSTER_AT = process.env.POSTER_AT ?? '5'; // seconds; the title card
+
+const exists = (f) => access(f).then(() => true, () => false);
+
+// Copies the film (and a poster frame) into dist, unless `dev`. Returns the embed markup, or '' if not rendered.
+async function embedVideo(dev) {
+  if (!(await exists(VIDEO))) {
+    console.warn(`warning: ${path.relative(process.cwd(), VIDEO)} not found; building without video`);
+    return '';
+  }
+  const posterStale = !(await exists(POSTER)) || (await stat(POSTER)).mtimeMs < (await stat(VIDEO)).mtimeMs;
+  if (posterStale) {
+    // Written next to the video so it's reused (and cached in CI) alongside it.
+    // Fall back to the first frame for short renders (e.g. DURATION=2).
+    for (const at of [POSTER_AT, '0']) {
+      const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-ss', at, '-i', VIDEO, '-frames:v', '1', '-q:v', '3', POSTER]);
+      if (r.error) break;
+      if ((await exists(POSTER)) && (await stat(POSTER)).mtimeMs >= (await stat(VIDEO)).mtimeMs) break;
+    }
+    if (posterStale && !(await exists(POSTER))) console.warn('warning: could not extract poster frame (is ffmpeg on PATH?)');
+  }
+  const hasPoster = await exists(POSTER);
+  const base = dev ? 'media/' : '';
+  if (!dev) {
+    await cp(VIDEO, path.join(OUT_DIR, 'video.mp4'));
+    if (hasPoster) await cp(POSTER, path.join(OUT_DIR, 'poster.jpg'));
+  }
+  return `<figure class="film">
+  <video controls playsinline preload="metadata"${hasPoster ? ` poster="${base}poster.jpg"` : ''} width="1920" height="1080">
+    <source src="${base}video.mp4" type="video/mp4">
+  </video>
+</figure>`;
+}
 
 const slugify = (s) =>
   s.toLowerCase().replace(/<[^>]+>/g, '').replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '');
@@ -89,17 +129,19 @@ function render(source) {
   return { title, heading, subtitle, body, tocHtml };
 }
 
-async function build() {
+export async function build({ dev = false } = {}) {
   const [source, template] = await Promise.all([readFile(SRC, 'utf8'), readFile(TEMPLATE, 'utf8')]);
   const { title, heading, subtitle, body, tocHtml } = render(source);
+  await mkdir(OUT_DIR, { recursive: true });
+  const video = await embedVideo(dev);
   const html = template
     .replaceAll('{{title}}', escapeHtml(title.replace(/<[^>]+>/g, '')))
     .replace('{{heading}}', heading)
     .replace('{{subtitle}}', subtitle ?? '')
     .replace('{{toc}}', tocHtml)
+    .replace('{{video}}', video)
     .replace('{{body}}', body);
 
-  await mkdir(OUT_DIR, { recursive: true });
   await cp(KATEX_DIST, path.join(OUT_DIR, 'katex'), {
     recursive: true,
     filter: (f) => !/\.(js|mjs)$/.test(f) && !f.includes(`${path.sep}contrib`),
@@ -108,13 +150,4 @@ async function build() {
   console.log(`built ${path.relative(process.cwd(), path.join(OUT_DIR, 'index.html'))}`);
 }
 
-await build();
-
-if (process.argv.includes('--watch')) {
-  console.log('watching paper.md and template.html…');
-  for await (const e of watch(here)) {
-    if (e.filename === 'paper.md' || e.filename === 'template.html') {
-      await build().catch((err) => console.error(err));
-    }
-  }
-}
+if (process.argv[1] === fileURLToPath(import.meta.url)) await build();

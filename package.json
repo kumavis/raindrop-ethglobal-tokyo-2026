@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "render-videos": "npm run render --workspace videos",
-    "build-paper": "npm run build --workspace paper"
+    "build-paper": "npm run build --workspace paper",
+    "dev-paper": "npm run dev --workspace paper"
   }
 }
