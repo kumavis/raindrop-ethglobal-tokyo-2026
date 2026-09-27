@@ -5,7 +5,6 @@ Raindrop explainer films, authored as self-contained HTML animations and rendere
 - `src/mission-first/video.html` — mission-led cut (~95s)
 - `src/protocol-first/video.html` — protocol-led cut (~131s), built on the [design system](../design-system/assets/README.md)
 - `src/dao-first/video.html` — funding cut (~165s) for any organization: the DAO approach (a machine you have to crank) as the old way, a Raindrop network (funding that follows trust) as the new one. Slower, one idea per slide, also on the design system
-- `src/slime-first/video.html` — **tendril** brand exploration (~135s): DAOs as clunky machines vs. governance as a living, adaptive organism (a slime mold). Same mechanism, same type and palette, no rain motif
 
 Open any `video.html` in a browser to preview it live.
 
@@ -13,7 +12,7 @@ The dao-first film also works as a **slide deck**: open `src/dao-first/slides.ht
 Each section is a slide that plays in and holds; advance by hand with → / Space / click, go back with ←,
 jump with Home / End or `#7` in the URL, and press F for fullscreen.
 
-The protocol-first, dao-first and slime-first films load the design system straight from `../design-system/`: the token CSS
+The protocol-first and dao-first films load the design system straight from `../design-system/`: the token CSS
 (palette, Manrope + Albert Sans, glass, backgrounds, progress bar) and the brand assets (the raindrop
 icon and token as rain and value particles, the cloud background and motif, the Sybil split). Keep the
 repo layout intact when previewing or rendering it.
@@ -24,7 +23,7 @@ These are not installed by npm and must be on your machine:
 
 - **Node.js** ≥ 18
 - **ffmpeg** with `libx264`, on your `PATH` (`brew install ffmpeg` / `apt install ffmpeg`)
-- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Manrope / Albert Sans for protocol-first, dao-first and slime-first)
+- **Network access** to Google Fonts at render time (or set `BLOCK_FONTS=1` to use locally installed fonts: Poppins / IBM Plex Mono for mission-first, Manrope / Albert Sans for protocol-first and dao-first)
 
 Playwright's Chromium is downloaded automatically by this package's `postinstall`.
 On Linux you may also need its OS libraries: `npx playwright install-deps chromium`.
@@ -35,7 +34,7 @@ From the repo root:
 
 ```bash
 npm install
-npm run render-videos          # renders all four films
+npm run render-videos          # renders all three films
 ```
 
 Or from this directory:
@@ -44,7 +43,6 @@ Or from this directory:
 npm run render:mission-first
 npm run render:protocol-first
 npm run render:dao-first
-npm run render:slime-first
 ```
 
 Output lands in `dist/<film>/video.mp4` (gitignored). To render an arbitrary file:

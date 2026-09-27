@@ -20,7 +20,7 @@ Built for ETHGlobal Tokyo 2026.
 | [`design-system/`](design-system/assets/README.md) | Design tokens (`tokens.json`, `tokens/*.css`), brand assets (logos, backgrounds, glass components) and [design reference](design-system/reference/README.md) spec sheets |
 | [`.github/workflows/paper-pages.yml`](.github/workflows/paper-pages.yml) | Renders the film and deploys the paper site to [raindrop.money](https://raindrop.money/) (GitHub Pages) on push to `main` |
 
-There are four explainer films: a **mission-first** cut (~95 s), a **protocol-first** cut (~131 s), and a slower **dao-first** cut (~165 s) for any organization deciding where its money does the most good: DAOs as the old approach, Raindrop networks as the new one. A fourth, **slime-first** (~135 s), is a brand exploration (*tendril*) that frames the same mechanism as living, adaptive governance. The protocol-first film is embedded at the top of the paper site. To preview any film, open its `videos/src/<film>/video.html` in a browser.
+There are three explainer films: a **mission-first** cut (~95 s), a **protocol-first** cut (~131 s), and a slower **dao-first** cut (~165 s) for any organization deciding where its money does the most good: DAOs as the old approach, Raindrop networks as the new one. To preview any film, open its `videos/src/<film>/video.html` in a browser.
 
 ## Getting started
 
@@ -33,7 +33,7 @@ From the repo root:
 
 ```bash
 npm install            # installs both workspaces and downloads Playwright's Chromium
-npm run render-videos  # renders all four films to videos/dist/<film>/video.mp4
+npm run render-videos  # renders all three films to videos/dist/<film>/video.mp4
 npm run build-paper    # builds the paper site into paper/dist/, embedding the film if rendered
 npm run dev-paper      # dev server at http://localhost:4173 with live reload
 ```
