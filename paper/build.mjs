@@ -6,6 +6,7 @@
 // server maps straight onto the video's directory.
 // The simulator, linked from the end of the page, is copied to simulator/ the same
 // way (plain ES modules, no build step); in dev the server maps simulator/ onto it.
+// The dao-first film is also published, in presenter mode, as slides.html (not linked from the page).
 import { readFile, writeFile, mkdir, cp, rm, access, stat } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
@@ -36,9 +37,27 @@ export const VIDEO = path.resolve(here, process.env.VIDEO ?? '../videos/dist/pro
 const POSTER = path.join(path.dirname(VIDEO), 'poster.jpg');
 const POSTER_AT = process.env.POSTER_AT ?? '5'; // seconds; the title card
 export const SIMULATOR_DIR = path.resolve(here, '../simulator');
+// The dao-first film in presenter mode, published unlinked at slides.html (see buildSlides).
+const SLIDES_SRC = path.resolve(here, '../videos/src/dao-first/video.html');
 export { SIMULATOR_SOURCES };
 
 const exists = (f) => access(f).then(() => true, () => false);
+
+// The deck is the dao-first film in presenter mode. It uses the same design-system files as the page,
+// so point its ../../../design-system/ paths at ds/, switch presenter mode on, and pin the cloud
+// background to the 1x image (dist/ds/ doesn't carry the 8 MB @2x one).
+async function buildSlides() {
+  const html = (await readFile(SLIDES_SRC, 'utf8'))
+    .replaceAll('../../../design-system/', 'ds/')
+    .replace('<html>', '<html data-mode="slides">')
+    .replace(/<title>[^<]*<\/title>/, `<title>Raindrop networks — slides</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" href="ds/assets/logo/raindrop-icon.svg" type="image/svg+xml">`)
+    .replace('</style>', ".bg-cloud{background-image:url('ds/assets/backgrounds/cloud-background.png')}\n</style>");
+  if (!html.includes('data-mode="slides"')) throw new Error(`could not switch ${SLIDES_SRC} into presenter mode`);
+  await writeFile(path.join(OUT_DIR, 'slides.html'), html);
+}
 
 // Copies the film (and a poster frame) into dist, unless `dev`. Returns the embed markup, or '' if not rendered.
 async function embedVideo(dev) {
@@ -177,6 +196,7 @@ export async function build({ dev = false } = {}) {
     await rm(out, { recursive: true, force: true });
     for (const f of SIMULATOR_SOURCES) await cp(path.join(SIMULATOR_DIR, f), path.join(out, f), { recursive: true });
   }
+  await buildSlides();
   await writeFile(path.join(OUT_DIR, 'index.html'), html);
   console.log(`built ${path.relative(process.cwd(), path.join(OUT_DIR, 'index.html'))}`);
 }

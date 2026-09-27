@@ -416,6 +416,7 @@ function render(t){
 // layers carry over exactly as in the film.
 //   → ↓ Space Enter PageDown, or click the right two-thirds: next (a first press finishes a slide still animating in)
 //   ← ↑ Backspace PageUp, or click the left third: previous · Home / End: first / last · F: fullscreen · #7 in the URL opens slide 7
+// (<html data-mode="slides"> also turns it on: the paper build publishes the deck that way as slides.html.)
 function slides(){
   const S=scenes.map(s=>({s:+s.dataset.s,e:Math.min(+s.dataset.e,DUR)})),N=S.length;
   const hold=i=>i==N-1?DUR:S[i].e-.6;
@@ -444,7 +445,7 @@ function slides(){
     render(t);num.textContent=`${target+1} / ${N}`+(touched?'':'  ·  → to advance');
     requestAnimationFrame(tick)}
   requestAnimationFrame(tick)}
-if(new URLSearchParams(location.search).has('slides'))slides();
+if(new URLSearchParams(location.search).has('slides')||document.documentElement.dataset.mode=='slides')slides();
 else{function loop(ts){render(ts/1000);requestAnimationFrame(loop)}
   render(0);requestAnimationFrame(loop)}
 })();

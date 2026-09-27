@@ -28,4 +28,7 @@ The page ends with a link to the simulator at `simulator/`. The production build
 simulator's `index.html` and `src/` (plain ES modules, no build step) into `dist/simulator/`,
 so it deploys alongside the paper; the dev server serves them straight from `simulator/`.
 
+The build also publishes the dao-first film as a hand-advanced slide deck at `slides.html` (the film in
+presenter mode, reusing `dist/ds/`). Nothing on the page links to it; share the URL directly.
+
 `dist/` is self-contained (KaTeX CSS + fonts are copied in) and can be deployed to any static host.
