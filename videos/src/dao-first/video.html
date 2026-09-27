@@ -194,6 +194,7 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 <div id="ch">
   <div class="c" style="left:48px"><img src="../../../design-system/assets/logo/raindrop-icon.svg" alt="">Raindrop</div>
   <div class="c" id="sec" style="right:48px"></div>
+  <div class="c" id="num" style="right:48px;top:auto;bottom:34px;display:none"></div>
   <div id="bar" class="progress-bar"></div>
 </div>
 
@@ -410,8 +411,42 @@ function render(t){
   if(id=='rt')ambient(u,.6,.7);
   if(id=='end')ambient(u,0,.5);
 }
-function loop(ts){render(ts/1000);requestAnimationFrame(loop)}
-render(0);requestAnimationFrame(loop);
+// Presenter mode (video.html?slides, or open slides.html): every section is a slide that plays in
+// and holds on its final frame. Advancing plays the slide's own fade into the next one, so shared
+// layers carry over exactly as in the film.
+//   → ↓ Space Enter PageDown, or click the right two-thirds: next (a first press finishes a slide still animating in)
+//   ← ↑ Backspace PageUp, or click the left third: previous · Home / End: first / last · F: fullscreen · #7 in the URL opens slide 7
+function slides(){
+  const S=scenes.map(s=>({s:+s.dataset.s,e:Math.min(+s.dataset.e,DUR)})),N=S.length;
+  const hold=i=>i==N-1?DUR:S[i].e-.6;
+  const st=document.createElement('style');
+  st.textContent='html{background:#000;overflow:hidden;height:100%}body{position:absolute;left:50%;top:50%;transform-origin:50% 50%;cursor:default}';
+  document.head.appendChild(st);
+  const fit=()=>{document.body.style.transform=`translate(-50%,-50%) scale(${Math.min(innerWidth/1920,innerHeight/1080)})`};
+  addEventListener('resize',fit);fit();
+  let target=Math.max(0,Math.min(N-1,(parseInt(location.hash.slice(1))||1)-1)),t=S[target].s,prev=null,touched=false;
+  const num=$('num');num.style.display='block';
+  const jump=i=>{target=Math.max(0,Math.min(N-1,i));t=S[target].s};
+  const next=()=>{if(t<hold(target))t=hold(target);else if(target<N-1)target++};
+  const back=()=>jump(target-1);
+  const act=f=>{touched=true;f();history.replaceState(null,'','#'+(target+1))};
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key))act(next);
+    else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key))act(back);
+    else if(e.key=='Home')act(()=>jump(0));else if(e.key=='End')act(()=>jump(N-1));
+    else if(e.key=='f'||e.key=='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();return}
+    else return;
+    e.preventDefault()});
+  addEventListener('click',e=>act(e.clientX>innerWidth/3?next:back));
+  addEventListener('hashchange',()=>{const i=(parseInt(location.hash.slice(1))||1)-1;if(i!=target)jump(i)});
+  function tick(now){const dt=prev==null?0:Math.min(.1,(now-prev)/1000);prev=now;
+    if(t<hold(target))t=Math.min(hold(target),t+dt);
+    render(t);num.textContent=`${target+1} / ${N}`+(touched?'':'  ·  → to advance');
+    requestAnimationFrame(tick)}
+  requestAnimationFrame(tick)}
+if(new URLSearchParams(location.search).has('slides'))slides();
+else{function loop(ts){render(ts/1000);requestAnimationFrame(loop)}
+  render(0);requestAnimationFrame(loop)}
 })();
 </script>
 </body></html>

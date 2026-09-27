@@ -4,7 +4,7 @@ The slow, quiet cut. Every organization faces the same problem: putting its mone
 The knowledge to do that lives in its people. **A DAO** is the old approach: a grey machine that puts every decision
 to a vote and only moves when someone cranks it. **A Raindrop network** is the new approach: funding that follows
 trust, continuously. One headline, at most one supporting line, and one visual per slide. ~165 s.
-Timings match `video.html` (each section's animations are timed from the start of that section).
+As slides, each row below is one slide: open `slides.html` and advance by hand. Timings match `video.html` (each section's animations are timed from the start of that section).
 
 ## 1. The problem
 

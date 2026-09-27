@@ -9,6 +9,10 @@ Raindrop explainer films, authored as self-contained HTML animations and rendere
 
 Open any `video.html` in a browser to preview it live.
 
+The dao-first film also works as a **slide deck**: open `src/dao-first/slides.html` (or `video.html?slides`).
+Each section is a slide that plays in and holds; advance by hand with → / Space / click, go back with ←,
+jump with Home / End or `#7` in the URL, and press F for fullscreen.
+
 The protocol-first, dao-first and slime-first films load the design system straight from `../design-system/`: the token CSS
 (palette, Manrope + Albert Sans, glass, backgrounds, progress bar) and the brand assets (the raindrop
 icon and token as rain and value particles, the cloud background and motif, the Sybil split). Keep the
