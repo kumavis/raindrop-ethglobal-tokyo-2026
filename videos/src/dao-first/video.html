@@ -113,12 +113,12 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
   <span class="a sub" data-i="1.4" data-f="up" style="margin-top:34px">Let funding follow trust, continuously.</span></div>
 </section>
 <section data-id="r1" class="s" data-s="62" data-e="69" data-bg="ink" data-sec="The Raindrop network" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">Everyone points at <span class="it rn">who they trust.</span></span></span>
-  <span class="a sub" data-i="1.0" data-f="up">No proposals. No deadlines. Change it anytime.</span></div>
+  <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">Everyone identifies those <span class="it rn">contributing to the mission.</span></span></span>
+  <span class="a sub" data-i="1.0" data-f="up">The votes are tallied through liquid democracy. No proposals, no deadlines, change yours anytime.</span></div>
 </section>
 <section data-id="r2" class="s" data-s="69" data-e="76" data-bg="ink" data-sec="The Raindrop network" style="color:var(--color-paper)">
-  <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">The money follows, <span class="it rn">every round.</span></span></span>
-  <span class="a sub" data-i="1.0" data-f="up">Small, steady payouts to the people the network trusts.</span></div>
+  <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">The identified contributors <span class="it rn">grow in power.</span></span></span>
+  <span class="a sub" data-i="1.0" data-f="up">Every round, new tokens rain on them: more voting power, more spending power.</span></div>
 </section>
 <section data-id="r3" class="s" data-s="76" data-e="83" data-bg="ink" data-sec="The Raindrop network" style="color:var(--color-paper)">
   <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">Nobody has to <span class="it rn">manually push it forward.</span></span></span>
@@ -162,13 +162,13 @@ svg text{font-family:var(--font-body);font-weight:500;letter-spacing:.14em}
 </section>
 <section data-id="sy" class="s" data-s="139" data-e="148" data-bg="dark" data-sec="How it works" style="color:var(--color-paper)">
   <div class="L"><span class="mk"><span class="a d" data-i=".3" data-f="rise">Sock puppets <span class="it rn">don't help.</span></span></span>
-  <span class="a sub" data-i="1.0" data-f="up">Trust is scored across the network, not per account.<br>One wallet split ten ways earns the same.</span></div>
+  <span class="a sub" data-i="1.0" data-f="up">Ten accounts endorsing you carry the same weight as one.<br>Trust is scored across the network, not per account.</span></div>
   <svg id="sys" width="1920" height="1080" style="position:absolute;inset:0"></svg>
   <div class="a" data-i="1.8" data-f="up" style="position:absolute;left:1120px;top:560px;width:640px">
-    <div class="m" style="font-size:26px;opacity:.75">Share of the rain</div>
+    <div class="m" style="font-size:26px;opacity:.75">Weight behind Eve</div>
     <div class="d" style="font-size:150px;margin:14px 0 26px">20%</div>
     <div class="progress-bar" style="--progress:.2"></div>
-    <div class="m" id="syn" style="font-size:24px;margin-top:22px;opacity:.75">1 account</div>
+    <div class="m" id="syn" style="font-size:24px;margin-top:22px;opacity:.75">from 1 account</div>
   </div>
 </section>
 
@@ -238,13 +238,13 @@ function dropSprite(){if(dropC)return dropC;const im=$('iDrop');if(!im.complete|
 const cv=$('rain'),cx=cv.getContext('2d');
 function drop(x,y,s,a=1){const im=dropSprite();if(!im)return;const k=3.3*s/78;cx.globalAlpha=a;cx.drawImage(im,x-47*k,y-2.3*s-10*k,94*k,109*k);cx.globalAlpha=1}
 function ripple(x,y,rx,a,lw=2){cx.strokeStyle=COL.rain;cx.lineWidth=lw;[[1,.2],[.69,.45],[.42,.7],[.19,.95]].forEach(([f,o])=>{cx.globalAlpha=a*o;cx.beginPath();cx.ellipse(x,y,rx*f,rx*f*.375,0,0,6.283);cx.stroke()});cx.globalAlpha=1}
-// calm rain: drops appear below the headline, fall slowly, and ripple where they land.
+// calm rain: drops fade in below the headline and its supporting line, fall slowly, and ripple where they land.
 // T(s) -> [{x,y,r,w}] targets at spawn time s; drops land on circles.
 function rainOn(t,a,b,T,rate,seed,V=820,Y0=420){const dt=1/rate;
   for(let k=Math.ceil((t-1.4)/dt);k<=Math.floor(t/dt);k++){const s0=k*dt;if(s0<a||s0>b)continue;const ts=T(s0),tot=ts.reduce((q,c)=>q+c.w,0);if(!tot)continue;
     let v=hs(k,seed)*tot,j=0;while(j<ts.length-1&&v>ts[j].w){v-=ts[j].w;j++}const c=ts[j];
     const x=c.x+(hs(k,seed+9)-.5)*c.r*1.2,top=c.y-Math.sqrt(Math.max(0,c.r*c.r-(x-c.x)**2)),y=Math.min(Y0,top-260)+V*(t-s0);
-    if(y<top)drop(x,y,6.5,cl((y-Y0+120)/80));else{const z=(y-top)/V/.35;if(z<1)ripple(x,top,8+z*30,1-z)}}}
+    if(y<top)drop(x,y,6.5,cl((y-Y0-10)/60));else{const z=(y-top)/V/.35;if(z<1)ripple(x,top,8+z*30,1-z)}}}
 function ambient(t,t0,alpha,rate=14){const dt=1/rate,V=700;
   for(let k=Math.ceil((t-1.8)/dt);k<=Math.floor(t/dt);k++){const s=k*dt;if(s<t0)continue;drop(hs(k,3)*1920,-40+V*(t-s)*(0.85+hs(k,5)*.3),6+hs(k,11)*4,alpha)}}
 
@@ -273,13 +273,15 @@ const oH=OP.map(()=>sv('circle',{fill:'url(#gHalo)',stroke:'url(#gIri)','stroke-
 const oA=OE.map(()=>arrow(OS,COL.paper,4)),oA2=OE.map(()=>arrow(OS,COL.rain,5)),oSw=arrow(OS,COL.rain,5);
 const oN=OP.map(([x,y])=>glass({cx:x,cy:y,r:34,opacity:0},OS));
 const round=label(OS,1770,990,'',{'text-anchor':'end','font-size':22,opacity:0});
+// from "grow in power" on, each member swells with the endorsement (and rain) flowing to them
+const nr=(i,t)=>34+7*deg(i,t)*ramp(t,START.r2+1.2,4.5);
 function openR(t){const u=t-OT0,lit=ramp(t,RELIT,1.2),grey=ramp(u,7.4,1.4);
   OP.forEach(([x,y],i)=>{const ap=ramp(u,.6+i*.18,1.2);oN[i].style.opacity=ap*(1-.55*grey*(1-lit));
-    const d=deg(i,t),hr=d>0?(34+18+d*22)*ramp(t,RELIT+.6+i*.1,1.8):0;set(oH[i],{cx:x,cy:y,r:hr});oH[i].style.opacity=.9});
+    const d=deg(i,t),r=nr(i,t),hr=d>0?(r+18+d*22)*ramp(t,RELIT+.6+i*.1,1.8):0;oN[i].setAttribute('r',r);set(oH[i],{cx:x,cy:y,r:hr});oH[i].style.opacity=.9});
   const sw=ramp(t,SWAP,1.0);
-  OE.forEach(([a,b],k)=>{const d=ramp(u,1.8+k*.45,.9),gone=k==7?sw:0;oA[k](OP[a],34,OP[b],34,d,(.5-.4*grey)*(1-lit));oA2[k](OP[a],34,OP[b],34,d,.85*lit*(1-gone))});
-  oSw(OP[6],34,OP[3],34,ramp(t,SWAP+.3,1.2),.85);
-  rainOn(t,START.r2+.6,START.r3+6.6,s=>OP.map(([x,y],i)=>({x,y,r:34,w:deg(i,s)})),14,3);
+  OE.forEach(([a,b],k)=>{const d=ramp(u,1.8+k*.45,.9),gone=k==7?sw:0;oA[k](OP[a],nr(a,t),OP[b],nr(b,t),d,(.5-.4*grey)*(1-lit));oA2[k](OP[a],nr(a,t),OP[b],nr(b,t),d,.85*lit*(1-gone))});
+  oSw(OP[6],nr(6,t),OP[3],nr(3,t),ramp(t,SWAP+.3,1.2),.85);
+  rainOn(t,START.r2+.6,START.r3+6.6,s=>OP.map(([x,y],i)=>({x,y,r:nr(i,s),w:deg(i,s)})),14,3);
   // rounds tick by on their own
   const rt=t-START.r2;round.textContent=rt>0?'ROUND '+(41+Math.floor(rt/1.8)):'';round.style.opacity=.6*ramp(t,START.r2+1,1)}
 
@@ -369,16 +371,31 @@ function kR(u){const kg=ramp(u,1.4,1);kN.style.opacity=kg;
   const q=eio(cl((u-3.6)/1.4));tokAt(sT,lerp(1150,1460,q),lerp(640,yy+20,q)-Math.sin(q*Math.PI)*80,16);sT.style.opacity=u>3.6&&q<1?1:0;
   const r2=eio(cl((u-5.4)/1.4));set(sV,{cx:lerp(1360,1150,r2),cy:lerp(yy+10,640,r2)-Math.sin(r2*Math.PI)*70});sV.style.opacity=u>5.4&&r2<1?1:0}
 
-// sy: one wallet split ten ways earns the same share
-const SYS=$('sys'),SC=[600,760],ONE=120;
-function slay(n){if(n==1)return[{x:SC[0],y:SC[1],r:ONE}];const r=ONE/Math.sqrt(n)*.92,P=[],cols=4;
-  for(let i=0;i<n;i++){const row=Math.floor(i/cols),inRow=Math.min(cols,n-row*cols),c=i%cols;P.push({x:SC[0]+(c-(inRow-1)/2)*(2*r+20),y:SC[1]+(row-(Math.ceil(n/cols)-1)/2)*(2*r+20),r})}return P}
-const L1=slay(1),L10=slay(10),sb=[...Array(10)].map(()=>sv('circle',{fill:COL.paper},SYS));
+// sy: Eve's wallet endorses her main account; split into ten sock puppets that all endorse her,
+// the same weight is only cut ten ways, so the weight behind Eve doesn't move
+const SYS=$('sys'),SC=[400,770],ONE=110,EVE=[880,770],ER=46;
+function slay(n){if(n==1)return[{x:SC[0],y:SC[1],r:ONE}];const r=ONE/Math.sqrt(n)*.92,P=[],cols=3;
+  for(let i=0;i<n;i++){const row=Math.floor(i/cols),inRow=Math.min(cols,n-row*cols),c=i%cols;P.push({x:SC[0]+(c-(inRow-1)/2)*(2*r+26),y:SC[1]+(row-(Math.ceil(n/cols)-1)/2)*(2*r+26),r})}return P}
+const L1=slay(1),L10=slay(10);
+const eH=sv('circle',{cx:EVE[0],cy:EVE[1],r:ER+64,fill:'url(#gHalo)',stroke:'url(#gIri)','stroke-width':2.5},SYS);
+// straight endorsement arrows: line + head, weight drawn as width
+const sArr=[...Array(10)].map(()=>({l:sv('line',{stroke:COL.rain,'stroke-linecap':'round'},SYS),h:sv('polygon',{fill:COL.rain},SYS)}));
+const sb=[...Array(10)].map(()=>sv('circle',{fill:COL.paper},SYS)),eN=glass({cx:EVE[0],cy:EVE[1],r:ER},SYS);
+const eL=label(SYS,EVE[0],EVE[1]+ER+120,'EVE'),wL=label(SYS,SC[0],SC[1]+200,"EVE'S WALLET",{opacity:.8});
 const split=u=>eio(cl((u-3.6)/1.4));
-function syR(u,t){const p=split(u),o=ramp(u,1.6,1);
-  sb.forEach((c,i)=>{const a=L1[0],b=L10[i];set(c,{cx:lerp(a.x,b.x,p),cy:lerp(a.y,b.y,p),r:lerp(i?0:a.r,b.r,p)});c.style.opacity=o});
-  $('syn').textContent=p>.5?'10 accounts':'1 account';
-  rainOn(t,START.sy+2,START.sy+8.6,s=>{const q=split(s-START.sy);return sb.map((_,i)=>{const a=L1[0],b=L10[i],r=lerp(i?0:a.r,b.r,q);return{x:lerp(a.x,b.x,q),y:lerp(a.y,b.y,q),r,w:r*r}})},16,41)}
+const puppet=(i,p)=>{const a=L1[0],b=L10[i];return{x:lerp(a.x,b.x,p),y:lerp(a.y,b.y,p),r:lerp(i?0:a.r,b.r,p)}};
+function syR(u){const p=split(u),o=ramp(u,1.6,1),d=ramp(u,2.2,1),W=14;SYS.style.opacity=o;
+  $('syn').textContent=p>.5?'from 10 accounts':'from 1 account';wL.textContent=p>.5?'10 SOCK PUPPETS':"EVE'S WALLET";
+  sb.forEach((c,i)=>{const q=puppet(i,p);set(c,{cx:q.x,cy:q.y,r:q.r})});
+  // one thick arrow before the split; ten arrows a tenth as heavy after it
+  sArr.forEach((A,i)=>{const q=puppet(i,p),w=i?W/10*p:lerp(W,W/10,p),dx=EVE[0]-q.x,dy=EVE[1]-q.y,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L;
+    const x0=q.x+ux*(q.r+10),y0=q.y+uy*(q.r+10),x1=EVE[0]-ux*(ER+22),y1=EVE[1]-uy*(ER+22),xe=lerp(x0,x1,d),ye=lerp(y0,y1,d),z=12+w*1.4,an=Math.atan2(uy,ux);
+    set(A.l,{x1:x0,y1:y0,x2:xe,y2:ye,'stroke-width':Math.max(.1,w)});A.l.style.opacity=(i?p:1)*.85;
+    set(A.h,{points:`${x1+Math.cos(an)*z} ${y1+Math.sin(an)*z},${x1+Math.cos(an+2.5)*z} ${y1+Math.sin(an+2.5)*z},${x1+Math.cos(an-2.5)*z} ${y1+Math.sin(an-2.5)*z}`});A.h.style.opacity=d>.97?(i?p:1)*.85:0;
+    // trust particles: ten along the one arrow, one along each of the ten
+    const n=i?Math.round(p):Math.round(lerp(10,1,p));cx.fillStyle=COL.paper;cx.shadowColor=COL.rain;cx.shadowBlur=16;
+    for(let k=0;k<n&&d>.97;k++){const v=((u*.35)+k/Math.max(1,n)+i*.137)%1;cx.globalAlpha=o*(.3+.7*Math.sin(v*Math.PI));cx.beginPath();cx.arc(lerp(x0,x1,v),lerp(y0,y1,v),5,0,6.283);cx.fill()}
+    cx.globalAlpha=1;cx.shadowBlur=0})}
 
 // ============ fx ============
 // each animated element is timed relative to the start of its own section

@@ -29,8 +29,8 @@ As slides, each row below is one slide: open `slides.html` and advance by hand. 
 | Time | On screen | Visual |
 |---|---|---|
 | 0:56 | Title card: **The Raindrop network** — Let funding follow trust, continuously. | Cloud background, soft rain |
-| 1:02 | *Everyone points at who they trust.* — No proposals. No deadlines. Change it anytime. | The members' network from 0:15; the arrows relight and halos form |
-| 1:09 | *The money follows, every round.* — Small, steady payouts to the people the network trusts. | Gentle rain on the trusted; a round counter ticks by on its own |
+| 1:02 | *Everyone identifies those contributing to the mission.* — The votes are tallied through liquid democracy. No proposals, no deadlines, change yours anytime. | The members' network from 0:15; the arrows relight and halos form |
+| 1:09 | *The identified contributors grow in power.* — Every round, new tokens rain on them: more voting power, more spending power. | Rain on the identified contributors, who swell as it lands; a round counter ticks by on its own |
 | 1:16 | *Nobody has to manually push it forward.* — It runs in the background, always up to date. | A member re-points; halos and rain follow without anyone pushing |
 
 ## 4. How it works
@@ -44,7 +44,7 @@ As slides, each row below is one slide: open `slides.html` and advance by hand. 
 | 1:55 | Step 5 of 5 — *New tokens rain down by score.* — Each round, fresh tokens are minted and dispersed in proportion to trust. | Rain falls in proportion to each halo |
 | 2:03 | *Keep them, or sell them.* | Keep: hold to gain a bigger voice · Sell: to the treasury, to get paid |
 | 2:11 | *Change your mind anytime.* — No proposal. No voting period. The next round follows you. | Your arrow swings from Ada to Ben; halos and rain follow |
-| 2:19 | *Sock puppets don't help.* — Trust is scored across the network, not per account. One wallet split ten ways earns the same. | One wallet splits into ten; its share of the rain stays at 20% |
+| 2:19 | *Sock puppets don't help.* — Ten accounts endorsing you carry the same weight as one. Trust is scored across the network, not per account. | Eve's wallet endorses her main account, then splits into ten sock puppets that all endorse her; each arrow carries a tenth of the weight, so the weight behind Eve stays at 20% |
 
 ## 5. Close
 
